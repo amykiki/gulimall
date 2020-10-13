@@ -1,4 +1,4 @@
-package daily.boot.gulimall.common.util;
+package io.renren.utils;
 
 
 import java.util.LinkedHashMap;
@@ -44,8 +44,5 @@ public class Query extends LinkedHashMap<String, Object> {
 
     public void setLimit(int limit) {
         this.limit = limit;
-    }
-    
-    public static void main(String[] args) {
     }
 }
