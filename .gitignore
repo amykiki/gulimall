@@ -1,5 +1,6 @@
 HELP.md
 target/
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
@@ -38,3 +39,4 @@ build/
 *.~vsdx
 /daily-boot-basis/iotest/*
 /doc/RedBlack.pdf
+/renren-generator/target/classes/template/add-or-update.vue.vm
