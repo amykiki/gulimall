@@ -39,4 +39,3 @@ build/
 *.~vsdx
 /daily-boot-basis/iotest/*
 /doc/RedBlack.pdf
-/renren-generator/target/classes/template/add-or-update.vue.vm

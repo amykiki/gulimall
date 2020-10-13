@@ -22,7 +22,7 @@ import daily.boot.gulimall.common.utils.R;
  *
  * @author amy
  * @email amy@gmail.com
- * @date 2020-10-13 14:20:31
+ * @date 2020-10-13 16:31:34
  */
 @RestController
 @RequestMapping("product/spuinfodesc")
@@ -34,7 +34,8 @@ public class SpuInfoDescController {
      * 列表
      */
     @RequestMapping("/list")
-        public R list(@RequestParam Map<String, Object> params){
+    //@RequiresPermissions("product:spuinfodesc:list")
+    public R list(@RequestParam Map<String, Object> params){
         PageUtils page = spuInfoDescService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -45,8 +46,9 @@ public class SpuInfoDescController {
      * 信息
      */
     @RequestMapping("/info/{spuId}")
-        public R info(@PathVariable("spuId") Long spuId){
-		SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
+    //@RequiresPermissions("product:spuinfodesc:info")
+    public R info(@PathVariable("spuId") Long spuId){
+        SpuInfoDescEntity spuInfoDesc = spuInfoDescService.getById(spuId);
 
         return R.ok().put("spuInfoDesc", spuInfoDesc);
     }
@@ -55,8 +57,9 @@ public class SpuInfoDescController {
      * 保存
      */
     @RequestMapping("/save")
-        public R save(@RequestBody SpuInfoDescEntity spuInfoDesc){
-		spuInfoDescService.save(spuInfoDesc);
+    //@RequiresPermissions("product:spuinfodesc:save")
+    public R save(@RequestBody SpuInfoDescEntity spuInfoDesc){
+        spuInfoDescService.save(spuInfoDesc);
 
         return R.ok();
     }
@@ -65,8 +68,9 @@ public class SpuInfoDescController {
      * 修改
      */
     @RequestMapping("/update")
-        public R update(@RequestBody SpuInfoDescEntity spuInfoDesc){
-		spuInfoDescService.updateById(spuInfoDesc);
+    //@RequiresPermissions("product:spuinfodesc:update")
+    public R update(@RequestBody SpuInfoDescEntity spuInfoDesc){
+        spuInfoDescService.updateById(spuInfoDesc);
 
         return R.ok();
     }
@@ -75,8 +79,9 @@ public class SpuInfoDescController {
      * 删除
      */
     @RequestMapping("/delete")
-        public R delete(@RequestBody Long[] spuIds){
-		spuInfoDescService.removeByIds(Arrays.asList(spuIds));
+    //@RequiresPermissions("product:spuinfodesc:delete")
+    public R delete(@RequestBody Long[] spuIds){
+        spuInfoDescService.removeByIds(Arrays.asList(spuIds));
 
         return R.ok();
     }

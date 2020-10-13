@@ -22,7 +22,7 @@ import daily.boot.gulimall.common.utils.R;
  *
  * @author amy
  * @email amy@gmail.com
- * @date 2020-10-13 14:20:31
+ * @date 2020-10-13 16:31:34
  */
 @RestController
 @RequestMapping("product/skuinfo")
@@ -34,7 +34,8 @@ public class SkuInfoController {
      * 列表
      */
     @RequestMapping("/list")
-        public R list(@RequestParam Map<String, Object> params){
+    //@RequiresPermissions("product:skuinfo:list")
+    public R list(@RequestParam Map<String, Object> params){
         PageUtils page = skuInfoService.queryPage(params);
 
         return R.ok().put("page", page);
@@ -45,8 +46,9 @@ public class SkuInfoController {
      * 信息
      */
     @RequestMapping("/info/{skuId}")
-        public R info(@PathVariable("skuId") Long skuId){
-		SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+    //@RequiresPermissions("product:skuinfo:info")
+    public R info(@PathVariable("skuId") Long skuId){
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
 
         return R.ok().put("skuInfo", skuInfo);
     }
@@ -55,8 +57,9 @@ public class SkuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-        public R save(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.save(skuInfo);
+    //@RequiresPermissions("product:skuinfo:save")
+    public R save(@RequestBody SkuInfoEntity skuInfo){
+        skuInfoService.save(skuInfo);
 
         return R.ok();
     }
@@ -65,8 +68,9 @@ public class SkuInfoController {
      * 修改
      */
     @RequestMapping("/update")
-        public R update(@RequestBody SkuInfoEntity skuInfo){
-		skuInfoService.updateById(skuInfo);
+    //@RequiresPermissions("product:skuinfo:update")
+    public R update(@RequestBody SkuInfoEntity skuInfo){
+        skuInfoService.updateById(skuInfo);
 
         return R.ok();
     }
@@ -75,8 +79,9 @@ public class SkuInfoController {
      * 删除
      */
     @RequestMapping("/delete")
-        public R delete(@RequestBody Long[] skuIds){
-		skuInfoService.removeByIds(Arrays.asList(skuIds));
+    //@RequiresPermissions("product:skuinfo:delete")
+    public R delete(@RequestBody Long[] skuIds){
+        skuInfoService.removeByIds(Arrays.asList(skuIds));
 
         return R.ok();
     }
