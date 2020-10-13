@@ -7,6 +7,19 @@
     <groupId>daily.boot.guli</groupId>
     <artifactId>mall</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <description>聚合服务</description>
+
+    <modules>
+        <module>mall-product</module>
+        <module>mall-coupon</module>
+        <module>mall-member</module>
+        <module>mall-order</module>
+        <module>mall-ware</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>mall-common</module>
+    </modules>
+    <packaging>pom</packaging>
 
 
 </project>
