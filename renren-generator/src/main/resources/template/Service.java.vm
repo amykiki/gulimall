@@ -1,7 +1,8 @@
 package ${package}.${moduleName}.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import ${mainPath}.common.utils.PageUtils;
+import ${mainPath}.common.page.PageQueryVo;
+import ${mainPath}.common.page.PageInfo;
 import ${package}.${moduleName}.entity.${className}Entity;
 
 import java.util.Map;
@@ -15,6 +16,11 @@ import java.util.Map;
  */
 public interface ${className}Service extends IService<${className}Entity> {
 
-    PageUtils queryPage(Map<String, Object> params);
+    /**
+     * 无条件翻页查询
+     * @param queryVo 分页查询参数
+     * @return
+     */
+    PageInfo<${className}Entity> queryPage(PageQueryVo queryVo);
 }
 
