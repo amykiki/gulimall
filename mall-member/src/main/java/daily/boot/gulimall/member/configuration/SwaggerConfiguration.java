@@ -1,4 +1,4 @@
-package daily.boot.gulimall.product.configuration;
+package daily.boot.gulimall.member.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,9 +31,9 @@ public class SwaggerConfiguration {
     
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("PRODUCT-PMS-API测试文档")
-                .description("谷粒商城-PRODUCT-PMS项目的接口测试文档")
-                .termsOfServiceUrl("http://xxx:18000")
+                .title("MEMBER-UMS-API测试文档")
+                .description("谷粒商城-UMS-MEMBER项目的接口测试文档")
+                .termsOfServiceUrl("http://xxx:16000")
                 .version("1.0")
                 .build();
     }
