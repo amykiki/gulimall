@@ -2,7 +2,6 @@ package ${package}.${moduleName}.controller;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,12 +33,12 @@ public class ${className}Controller {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @RequestMapping("/list")
     //@RequiresPermissions("${moduleName}:${pathName}:list")
-    public R list(){
-        List<${className}Entity> list = ${classname}Service.list();
+    public R list(@RequestParam Map<String, Object> params){
+        PageUtils page = ${classname}Service.queryPage(params);
 
-        return R.ok().put("data", list);
+        return R.ok().put("page", page);
     }
 
 

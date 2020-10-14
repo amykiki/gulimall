@@ -1,31 +1,28 @@
 package daily.boot.gulimall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import daily.boot.gulimall.common.page.PageInfo;
+import daily.boot.gulimall.common.page.PageQueryVo;
+import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.product.entity.BrandEntity;
 import daily.boot.gulimall.product.service.BrandService;
-import daily.boot.gulimall.common.utils.PageUtils;
-import daily.boot.gulimall.common.utils.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 
 /**
  * 品牌
- *
  * @author amy
- * @email amy@gmail.com
  * @date 2020-10-13 16:31:34
  */
 @RestController
 @RequestMapping("product/brand")
+@Api(tags = "品牌接口")
 public class BrandController {
     @Autowired
     private BrandService brandService;
@@ -33,19 +30,21 @@ public class BrandController {
     /**
      * 列表
      */
-    @RequestMapping("/list")
+    @GetMapping("/list")
     //@RequiresPermissions("product:brand:list")
-    public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = brandService.queryPage(params);
-
-        return R.ok().put("page", page);
+    @ApiOperation(value = "所有列表")
+    public R list(){
+        List<BrandEntity> list = brandService.list();
+    
+        return R.ok().put("data", list);
     }
 
 
     /**
      * 信息
      */
-    @RequestMapping("/info/{brandId}")
+    @GetMapping("/info/{brandId}")
+    @ApiOperation(value = "根据主键ID查询")
     //@RequiresPermissions("product:brand:info")
     public R info(@PathVariable("brandId") Long brandId){
         BrandEntity brand = brandService.getById(brandId);
@@ -56,7 +55,8 @@ public class BrandController {
     /**
      * 保存
      */
-    @RequestMapping("/save")
+    @PostMapping("/save")
+    @ApiOperation(value = "新增数据")
     //@RequiresPermissions("product:brand:save")
     public R save(@RequestBody BrandEntity brand){
         brandService.save(brand);
@@ -67,7 +67,8 @@ public class BrandController {
     /**
      * 修改
      */
-    @RequestMapping("/update")
+    @PutMapping("/update")
+    @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:brand:update")
     public R update(@RequestBody BrandEntity brand){
         brandService.updateById(brand);
@@ -78,12 +79,36 @@ public class BrandController {
     /**
      * 删除
      */
-    @RequestMapping("/delete")
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "批量删除数据")
     //@RequiresPermissions("product:brand:delete")
     public R delete(@RequestBody Long[] brandIds){
         brandService.removeByIds(Arrays.asList(brandIds));
-
         return R.ok();
+    }
+    
+    /**
+     * 无条件分页查询
+     */
+    @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
+    @PostMapping("/page-list")
+    //@RequiresPermissions("product:brand:delete")
+    public R pageList(PageQueryVo pageQueryVo){
+        PageInfo pageInfo = brandService.queryPage(pageQueryVo);
+        
+        return R.ok().put("page", pageInfo);
+    }
+    /**
+     * 带条件分页查询
+     */
+    @ApiOperation(value = "带条件分页查询", notes = "分页查询，根据当前页数+每页显示查询，带条件查询")
+    @PostMapping("/page-query")
+    //@RequiresPermissions("product:brand:delete")
+    public R pageQuery(PageQueryVo pageQueryVo,
+                  @RequestBody BrandEntity brand){
+        PageInfo pageInfo = brandService.queryPage(pageQueryVo, brand);
+    
+        return R.ok().put("page", pageInfo);
     }
 
 }
