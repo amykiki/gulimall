@@ -1,7 +1,6 @@
 package daily.boot.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,7 +10,6 @@ import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.product.dao.BrandDao;
 import daily.boot.gulimall.product.entity.BrandEntity;
 import daily.boot.gulimall.product.service.BrandService;
-import jdk.nashorn.internal.ir.BreakableNode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 

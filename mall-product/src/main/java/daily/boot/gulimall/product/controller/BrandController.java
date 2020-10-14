@@ -94,7 +94,7 @@ public class BrandController {
     @PostMapping("/page-list")
     //@RequiresPermissions("product:brand:delete")
     public R pageList(PageQueryVo pageQueryVo){
-        PageInfo pageInfo = brandService.queryPage(pageQueryVo);
+        PageInfo<BrandEntity> pageInfo = brandService.queryPage(pageQueryVo);
         
         return R.ok().put("page", pageInfo);
     }
@@ -106,7 +106,7 @@ public class BrandController {
     //@RequiresPermissions("product:brand:delete")
     public R pageQuery(PageQueryVo pageQueryVo,
                   @RequestBody BrandEntity brand){
-        PageInfo pageInfo = brandService.queryPage(pageQueryVo, brand);
+        PageInfo<BrandEntity> pageInfo = brandService.queryPage(pageQueryVo, brand);
     
         return R.ok().put("page", pageInfo);
     }
