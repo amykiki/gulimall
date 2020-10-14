@@ -16,7 +16,6 @@ import lombok.Data;
  * ${comments}
  * 
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
  */
 @Data
@@ -33,7 +32,7 @@ public class ${className}Entity implements Serializable {
 @TableId
     #end
 @ApiModelProperty(value = "${column.comments}")
-private $column.attrType $column.attrname;
+    private $column.attrType $column.attrname;
 #end
 
 }

@@ -5,13 +5,11 @@ import ${mainPath}.common.page.PageQueryVo;
 import ${mainPath}.common.page.PageInfo;
 import ${package}.${moduleName}.entity.${className}Entity;
 
-import java.util.Map;
 
 /**
  * ${comments}
  *
  * @author ${author}
- * @email ${email}
  * @date ${datetime}
  */
 public interface ${className}Service extends IService<${className}Entity> {
