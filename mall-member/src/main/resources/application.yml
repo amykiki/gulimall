@@ -10,7 +10,8 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: docer-serv:8848
+        server-addr: docker-serv:8848
+
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -21,3 +22,7 @@ mybatis-plus:
 logging:
   level:
     daily.boot.gulimall.member: debug
+
+gulimall:
+  feign:
+    order: gulimall-order

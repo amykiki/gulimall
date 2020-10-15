@@ -3,8 +3,11 @@ package daily.boot.gulimall.member.controller;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.common.utils.Result;
 import daily.boot.gulimall.member.entity.MemberEntity;
 import daily.boot.gulimall.member.service.MemberService;
+import daily.boot.gulimall.service.api.entity.OrderDto;
+import daily.boot.gulimall.service.api.feign.OrderFeignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,9 @@ import java.util.List;
 public class MemberController {
     @Autowired
     private MemberService memberService;
+    
+    @Autowired
+    private OrderFeignService orderFeignService;
 
     /**
      * 列表
@@ -98,6 +104,12 @@ public class MemberController {
     public R pageList(PageQueryVo pageQueryVo){
         PageInfo<MemberEntity> pageInfo = memberService.queryPage(pageQueryVo);
         return R.ok().put("page", pageInfo);
+    }
+    
+    @GetMapping("/order/order/{memberId}")
+    public Result<List<OrderDto>> getOrdersByMemberId(@PathVariable("memberId") Long memberId) {
+        Result<List<OrderDto>> orders = orderFeignService.getOrdersByMemberId(memberId);
+        return orders;
     }
 
 }

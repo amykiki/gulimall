@@ -3,6 +3,7 @@ package daily.boot.gulimall.order.controller;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.common.utils.Result;
 import daily.boot.gulimall.order.entity.OrderEntity;
 import daily.boot.gulimall.order.service.OrderService;
 import io.swagger.annotations.Api;
@@ -100,4 +101,9 @@ public class OrderController {
         return R.ok().put("page", pageInfo);
     }
 
+    @GetMapping("/{memberId}")
+    public Result<List<OrderEntity>> getOrdersByMemberId(@PathVariable Long memberId) {
+        List<OrderEntity> orders = orderService.getOrdersByMemberId(memberId);
+        return Result.ok(orders);
+    }
 }
