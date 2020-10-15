@@ -1,0 +1,11 @@
+server:
+  port: 818
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
+logging:
+  level:
+    daily.boot.gulimall.gateway: debug

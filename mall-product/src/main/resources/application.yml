@@ -1,3 +1,4 @@
+env: 本地测试开发
 server:
   port: 18000
 
@@ -7,6 +8,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: abc123
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
