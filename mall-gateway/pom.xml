@@ -32,6 +32,13 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
+        <!--注意，gateway模块中不能引入spring-boot-starter-web-->
+       <!-- 因为spring cloud gateway是基于webflux的，
+            如果非要web支持的话需要导入spring-boot-starter-webflux而不是spring-boot-start-web。-->
+       <!-- <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>

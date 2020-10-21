@@ -6,6 +6,20 @@ spring:
     nacos:
       discovery:
         server-addr: docker-serv:8848
+    gateway:
+      routes:
+        - id: product_route
+          uri: lb://gulimall-product #负载均衡服务
+          predicates:
+            - Path=/api/product/** #前端项目，都用/api
+          filters:
+            - RewritePath=/api/(?<segment>.*), /$\{segment}
+        - id: admin_route
+          uri: lb://renren-fast #负载均衡服务
+          predicates:
+            - Path=/api/** #前端项目，都用/api
+          filters:
+            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
 logging:
   level:
     daily.boot.gulimall.gateway: debug

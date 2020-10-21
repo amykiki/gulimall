@@ -88,10 +88,10 @@ public class BrandController {
     }
     
     /**
-     * 无条件分页查询
+     * 通用查询条件分页查询
      */
-    @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
-    @PostMapping("/page-list")
+    @ApiOperation(value = "通用查询条件分页", notes = "通用条件分页查询")
+    @GetMapping("/page-list")
     //@RequiresPermissions("product:brand:delete")
     public R pageList(PageQueryVo pageQueryVo){
         PageInfo<BrandEntity> pageInfo = brandService.queryPage(pageQueryVo);
@@ -102,10 +102,9 @@ public class BrandController {
      * 带条件分页查询
      */
     @ApiOperation(value = "带条件分页查询", notes = "分页查询，根据当前页数+每页显示查询，带条件查询")
-    @PostMapping("/page-query")
+    @GetMapping("/page-query")
     //@RequiresPermissions("product:brand:delete")
-    public R pageQuery(PageQueryVo pageQueryVo,
-                  @RequestBody BrandEntity brand){
+    public R pageQuery(PageQueryVo pageQueryVo, BrandEntity brand){
         PageInfo<BrandEntity> pageInfo = brandService.queryPage(pageQueryVo, brand);
     
         return R.ok().put("page", pageInfo);

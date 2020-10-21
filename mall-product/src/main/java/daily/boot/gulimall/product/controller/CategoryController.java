@@ -29,13 +29,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * 列表
+     * 查出所有品牌的分类以及子分类，以树形结构组装起来
      */
-    @GetMapping("/list")
+    @GetMapping("/list/tree")
     //@RequiresPermissions("product:category:list")
-    @ApiOperation(value = "所有列表")
+    @ApiOperation(value = "品牌树形列表")
     public R list(){
-        List<CategoryEntity> list = categoryService.list();
+        List<CategoryEntity> list = categoryService.listWithTree();
 
         return R.ok().put("data", list);
     }
@@ -50,7 +50,7 @@ public class CategoryController {
     public R info(@PathVariable("catId") Long catId){
         CategoryEntity category = categoryService.getById(catId);
 
-        return R.ok().put("category", category);
+        return R.ok().put("data", category);
     }
 
     /**
@@ -68,12 +68,24 @@ public class CategoryController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
         categoryService.updateById(category);
 
+        return R.ok();
+    }
+    
+    /**
+     * 批量修改
+     *
+     * @return
+     */
+    @PostMapping("/update/batch")
+    @ApiOperation(value = "批量修改数据")
+    public R updateBatch(@RequestBody CategoryEntity[] categories) {
+        categoryService.updateBatchById(Arrays.asList(categories));
         return R.ok();
     }
 
@@ -84,7 +96,7 @@ public class CategoryController {
     @ApiOperation(value = "批量删除数据")
     //@RequiresPermissions("product:category:delete")
     public R delete(@RequestBody Long[] catIds){
-        categoryService.removeByIds(Arrays.asList(catIds));
+        categoryService.removeMenuByIds(Arrays.asList(catIds));
 
         return R.ok();
     }

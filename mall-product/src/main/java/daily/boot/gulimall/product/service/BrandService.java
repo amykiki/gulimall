@@ -23,7 +23,7 @@ public interface BrandService extends IService<BrandEntity> {
     PageInfo<BrandEntity> queryPage(PageQueryVo queryVo, BrandEntity brand);
     
     /**
-     * 无条件翻页查询
+     * 通用条件翻页查询
      * @param queryVo
      * @return
      */

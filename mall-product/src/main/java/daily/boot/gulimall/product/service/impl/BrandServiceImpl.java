@@ -32,7 +32,14 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
     
     @Override
     public PageInfo<BrandEntity> queryPage(PageQueryVo queryVo) {
-        IPage<BrandEntity> page = this.page(Query.getPage(queryVo));
+        LambdaQueryWrapper<BrandEntity> query = Wrappers.<BrandEntity>lambdaQuery();
+        if (StringUtils.isNotBlank(queryVo.getKey())) {
+            query = Wrappers.<BrandEntity>lambdaQuery()
+                    .eq(BrandEntity::getBrandId, queryVo.getKey())
+                    .or()
+                    .like(BrandEntity::getName, queryVo.getKey());
+        }
+        IPage<BrandEntity> page = this.page(Query.getPage(queryVo), query);
         return PageInfo.of(page);
     }
 }

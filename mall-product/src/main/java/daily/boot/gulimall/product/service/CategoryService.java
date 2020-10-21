@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.CategoryEntity;
 
+import java.util.List;
+
 
 /**
  * 商品三级分类
@@ -20,5 +22,17 @@ public interface CategoryService extends IService<CategoryEntity> {
      * @return
      */
     PageInfo<CategoryEntity> queryPage(PageQueryVo queryVo);
+    
+    /**
+     * 获取所有品牌分类以及子分类，以树形结构组装起来
+     * @return
+     */
+    List<CategoryEntity> listWithTree();
+    
+    /**
+     * 检查品牌没有被其他业务引用才能删除
+     * @param delIds
+     */
+    void removeMenuByIds(List<Long> delIds);
 }
 

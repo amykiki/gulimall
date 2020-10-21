@@ -15,4 +15,6 @@ public class PageQueryVo {
     private String orderFiled;
     @ApiModelProperty(value = "排序方式", allowableValues = "asc, desc")
     private String order;
+    @ApiModelProperty(value = "通用查询参数")
+    private String key;
 }

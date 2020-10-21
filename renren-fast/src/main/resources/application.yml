@@ -37,6 +37,10 @@ spring:
         min-idle: 5       # 连接池中的最小空闲连接
   mvc:
     throw-exception-if-no-handler-found: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
 #  resources:
 #    add-mappings: false
 
