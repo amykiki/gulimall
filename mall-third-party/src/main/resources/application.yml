@@ -1,0 +1,13 @@
+server:
+  port: 20000
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
+
+logging:
+  level:
+    daily.boot.gulimall.thirdparty: debug
+
