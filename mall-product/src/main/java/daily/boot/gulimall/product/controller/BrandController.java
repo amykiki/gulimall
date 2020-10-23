@@ -64,13 +64,7 @@ public class BrandController {
     @PostMapping("/save")
     @ApiOperation(value = "新增数据")
     //@RequiresPermissions("product:brand:save")
-    public R save(@Validated(ValidateGroup.Add.class) @RequestBody BrandEntity brand, BindingResult result){
-        if (result.hasErrors()) {
-            Map<String, String> bindError = new HashMap<>();
-            result.getFieldErrors().forEach(item -> bindError.put(item.getField(), item.getDefaultMessage()));
-            return R.error(BizCodeEnum.VALID_EXCEPTION.getCode(), BizCodeEnum.VALID_EXCEPTION.getMsg())
-                    .put("data", bindError);
-        }
+    public R save(@Validated(ValidateGroup.Add.class) @RequestBody BrandEntity brand){
         brandService.save(brand);
 
         return R.ok();
