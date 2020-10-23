@@ -1,18 +1,24 @@
 package daily.boot.gulimall.product.controller;
 
+import daily.boot.gulimall.common.exception.BizCodeEnum;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.common.valid.ValidateGroup;
 import daily.boot.gulimall.product.entity.BrandEntity;
 import daily.boot.gulimall.product.service.BrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 
 /**
@@ -58,7 +64,13 @@ public class BrandController {
     @PostMapping("/save")
     @ApiOperation(value = "新增数据")
     //@RequiresPermissions("product:brand:save")
-    public R save(@RequestBody BrandEntity brand){
+    public R save(@Validated(ValidateGroup.Add.class) @RequestBody BrandEntity brand, BindingResult result){
+        if (result.hasErrors()) {
+            Map<String, String> bindError = new HashMap<>();
+            result.getFieldErrors().forEach(item -> bindError.put(item.getField(), item.getDefaultMessage()));
+            return R.error(BizCodeEnum.VALID_EXCEPTION.getCode(), BizCodeEnum.VALID_EXCEPTION.getMsg())
+                    .put("data", bindError);
+        }
         brandService.save(brand);
 
         return R.ok();
@@ -70,7 +82,7 @@ public class BrandController {
     @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:brand:update")
-    public R update(@RequestBody BrandEntity brand){
+    public R update(@Validated(ValidateGroup.Update.class) @RequestBody BrandEntity brand){
         brandService.updateById(brand);
 
         return R.ok();

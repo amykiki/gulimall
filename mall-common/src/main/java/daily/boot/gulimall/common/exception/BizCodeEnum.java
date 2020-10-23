@@ -19,7 +19,7 @@ package daily.boot.gulimall.common.exception;
  */
 public enum BizCodeEnum {
     SUCCESS(10000, "调用成功"),
-    VAILD_EXCEPTION(10001, "参数格式校验失败"),
+    VALID_EXCEPTION(10001, "参数格式校验失败"),
     UNKNOW_EXCEPTION(10999, "系统未知异常");
     private int code;
     private String msg;

@@ -24,3 +24,4 @@ mybatis-plus:
 logging:
   level:
     daily.boot.gulimall.product: debug
+    daily.boot.unified.dispose.advice: debug
