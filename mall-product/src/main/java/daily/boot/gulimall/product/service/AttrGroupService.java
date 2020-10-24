@@ -20,5 +20,12 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
      * @return
      */
     PageInfo<AttrGroupEntity> queryPage(PageQueryVo queryVo);
+    
+    /**
+     * 根据三级分类ID无条件翻页查询
+     * @param queryVo 分页查询参数
+     * @return
+     */
+    PageInfo<AttrGroupEntity> queryPage(PageQueryVo queryVo, Long categoryId);
 }
 

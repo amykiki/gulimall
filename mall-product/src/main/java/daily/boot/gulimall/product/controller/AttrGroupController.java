@@ -88,15 +88,15 @@ public class AttrGroupController {
 
         return R.ok();
     }
-
+    
     /**
-     * 无条件分页查询
+     * 通用查询条件分页查询
      */
-    @PostMapping("/page-list")
-    @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
+    @ApiOperation(value = "通用查询条件分页", notes = "通用条件分页查询")
+    @GetMapping("/page-list/{categoryId}")
     //@RequiresPermissions("product:attrgroup:pagelist")
-    public R pageList(PageQueryVo pageQueryVo){
-        PageInfo<AttrGroupEntity> pageInfo = attrGroupService.queryPage(pageQueryVo);
+    public R pageList(PageQueryVo pageQueryVo, @PathVariable("categoryId") Long categoryId){
+        PageInfo<AttrGroupEntity> pageInfo = attrGroupService.queryPage(pageQueryVo, categoryId);
         return R.ok().put("page", pageInfo);
     }
 
