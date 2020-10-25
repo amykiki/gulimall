@@ -72,7 +72,7 @@ public class CategoryController {
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:category:update")
     public R update(@RequestBody CategoryEntity category){
-        categoryService.updateById(category);
+        categoryService.updateCascaded(category);
 
         return R.ok();
     }

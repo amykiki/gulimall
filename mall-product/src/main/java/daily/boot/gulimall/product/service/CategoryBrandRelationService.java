@@ -3,7 +3,10 @@ package daily.boot.gulimall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
+import daily.boot.gulimall.product.entity.BrandEntity;
 import daily.boot.gulimall.product.entity.CategoryBrandRelationEntity;
+
+import java.util.List;
 
 
 /**
@@ -20,5 +23,15 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
      * @return
      */
     PageInfo<CategoryBrandRelationEntity> queryPage(PageQueryVo queryVo);
+    
+    List<CategoryBrandRelationEntity> getBrandCategories(Long brandId);
+    
+    List<BrandEntity> getBrandsByCatId(Long catId);
+    
+    void details(CategoryBrandRelationEntity categoryBrandRelation);
+    
+    void updateRelationBrand(Long brandId, String brandName);
+    
+    void updateRelationCategory(Long categoryId, String categoryName);
 }
 

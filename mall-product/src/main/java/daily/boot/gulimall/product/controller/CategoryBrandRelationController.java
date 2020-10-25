@@ -3,16 +3,19 @@ package daily.boot.gulimall.product.controller;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.product.entity.BrandEntity;
 import daily.boot.gulimall.product.entity.CategoryBrandRelationEntity;
 import daily.boot.gulimall.product.service.CategoryBrandRelationService;
+import daily.boot.gulimall.product.vo.BrandVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 /**
@@ -27,7 +30,26 @@ import java.util.List;
 public class CategoryBrandRelationController {
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
-
+    
+    @GetMapping("/catelog/list")
+    @ApiOperation(value = "获取当前品牌关联的所有分类列表")
+    public R catelogList(@RequestParam("brandId") Long brandId) {
+        List<CategoryBrandRelationEntity> data = categoryBrandRelationService.getBrandCategories(brandId);
+        return R.ok().put("data", data);
+    }
+    
+    @GetMapping("/brands/list")
+    public R relationBrandsList(@RequestParam(value = "catId", required = true) Long catId) {
+        List<BrandEntity> brands =categoryBrandRelationService.getBrandsByCatId(catId);
+        //brands转成brandVo
+        List<BrandVo> vos = brands.stream().map(brand -> {
+            BrandVo vo = new BrandVo();
+            BeanUtils.copyProperties(brand, vo);
+            return vo;
+        }).collect(Collectors.toList());
+        return R.ok().putData(vos);
+    }
+    
     /**
      * 列表
      */
@@ -60,8 +82,8 @@ public class CategoryBrandRelationController {
     @ApiOperation(value = "新增数据")
     //@RequiresPermissions("product:categorybrandrelation:save")
     public R save(@RequestBody CategoryBrandRelationEntity categoryBrandRelation){
-        categoryBrandRelationService.save(categoryBrandRelation);
-
+        //需要获取品牌名&分类名
+        categoryBrandRelationService.details(categoryBrandRelation);
         return R.ok();
     }
 

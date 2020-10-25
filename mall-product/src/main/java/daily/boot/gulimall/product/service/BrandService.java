@@ -28,5 +28,14 @@ public interface BrandService extends IService<BrandEntity> {
      * @return
      */
     PageInfo<BrandEntity> queryPage(PageQueryVo queryVo);
+    
+    /**
+     * 只获取部分核心品牌属性
+     * @param brandId
+     * @return
+     */
+    BrandEntity getSimpleBrandEntityById(Long brandId);
+    
+    void updateCascaded(BrandEntity brand);
 }
 

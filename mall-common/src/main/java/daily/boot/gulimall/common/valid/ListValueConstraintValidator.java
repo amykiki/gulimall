@@ -22,6 +22,10 @@ public class ListValueConstraintValidator implements ConstraintValidator<ListVal
     }
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
+        //NULL情况直接返回true
+        if (value == null) {
+            return true;
+        }
         //为错误message引入额外信息变量
         context.unwrap(HibernateConstraintValidatorContext.class)
                 .addExpressionVariable("listValues", listValues);

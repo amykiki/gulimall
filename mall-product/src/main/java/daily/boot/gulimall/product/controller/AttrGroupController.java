@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.product.entity.AttrGroupEntity;
 import daily.boot.gulimall.product.service.AttrGroupService;
+import daily.boot.gulimall.product.service.CategoryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ import java.util.List;
 public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * 列表
@@ -49,7 +52,10 @@ public class AttrGroupController {
     //@RequiresPermissions("product:attrgroup:info")
     public R info(@PathVariable("attrGroupId") Long attrGroupId){
         AttrGroupEntity attrGroup = attrGroupService.getById(attrGroupId);
-
+        //获取属性对应的完整三级分类路径
+        Long catelogId = attrGroup.getCatelogId();
+        Long[] catelogPaths = categoryService.findCatelogPath(catelogId);
+        attrGroup.setCatelogPath(catelogPaths);
         return R.ok().put("attrGroup", attrGroup);
     }
 
@@ -68,7 +74,7 @@ public class AttrGroupController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:attrgroup:update")
     public R update(@RequestBody AttrGroupEntity attrGroup){

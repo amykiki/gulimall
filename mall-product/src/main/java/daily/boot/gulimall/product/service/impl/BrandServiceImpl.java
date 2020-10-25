@@ -10,13 +10,18 @@ import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.product.dao.BrandDao;
 import daily.boot.gulimall.product.entity.BrandEntity;
 import daily.boot.gulimall.product.service.BrandService;
+import daily.boot.gulimall.product.service.CategoryBrandRelationService;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("brandService")
 public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> implements BrandService {
     
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
     @Override
     public PageInfo<BrandEntity> queryPage(PageQueryVo queryVo, BrandEntity brandEntity) {
         
@@ -41,5 +46,27 @@ public class BrandServiceImpl extends ServiceImpl<BrandDao, BrandEntity> impleme
         }
         IPage<BrandEntity> page = this.page(Query.getPage(queryVo), query);
         return PageInfo.of(page);
+    }
+    
+    @Override
+    public BrandEntity getSimpleBrandEntityById(Long brandId) {
+        return this.getOne(
+                Wrappers.lambdaQuery(BrandEntity.class)
+                        .select(BrandEntity::getBrandId,
+                                BrandEntity::getName)
+                        .eq(BrandEntity::getBrandId, brandId));
+    }
+    
+    @Override
+    @Transactional
+    public void updateCascaded(BrandEntity brand) {
+        //保证冗余字段的数据一致--冗余name
+        this.updateById(brand);
+        if (StringUtils.isNotBlank(brand.getName())) {
+            //同步更新其他关联表中的数据
+            categoryBrandRelationService.updateRelationBrand(
+                    brand.getBrandId(), brand.getName());
+        }
+        
     }
 }

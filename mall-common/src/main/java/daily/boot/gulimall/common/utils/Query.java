@@ -23,7 +23,7 @@ import org.apache.commons.lang.StringUtils;
 public class Query {
 
     public static <T> IPage<T> getPage(PageQueryVo pageVo) {
-        return getPage(pageVo, null, false);
+        return getPage(pageVo, null, true);
     }
 
     public static <T> IPage<T> getPage(PageQueryVo pageVo, String defaultOrderField, boolean isAsc) {

@@ -60,7 +60,6 @@ public class BrandEntity implements Serializable {
 	 * 显示状态[0-不显示；1-显示]
 	 */
 	@NotNull(message = "显示状态不能为空", groups = ValidateGroup.Add.class)
-    //@ListValue(values = {0, 1}, message = "显示状态可选值0, 1")
     @ListValue(values = {0, 1})
 	private Integer showStatus;
 	

@@ -77,8 +77,7 @@ public class BrandController {
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:brand:update")
     public R update(@Validated(ValidateGroup.Update.class) @RequestBody BrandEntity brand){
-        brandService.updateById(brand);
-
+        brandService.updateCascaded(brand);
         return R.ok();
     }
 
