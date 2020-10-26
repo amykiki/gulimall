@@ -13,6 +13,8 @@ import daily.boot.gulimall.product.dao.AttrGroupDao;
 import daily.boot.gulimall.product.entity.AttrGroupEntity;
 import daily.boot.gulimall.product.service.AttrGroupService;
 
+import java.util.List;
+
 
 @Service("attrGroupService")
 public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEntity> implements AttrGroupService {
@@ -34,5 +36,11 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
                         .like(AttrGroupEntity::getAttrGroupName, key));
         IPage<AttrGroupEntity> page = this.page(Query.getPage(queryVo), queryWrapper);
         return PageInfo.of(page);
+    }
+    
+    @Override
+    public List<AttrGroupEntity> getByCatelogId(Long catelogId) {
+        return this.list(Wrappers.lambdaQuery(AttrGroupEntity.class)
+                                 .eq(AttrGroupEntity::getCatelogId, catelogId));
     }
 }

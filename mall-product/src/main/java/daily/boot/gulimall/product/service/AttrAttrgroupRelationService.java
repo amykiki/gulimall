@@ -1,9 +1,12 @@
 package daily.boot.gulimall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
+import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.product.entity.AttrAttrgroupRelationEntity;
+import daily.boot.gulimall.product.vo.AttrGroupRelationVo;
+
+import java.util.List;
 
 
 /**
@@ -34,5 +37,11 @@ public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRela
      * @param attrId
      */
     void updateByAttrId(AttrAttrgroupRelationEntity attrAttrgroupRelationEntity, Long attrId);
+    
+    List<AttrAttrgroupRelationEntity> getAllByAttrGroupId(Long attrGroupId);
+    
+    List<AttrAttrgroupRelationEntity> getAllByAttrGroupIds(List<Long> attrGroupIds);
+    
+    void deleteRelation(AttrGroupRelationVo[] attrGroupRelationVos);
 }
 

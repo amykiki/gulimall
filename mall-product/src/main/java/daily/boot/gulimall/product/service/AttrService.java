@@ -7,6 +7,8 @@ import daily.boot.gulimall.product.entity.AttrEntity;
 import daily.boot.gulimall.product.vo.AttrRespVo;
 import daily.boot.gulimall.product.vo.AttrVo;
 
+import java.util.List;
+
 
 /**
  * 商品属性
@@ -34,5 +36,9 @@ public interface AttrService extends IService<AttrEntity> {
      * @param attrVo
      */
     void updateAttrInfo(AttrVo attrVo);
+    
+    List<AttrEntity> getRelationAttr(Long attrGroupId);
+    
+    PageInfo<AttrEntity> getNoAttrRelation(PageQueryVo pageQueryVo, Long attrGroupId);
 }
 
