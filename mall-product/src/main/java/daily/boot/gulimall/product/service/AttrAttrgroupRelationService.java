@@ -20,5 +20,19 @@ public interface AttrAttrgroupRelationService extends IService<AttrAttrgroupRela
      * @return
      */
     PageInfo<AttrAttrgroupRelationEntity> queryPage(PageQueryVo queryVo);
+    
+    /**
+     * 根据属性ID查询
+     * @param attrId
+     * @return
+     */
+    AttrAttrgroupRelationEntity getByAttrId(Long attrId);
+    
+    /**
+     * 根据属性ID更新关联表
+     * @param attrAttrgroupRelationEntity
+     * @param attrId
+     */
+    void updateByAttrId(AttrAttrgroupRelationEntity attrAttrgroupRelationEntity, Long attrId);
 }
 

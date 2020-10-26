@@ -3,8 +3,11 @@ package daily.boot.gulimall.product.controller;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.common.valid.ValidateGroup;
 import daily.boot.gulimall.product.entity.AttrEntity;
 import daily.boot.gulimall.product.service.AttrService;
+import daily.boot.gulimall.product.vo.AttrRespVo;
+import daily.boot.gulimall.product.vo.AttrVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,9 +51,9 @@ public class AttrController {
     @ApiOperation(value = "根据主键ID查询")
     //@RequiresPermissions("product:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
-        AttrEntity attr = attrService.getById(attrId);
+        AttrRespVo attrRespVo = attrService.getAttrInfo(attrId);
 
-        return R.ok().put("attr", attr);
+        return R.ok().put("attr", attrRespVo);
     }
 
     /**
@@ -59,8 +62,9 @@ public class AttrController {
     @PostMapping("/save")
     @ApiOperation(value = "新增数据")
     //@RequiresPermissions("product:attr:save")
-    public R save(@RequestBody AttrEntity attr){
-        attrService.save(attr);
+    public R save(@RequestBody AttrVo attrVo){
+        //级联更新
+        attrService.saveCascaded(attrVo);
 
         return R.ok();
     }
@@ -68,11 +72,11 @@ public class AttrController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:attr:update")
-    public R update(@RequestBody AttrEntity attr){
-        attrService.updateById(attr);
+    public R update(@RequestBody AttrVo attrVo){
+        attrService.updateAttrInfo(attrVo);
 
         return R.ok();
     }
@@ -98,6 +102,16 @@ public class AttrController {
     public R pageList(PageQueryVo pageQueryVo){
         PageInfo<AttrEntity> pageInfo = attrService.queryPage(pageQueryVo);
         return R.ok().put("page", pageInfo);
+    }
+    
+    @GetMapping("/{attrType}/list/{catelogId}")
+    @ApiOperation(value = "根据商品品类分页查询商品属性")
+    public R baseAttrList(PageQueryVo pageQueryVo,
+                          @PathVariable("attrType") String attrType,
+                          @PathVariable("catelogId") Long catelogId) {
+        PageInfo<AttrRespVo> pageInfo = attrService.queryPage(pageQueryVo, catelogId, attrType);
+        return R.ok().put("page", pageInfo);
+        
     }
 
 }

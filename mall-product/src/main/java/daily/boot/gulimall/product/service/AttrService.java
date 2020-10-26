@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.AttrEntity;
+import daily.boot.gulimall.product.vo.AttrRespVo;
+import daily.boot.gulimall.product.vo.AttrVo;
 
 
 /**
@@ -20,5 +22,17 @@ public interface AttrService extends IService<AttrEntity> {
      * @return
      */
     PageInfo<AttrEntity> queryPage(PageQueryVo queryVo);
+    
+    void saveCascaded(AttrVo attrVo);
+    
+    PageInfo<AttrRespVo> queryPage(PageQueryVo pageQueryVo, Long catelogId, String attrType);
+    
+    AttrRespVo getAttrInfo(Long attrId);
+    
+    /**
+     * 更新AttrEntity & 关联的AttrGroup属性
+     * @param attrVo
+     */
+    void updateAttrInfo(AttrVo attrVo);
 }
 

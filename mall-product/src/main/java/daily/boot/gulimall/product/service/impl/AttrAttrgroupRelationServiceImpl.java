@@ -1,5 +1,6 @@
 package daily.boot.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,5 +20,18 @@ public class AttrAttrgroupRelationServiceImpl extends ServiceImpl<AttrAttrgroupR
         IPage<AttrAttrgroupRelationEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    public AttrAttrgroupRelationEntity getByAttrId(Long attrId) {
+        AttrAttrgroupRelationEntity entity = this.getOne(Wrappers.lambdaQuery(AttrAttrgroupRelationEntity.class)
+                                                                 .eq(AttrAttrgroupRelationEntity::getAttrId, attrId));
+        return entity;
+    }
+    
+    @Override
+    public void updateByAttrId(AttrAttrgroupRelationEntity attrAttrgroupRelationEntity, Long attrId) {
+        this.update(attrAttrgroupRelationEntity,
+                    Wrappers.lambdaUpdate(AttrAttrgroupRelationEntity.class)
+                            .eq(AttrAttrgroupRelationEntity::getAttrId, attrId));
+    }
 }

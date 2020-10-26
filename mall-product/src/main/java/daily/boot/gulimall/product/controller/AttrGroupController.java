@@ -105,5 +105,4 @@ public class AttrGroupController {
         PageInfo<AttrGroupEntity> pageInfo = attrGroupService.queryPage(pageQueryVo, categoryId);
         return R.ok().put("page", pageInfo);
     }
-
 }
