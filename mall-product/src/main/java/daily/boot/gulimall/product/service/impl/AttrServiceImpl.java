@@ -26,6 +26,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -176,7 +177,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         List<Long> attrGroupIds = attrGroupEntities.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
         
         // 3. 查询该品类对应的所有AttrGroup已经绑定的规格参数
-        List<AttrAttrgroupRelationEntity> relations = attrAttrgroupRelationService.getAllByAttrGroupIds(attrGroupIds);
+        List<AttrAttrgroupRelationEntity> relations = attrAttrgroupRelationService.listByAttrGroupIds(attrGroupIds);
         // 3.2 获取所有已绑定的规格参数
         List<Long> attrIds = relations.stream().map(AttrAttrgroupRelationEntity::getAttrId).collect(Collectors.toList());
         
@@ -184,7 +185,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         LambdaQueryWrapper<AttrEntity> queryWrapper = Wrappers.lambdaQuery(AttrEntity.class)
                                                                .eq(AttrEntity::getAttrType, ProductConstant.AttrEnum.ATTR_TYPE_BASE.getCode())
                                                                .eq(AttrEntity::getCatelogId, attrGroupEntity.getCatelogId())
-                                                               .notIn(AttrEntity::getAttrId, attrIds);
+                                                               .notIn(!CollectionUtils.isEmpty(attrIds), AttrEntity::getAttrId, attrIds);
         addPageQuery(queryWrapper, pageQueryVo.getKey());
     
         IPage<AttrEntity> page = this.page(Query.getPage(pageQueryVo), queryWrapper);

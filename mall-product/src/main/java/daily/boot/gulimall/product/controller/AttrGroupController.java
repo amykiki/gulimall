@@ -132,6 +132,12 @@ public class AttrGroupController {
     @GetMapping("/{attrGroupId}/noattr/relation")
     public R attrNoRelation(PageQueryVo pageQueryVo, @PathVariable("attrGroupId") Long attrGroupId) {
         PageInfo<AttrEntity> pageInfo = attrService.getNoAttrRelation(pageQueryVo, attrGroupId);
-        return R.ok().put("page", pageInfo);
+        return R.ok().put("data", pageInfo);
+    }
+    
+    @PostMapping("/attr/relation")
+    public R attrRelation(@RequestBody List<AttrGroupRelationVo> attrGroupRelationVos) {
+        attrAttrgroupRelationService.saveBatchRelations(attrGroupRelationVos);
+        return R.ok();
     }
 }
