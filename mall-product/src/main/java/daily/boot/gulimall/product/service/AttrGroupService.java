@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.product.entity.AttrGroupEntity;
+import daily.boot.gulimall.product.vo.AttrGroupWithAttrsVo;
 
 import java.util.List;
 
@@ -30,6 +31,8 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
      */
     PageInfo<AttrGroupEntity> queryPage(PageQueryVo queryVo, Long categoryId);
     
-    List<AttrGroupEntity> getByCatelogId(Long catelogId);
+    List<AttrGroupEntity> listByCatelogId(Long catelogId);
+    
+    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
 }
 

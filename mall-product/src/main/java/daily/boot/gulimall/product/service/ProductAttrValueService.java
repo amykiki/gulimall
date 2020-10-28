@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.ProductAttrValueEntity;
+import daily.boot.gulimall.product.vo.SpuSaveVo;
+
+import java.util.List;
 
 
 /**
@@ -20,5 +23,7 @@ public interface ProductAttrValueService extends IService<ProductAttrValueEntity
      * @return
      */
     PageInfo<ProductAttrValueEntity> queryPage(PageQueryVo queryVo);
+    
+    void save(Long spuId, List<SpuSaveVo.BaseAttrs> baseAttrs);
 }
 

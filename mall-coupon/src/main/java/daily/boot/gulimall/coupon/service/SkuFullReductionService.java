@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.coupon.entity.SkuFullReductionEntity;
+import daily.boot.gulimall.service.api.to.SkuReductionTo;
+
+import java.util.List;
 
 
 /**
@@ -20,5 +23,7 @@ public interface SkuFullReductionService extends IService<SkuFullReductionEntity
      * @return
      */
     PageInfo<SkuFullReductionEntity> queryPage(PageQueryVo queryVo);
+    
+    void saveSkuReduction(List<SkuReductionTo> skuReductionTos);
 }
 

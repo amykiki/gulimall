@@ -1,0 +1,1335 @@
+{
+  "spuName": "Apple iPhone 12 Pro (A2408) 支持移动联通电信5G 双卡双待手机",
+  "spuDescription": "Apple iPhone 12 Pro (A2408)  ",
+  "catalogId": 225,
+  "brandId": 272,
+  "weight": 0.35,
+  "publishStatus": 0,
+  "decript": ["https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/605ab1d7-dff5-4200-87bc-346af9e1bc0b_iphone_desc.jpg"],
+  "images": ["https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/e31bd8d7-cd54-4beb-8cb5-b971eb80f38a_iphone_4_1.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/aef2273d-1230-405b-85c8-80dff74480c2_iphone_4_2.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/a4926356-3a03-4d77-8459-0c0473196812_iphone_4_3.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/1c32cd86-8a9f-4f5e-8cb1-02c6cab4d8f7_iphone_4_4.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c126e37-9073-4c87-80d6-3a69791d575b_iphone_3_1.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/91c707f4-705f-4083-8adb-79cda9e9d78b_iphone_3_2.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/35defb1a-eba8-400f-80fb-3dbf82abecc7_iphone_3_3.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c782969-3648-496d-8b0d-5a1936e41c1c_iphone_3_4.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/80babaab-0eed-4a2c-8f92-c5c6e2f34dbc_iphone_1_1.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/df3d9c12-9345-4b4c-8a66-3440593336d4_iphone_1_2.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6788e452-592d-4f84-81b5-1d0ec617f2a1_iphone_1_3.jpg", "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6d1f2306-7506-4931-88e8-d62c6c594ccf_iphone_1_4.jpg"],
+  "bounds": {
+    "buyBounds": 100,
+    "growBounds": 200
+  },
+  "baseAttrs": [{
+    "attrId": 2,
+    "attrValues": "2020",
+    "showDesc": 1
+  },
+    {
+      "attrId": 10,
+      "attrValues": "146.7",
+      "showDesc": 1
+    },
+    {
+      "attrId": 1,
+      "attrValues": "4G;5G",
+      "showDesc": 1
+    },
+    {
+      "attrId": 12,
+      "attrValues": "Apple",
+      "showDesc": 1
+    },
+    {
+      "attrId": 14,
+      "attrValues": "1080",
+      "showDesc": 0
+    }],
+  "skus": [{
+    "attr": [{
+      "attrId": 4,
+      "attrName": "颜色",
+      "attrValue": "翡翠绿"
+    },
+      {
+        "attrId": 5,
+        "attrName": "内存",
+        "attrValue": "256G"
+      },
+      {
+        "attrId": 17,
+        "attrName": "购买方式",
+        "attrValue": "公开版"
+      }],
+    "skuName": "Apple iPhone 12 Pro (A2408) 翡翠绿 256G 公开版",
+    "price": "7599",
+    "skuTitle": "Apple iPhone 12 Pro (A2408) 翡翠绿 256G 公开版 支持移动联通电信5G 双卡双待手机",
+    "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+    "images": [{
+      "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+      "defaultImg": 0
+    },
+      {
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/e31bd8d7-cd54-4beb-8cb5-b971eb80f38a_iphone_4_1.jpg",
+        "defaultImg": 1
+      },
+      {
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/aef2273d-1230-405b-85c8-80dff74480c2_iphone_4_2.jpg",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/a4926356-3a03-4d77-8459-0c0473196812_iphone_4_3.jpg",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/1c32cd86-8a9f-4f5e-8cb1-02c6cab4d8f7_iphone_4_4.jpg",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      },
+      {
+        "imgUrl": "",
+        "defaultImg": 0
+      }],
+    "descar": ["翡翠绿", "256G", "公开版"],
+    "fullCount": 5,
+    "discount": 0.95,
+    "countStatus": 1,
+    "fullPrice": 20000,
+    "reducePrice": 50,
+    "priceStatus": 1,
+    "memberPrice": [{
+      "id": 2,
+      "name": "铜牌会员",
+      "price": 7599
+    },
+      {
+        "id": 3,
+        "name": "银牌会员",
+        "price": 7589
+      },
+      {
+        "id": 4,
+        "name": "金牌会员",
+        "price": 7579
+      },
+      {
+        "id": 5,
+        "name": "钻石会员",
+        "price": 7569
+      }]
+  },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "翡翠绿"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "256G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "保值换新版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 翡翠绿 256G 保值换新版",
+      "price": "7599",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 翡翠绿 256G 保值换新版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/e31bd8d7-cd54-4beb-8cb5-b971eb80f38a_iphone_4_1.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/aef2273d-1230-405b-85c8-80dff74480c2_iphone_4_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/a4926356-3a03-4d77-8459-0c0473196812_iphone_4_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/1c32cd86-8a9f-4f5e-8cb1-02c6cab4d8f7_iphone_4_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["翡翠绿", "256G", "保值换新版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 7599
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 7589
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 7579
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 7569
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "翡翠绿"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "128G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "公开版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 翡翠绿 128G 公开版",
+      "price": "6799",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 翡翠绿 128G 公开版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/e31bd8d7-cd54-4beb-8cb5-b971eb80f38a_iphone_4_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/aef2273d-1230-405b-85c8-80dff74480c2_iphone_4_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/a4926356-3a03-4d77-8459-0c0473196812_iphone_4_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/1c32cd86-8a9f-4f5e-8cb1-02c6cab4d8f7_iphone_4_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["翡翠绿", "128G", "公开版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 6799
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 6795
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 6789
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 6785
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "翡翠绿"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "128G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "保值换新版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 翡翠绿 128G 保值换新版",
+      "price": "6799",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 翡翠绿 128G 保值换新版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/e31bd8d7-cd54-4beb-8cb5-b971eb80f38a_iphone_4_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/aef2273d-1230-405b-85c8-80dff74480c2_iphone_4_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/a4926356-3a03-4d77-8459-0c0473196812_iphone_4_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/1c32cd86-8a9f-4f5e-8cb1-02c6cab4d8f7_iphone_4_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["翡翠绿", "128G", "保值换新版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 6799
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 6795
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 6789
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 6785
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "海蓝色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "256G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "公开版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 海蓝色 256G 公开版",
+      "price": "7599",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 海蓝色 256G 公开版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c126e37-9073-4c87-80d6-3a69791d575b_iphone_3_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/91c707f4-705f-4083-8adb-79cda9e9d78b_iphone_3_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/35defb1a-eba8-400f-80fb-3dbf82abecc7_iphone_3_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c782969-3648-496d-8b0d-5a1936e41c1c_iphone_3_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["海蓝色", "256G", "公开版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 7599
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 7589
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 7579
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 7569
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "海蓝色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "256G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "保值换新版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 海蓝色 256G 保值换新版",
+      "price": "7599",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 海蓝色 256G 保值换新版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c126e37-9073-4c87-80d6-3a69791d575b_iphone_3_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/91c707f4-705f-4083-8adb-79cda9e9d78b_iphone_3_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/35defb1a-eba8-400f-80fb-3dbf82abecc7_iphone_3_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c782969-3648-496d-8b0d-5a1936e41c1c_iphone_3_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["海蓝色", "256G", "保值换新版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 7599
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 7589
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 7579
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 7569
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "海蓝色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "128G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "公开版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 海蓝色 128G 公开版",
+      "price": "6799",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 海蓝色 128G 公开版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c126e37-9073-4c87-80d6-3a69791d575b_iphone_3_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/91c707f4-705f-4083-8adb-79cda9e9d78b_iphone_3_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/35defb1a-eba8-400f-80fb-3dbf82abecc7_iphone_3_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c782969-3648-496d-8b0d-5a1936e41c1c_iphone_3_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["海蓝色", "128G", "公开版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 6799
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 6795
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 6789
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 6785
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "海蓝色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "128G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "保值换新版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 海蓝色 128G 保值换新版",
+      "price": "6799",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 海蓝色 128G 保值换新版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c126e37-9073-4c87-80d6-3a69791d575b_iphone_3_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/91c707f4-705f-4083-8adb-79cda9e9d78b_iphone_3_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/35defb1a-eba8-400f-80fb-3dbf82abecc7_iphone_3_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/2c782969-3648-496d-8b0d-5a1936e41c1c_iphone_3_4.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        }],
+      "descar": ["海蓝色", "128G", "保值换新版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 6799
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 6795
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 6789
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 6785
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "石墨色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "256G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "公开版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 石墨色 256G 公开版",
+      "price": "7599",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 石墨色 256G 公开版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/80babaab-0eed-4a2c-8f92-c5c6e2f34dbc_iphone_1_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/df3d9c12-9345-4b4c-8a66-3440593336d4_iphone_1_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6788e452-592d-4f84-81b5-1d0ec617f2a1_iphone_1_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6d1f2306-7506-4931-88e8-d62c6c594ccf_iphone_1_4.jpg",
+          "defaultImg": 0
+        }],
+      "descar": ["石墨色", "256G", "公开版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 7599
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 7589
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 7579
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 7569
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "石墨色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "256G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "保值换新版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 石墨色 256G 保值换新版",
+      "price": "7599",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 石墨色 256G 保值换新版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/80babaab-0eed-4a2c-8f92-c5c6e2f34dbc_iphone_1_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/df3d9c12-9345-4b4c-8a66-3440593336d4_iphone_1_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6788e452-592d-4f84-81b5-1d0ec617f2a1_iphone_1_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6d1f2306-7506-4931-88e8-d62c6c594ccf_iphone_1_4.jpg",
+          "defaultImg": 0
+        }],
+      "descar": ["石墨色", "256G", "保值换新版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 7599
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 7589
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 7579
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 7569
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "石墨色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "128G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "公开版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 石墨色 128G 公开版",
+      "price": "6799",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 石墨色 128G 公开版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/80babaab-0eed-4a2c-8f92-c5c6e2f34dbc_iphone_1_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/df3d9c12-9345-4b4c-8a66-3440593336d4_iphone_1_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6788e452-592d-4f84-81b5-1d0ec617f2a1_iphone_1_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6d1f2306-7506-4931-88e8-d62c6c594ccf_iphone_1_4.jpg",
+          "defaultImg": 0
+        }],
+      "descar": ["石墨色", "128G", "公开版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 6799
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 6795
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 6789
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 6785
+        }]
+    },
+    {
+      "attr": [{
+        "attrId": 4,
+        "attrName": "颜色",
+        "attrValue": "石墨色"
+      },
+        {
+          "attrId": 5,
+          "attrName": "内存",
+          "attrValue": "128G"
+        },
+        {
+          "attrId": 17,
+          "attrName": "购买方式",
+          "attrValue": "保值换新版"
+        }],
+      "skuName": "Apple iPhone 12 Pro (A2408) 石墨色 128G 保值换新版",
+      "price": "6799",
+      "skuTitle": "Apple iPhone 12 Pro (A2408) 石墨色 128G 保值换新版 支持移动联通电信5G 双卡双待手机",
+      "skuSubtitle": "【5G新品，限量开抢】A14仿生芯片，6.1英寸超视网膜XDR显示屏，升维大提速，现实力登场",
+      "images": [{
+        "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/36b69541-dcdf-471b-8195-7c886c409976_iphone_0_1.jpg",
+        "defaultImg": 0
+      },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/334698d2-88c0-44ff-8516-f5c192a1b3d1_iphone_0_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/c182463e-fb5d-4a8f-869c-b61c402c1b8a_iphone_0_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/80babaab-0eed-4a2c-8f92-c5c6e2f34dbc_iphone_1_1.jpg",
+          "defaultImg": 1
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/df3d9c12-9345-4b4c-8a66-3440593336d4_iphone_1_2.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6788e452-592d-4f84-81b5-1d0ec617f2a1_iphone_1_3.jpg",
+          "defaultImg": 0
+        },
+        {
+          "imgUrl": "https://gulimall-future.oss-cn-shanghai.aliyuncs.com/2020-10-28/6d1f2306-7506-4931-88e8-d62c6c594ccf_iphone_1_4.jpg",
+          "defaultImg": 0
+        }],
+      "descar": ["石墨色", "128G", "保值换新版"],
+      "fullCount": 5,
+      "discount": 0.95,
+      "countStatus": 1,
+      "fullPrice": 20000,
+      "reducePrice": 50,
+      "priceStatus": 1,
+      "memberPrice": [{
+        "id": 2,
+        "name": "铜牌会员",
+        "price": 6799
+      },
+        {
+          "id": 3,
+          "name": "银牌会员",
+          "price": 6795
+        },
+        {
+          "id": 4,
+          "name": "金牌会员",
+          "price": 6789
+        },
+        {
+          "id": 5,
+          "name": "钻石会员",
+          "price": 6785
+        }]
+    }]
+}

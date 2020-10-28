@@ -6,7 +6,7 @@ import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.common.utils.Result;
 import daily.boot.gulimall.member.entity.MemberEntity;
 import daily.boot.gulimall.member.service.MemberService;
-import daily.boot.gulimall.service.api.entity.OrderDto;
+import daily.boot.gulimall.service.api.to.OrderTo;
 import daily.boot.gulimall.service.api.feign.OrderFeignService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -107,8 +107,8 @@ public class MemberController {
     }
     
     @GetMapping("/order/order/{memberId}")
-    public Result<List<OrderDto>> getOrdersByMemberId(@PathVariable("memberId") Long memberId) {
-        Result<List<OrderDto>> orders = orderFeignService.getOrdersByMemberId(memberId);
+    public Result<List<OrderTo>> getOrdersByMemberId(@PathVariable("memberId") Long memberId) {
+        Result<List<OrderTo>> orders = orderFeignService.getOrdersByMemberId(memberId);
         return orders;
     }
 

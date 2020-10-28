@@ -9,7 +9,6 @@ import daily.boot.gulimall.product.service.CategoryBrandRelationService;
 import daily.boot.gulimall.product.vo.BrandVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +43,8 @@ public class CategoryBrandRelationController {
         //brands转成brandVo
         List<BrandVo> vos = brands.stream().map(brand -> {
             BrandVo vo = new BrandVo();
-            BeanUtils.copyProperties(brand, vo);
+            vo.setBrandId(brand.getBrandId());
+            vo.setBrandName(brand.getName());
             return vo;
         }).collect(Collectors.toList());
         return R.ok().putData(vos);

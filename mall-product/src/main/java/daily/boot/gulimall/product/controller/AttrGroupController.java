@@ -10,8 +10,8 @@ import daily.boot.gulimall.product.service.AttrGroupService;
 import daily.boot.gulimall.product.service.AttrService;
 import daily.boot.gulimall.product.service.CategoryService;
 import daily.boot.gulimall.product.vo.AttrGroupRelationVo;
+import daily.boot.gulimall.product.vo.AttrGroupWithAttrsVo;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -118,7 +118,7 @@ public class AttrGroupController {
     @ApiOperation(value = "查询分组属性关联的所有规格参数")
     @GetMapping("/{attrGroupId}/attr/relation")
     public R attrRelation(@PathVariable("attrGroupId") Long attrGroupId) {
-        List<AttrEntity> attrEntities = attrService.getRelationAttr(attrGroupId);
+        List<AttrEntity> attrEntities = attrService.listRelationAttr(attrGroupId);
         return R.ok().putData(attrEntities);
     }
     
@@ -139,5 +139,11 @@ public class AttrGroupController {
     public R attrRelation(@RequestBody List<AttrGroupRelationVo> attrGroupRelationVos) {
         attrAttrgroupRelationService.saveBatchRelations(attrGroupRelationVos);
         return R.ok();
+    }
+    
+    @GetMapping("/{catelogId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("catelogId") Long catelogId) {
+        List<AttrGroupWithAttrsVo> vos = attrGroupService.getAttrGroupWithAttrsByCatelogId(catelogId);
+        return R.ok().putData(vos);
     }
 }

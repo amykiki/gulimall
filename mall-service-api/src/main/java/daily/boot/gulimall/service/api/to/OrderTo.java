@@ -1,4 +1,4 @@
-package daily.boot.gulimall.service.api.entity;
+package daily.boot.gulimall.service.api.to;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -16,7 +16,7 @@ import java.util.Date;
  */
 @Data
 @ApiModel(value = "订单类")
-public class OrderDto implements Serializable {
+public class OrderTo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

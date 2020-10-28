@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.product.entity.SpuInfoEntity;
 import daily.boot.gulimall.product.service.SpuInfoService;
+import daily.boot.gulimall.product.vo.SpuSaveVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class SpuInfoController {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("product:spuinfo:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -59,8 +60,8 @@ public class SpuInfoController {
     @PostMapping("/save")
     @ApiOperation(value = "新增数据")
     //@RequiresPermissions("product:spuinfo:save")
-    public R save(@RequestBody SpuInfoEntity spuInfo){
-        spuInfoService.save(spuInfo);
+    public R save(@RequestBody SpuSaveVo spuSaveVo){
+        spuInfoService.saveSpuInfo(spuSaveVo);
 
         return R.ok();
     }
@@ -92,7 +93,7 @@ public class SpuInfoController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("product:spuinfo:pagelist")
     public R pageList(PageQueryVo pageQueryVo){

@@ -1,5 +1,6 @@
 package daily.boot.gulimall.product.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -24,7 +25,7 @@ public class SpuInfoDescEntity implements Serializable {
     /**
      * 商品id
      */
-    @TableId
+    @TableId(type = IdType.INPUT)
     @ApiModelProperty(value = "商品id")
     private Long spuId;
     /**

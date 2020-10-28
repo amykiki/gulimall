@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.coupon.entity.SkuFullReductionEntity;
 import daily.boot.gulimall.coupon.service.SkuFullReductionService;
+import daily.boot.gulimall.service.api.to.SkuReductionTo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,12 @@ import java.util.List;
 public class SkuFullReductionController {
     @Autowired
     private SkuFullReductionService skuFullReductionService;
-
+    
+    @PostMapping("/saveSkuReduction")
+    public R saveSkuReduction(@RequestBody List<SkuReductionTo> skuReductionTos) {
+        skuFullReductionService.saveSkuReduction(skuReductionTos);
+        return R.ok();
+    }
     /**
      * 列表
      */

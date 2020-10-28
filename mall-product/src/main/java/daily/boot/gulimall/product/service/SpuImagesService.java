@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.SpuImagesEntity;
 
+import java.util.List;
+
 
 /**
  * spu图片
@@ -20,5 +22,7 @@ public interface SpuImagesService extends IService<SpuImagesEntity> {
      * @return
      */
     PageInfo<SpuImagesEntity> queryPage(PageQueryVo queryVo);
+    
+    void save(Long spuId, List<String> images);
 }
 

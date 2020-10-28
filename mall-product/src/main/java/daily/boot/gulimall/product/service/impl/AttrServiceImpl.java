@@ -153,7 +153,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     }
     
     @Override
-    public List<AttrEntity> getRelationAttr(Long attrGroupId) {
+    public List<AttrEntity> listRelationAttr(Long attrGroupId) {
         List<AttrAttrgroupRelationEntity> relationEntities = attrAttrgroupRelationService.getAllByAttrGroupId(attrGroupId);
         List<Long> attrIds = relationEntities.stream()
                                              .map(AttrAttrgroupRelationEntity::getAttrId)
@@ -173,7 +173,7 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         }
         
         // 2. 查询该品类对应的所有attrGroup
-        List<AttrGroupEntity> attrGroupEntities = attrGroupService.getByCatelogId(attrGroupEntity.getCatelogId());
+        List<AttrGroupEntity> attrGroupEntities = attrGroupService.listByCatelogId(attrGroupEntity.getCatelogId());
         List<Long> attrGroupIds = attrGroupEntities.stream().map(AttrGroupEntity::getAttrGroupId).collect(Collectors.toList());
         
         // 3. 查询该品类对应的所有AttrGroup已经绑定的规格参数

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.SpuInfoEntity;
+import daily.boot.gulimall.product.vo.SpuSaveVo;
 
 
 /**
@@ -20,5 +21,11 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
      * @return
      */
     PageInfo<SpuInfoEntity> queryPage(PageQueryVo queryVo);
+    
+    /**
+     * 保存前台传入的spuSaveVo
+     * @param spuSaveVo
+     */
+    void saveSpuInfo(SpuSaveVo spuSaveVo);
 }
 

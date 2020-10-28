@@ -66,4 +66,8 @@ public class R extends HashMap<String, Object> {
 		super.put("data", value);
 		return this;
 	}
+	
+	public boolean isSuccess() {
+		return "0".equals(String.valueOf(this.get("code")));
+	}
 }

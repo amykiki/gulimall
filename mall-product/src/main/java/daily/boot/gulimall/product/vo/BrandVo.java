@@ -14,5 +14,5 @@ public class BrandVo implements Serializable {
     @ApiModelProperty(value = "商品ID")
     private Long brandId;
     @ApiModelProperty(value = "商品名")
-    private String name;
+    private String brandName;
 }

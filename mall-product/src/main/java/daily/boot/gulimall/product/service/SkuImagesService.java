@@ -4,6 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.SkuImagesEntity;
+import daily.boot.gulimall.product.vo.SpuSaveVo;
+
+import java.util.List;
 
 
 /**
@@ -20,5 +23,7 @@ public interface SkuImagesService extends IService<SkuImagesEntity> {
      * @return
      */
     PageInfo<SkuImagesEntity> queryPage(PageQueryVo queryVo);
+    
+    void saveSku(Long skuId, List<SpuSaveVo.Skus.Image> images);
 }
 

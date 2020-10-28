@@ -25,3 +25,16 @@ logging:
   level:
     daily.boot.gulimall.product: debug
     daily.boot.unified.dispose.advice: debug
+
+
+gulimall:
+  feign:
+    coupon: gulimall-coupon
+    order: gulimall-order
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 60000
+        read-timeout: 60000

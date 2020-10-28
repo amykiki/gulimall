@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.SpuInfoDescEntity;
 
+import java.util.List;
+
 
 /**
  * spu信息介绍
@@ -20,5 +22,7 @@ public interface SpuInfoDescService extends IService<SpuInfoDescEntity> {
      * @return
      */
     PageInfo<SpuInfoDescEntity> queryPage(PageQueryVo queryVo);
+    
+    void save(Long spuId, List<String> decript);
 }
 

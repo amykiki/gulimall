@@ -31,7 +31,7 @@ public class MemberLevelController {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("member:memberlevel:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -92,7 +92,7 @@ public class MemberLevelController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("member:memberlevel:pagelist")
     public R pageList(PageQueryVo pageQueryVo){

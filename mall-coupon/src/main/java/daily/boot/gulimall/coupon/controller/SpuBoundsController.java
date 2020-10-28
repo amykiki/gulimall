@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.coupon.entity.SpuBoundsEntity;
 import daily.boot.gulimall.coupon.service.SpuBoundsService;
+import daily.boot.gulimall.service.api.to.SpuBoundsTo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import java.util.List;
 public class SpuBoundsController {
     @Autowired
     private SpuBoundsService spuBoundsService;
-
+    
     /**
      * 列表
      */
@@ -61,7 +62,7 @@ public class SpuBoundsController {
     //@RequiresPermissions("coupon:spubounds:save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){
         spuBoundsService.save(spuBounds);
-
+        System.out.println("保存成功");
         return R.ok();
     }
 
