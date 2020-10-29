@@ -21,9 +21,10 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
     /**
      * 无条件翻页查询
      * @param queryVo 分页查询参数
+     * @param skuInfoEntity
      * @return
      */
-    PageInfo<SkuInfoEntity> queryPage(PageQueryVo queryVo);
+    PageInfo<SkuInfoEntity> queryPage(PageQueryVo queryVo, SkuInfoEntity skuInfoEntity);
     
     void save(SpuInfoEntity spuInfoEntity, List<SpuSaveVo.Skus> skus);
 }

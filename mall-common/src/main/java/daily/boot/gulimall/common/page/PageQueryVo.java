@@ -17,4 +17,8 @@ public class PageQueryVo {
     private String order;
     @ApiModelProperty(value = "通用查询参数")
     private String key;
+    @ApiModelProperty(value = "区间查询最小值")
+    private String min;
+    @ApiModelProperty(value = "区间查询最大值")
+    private String max;
 }

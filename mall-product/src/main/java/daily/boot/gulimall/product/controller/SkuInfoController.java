@@ -31,7 +31,7 @@ public class SkuInfoController {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("product:skuinfo:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -92,11 +92,11 @@ public class SkuInfoController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("product:skuinfo:pagelist")
-    public R pageList(PageQueryVo pageQueryVo){
-        PageInfo<SkuInfoEntity> pageInfo = skuInfoService.queryPage(pageQueryVo);
+    public R pageList(PageQueryVo pageQueryVo, SkuInfoEntity skuInfoEntity){
+        PageInfo<SkuInfoEntity> pageInfo = skuInfoService.queryPage(pageQueryVo, skuInfoEntity);
         return R.ok().put("page", pageInfo);
     }
 
