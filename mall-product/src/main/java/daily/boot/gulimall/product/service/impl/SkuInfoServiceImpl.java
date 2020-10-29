@@ -93,11 +93,13 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         });
         
         //远程调用coupon service
-        R rtn = couponFeignService.saveSkuReduction(skuReductionTos);
-        if (!rtn.isSuccess()) {
-            throw new BusinessException(CommonErrorCode.API_GATEWAY_ERROR,
-                                        "SkuInfoServiceImpl#save-->远程调用couponFeignService.saveSkuReduction失败--->"
-                                        + skuReductionTos.stream().map(SkuReductionTo::toString).collect(Collectors.joining(",")));
+        if (CollectionUtils.isNotEmpty(skuReductionTos)) {
+            R rtn = couponFeignService.saveSkuReduction(skuReductionTos);
+            if (!rtn.isSuccess()) {
+                throw new BusinessException(CommonErrorCode.API_GATEWAY_ERROR,
+                                            "SkuInfoServiceImpl#save-->远程调用couponFeignService.saveSkuReduction失败--->"
+                                            + skuReductionTos.stream().map(SkuReductionTo::toString).collect(Collectors.joining(",")));
+            }
         }
     
     }

@@ -7,6 +7,7 @@ import daily.boot.gulimall.coupon.entity.SkuFullReductionEntity;
 import daily.boot.gulimall.service.api.to.SkuReductionTo;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 
 /**
@@ -25,5 +26,12 @@ public interface SkuFullReductionService extends IService<SkuFullReductionEntity
     PageInfo<SkuFullReductionEntity> queryPage(PageQueryVo queryVo);
     
     void saveSkuReduction(List<SkuReductionTo> skuReductionTos);
+    
+    /**
+     * 批量保存前先过滤list
+     * @param skuFullReductionEntities
+     * @param predicate
+     */
+    void saveBatch(List<SkuFullReductionEntity> skuFullReductionEntities, Predicate<? super SkuFullReductionEntity> predicate);
 }
 

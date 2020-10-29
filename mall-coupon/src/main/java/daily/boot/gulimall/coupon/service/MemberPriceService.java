@@ -5,6 +5,9 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.coupon.entity.MemberPriceEntity;
 
+import java.util.List;
+import java.util.function.Predicate;
+
 
 /**
  * 商品会员价格
@@ -20,5 +23,12 @@ public interface MemberPriceService extends IService<MemberPriceEntity> {
      * @return
      */
     PageInfo<MemberPriceEntity> queryPage(PageQueryVo queryVo);
+    
+    /**
+     * 批量保存前先过滤list
+     * @param memberPriceEntities
+     * @param predicate
+     */
+    void saveBatch(List<MemberPriceEntity> memberPriceEntities, Predicate<? super MemberPriceEntity> predicate);
 }
 

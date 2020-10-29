@@ -62,7 +62,6 @@ public class SpuBoundsController {
     //@RequiresPermissions("coupon:spubounds:save")
     public R save(@RequestBody SpuBoundsEntity spuBounds){
         spuBoundsService.save(spuBounds);
-        System.out.println("保存成功");
         return R.ok();
     }
 

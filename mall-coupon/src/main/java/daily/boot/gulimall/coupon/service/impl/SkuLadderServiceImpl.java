@@ -10,6 +10,10 @@ import daily.boot.gulimall.coupon.dao.SkuLadderDao;
 import daily.boot.gulimall.coupon.entity.SkuLadderEntity;
 import daily.boot.gulimall.coupon.service.SkuLadderService;
 
+import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 
 @Service("skuLadderService")
 public class SkuLadderServiceImpl extends ServiceImpl<SkuLadderDao, SkuLadderEntity> implements SkuLadderService {
@@ -19,5 +23,12 @@ public class SkuLadderServiceImpl extends ServiceImpl<SkuLadderDao, SkuLadderEnt
         IPage<SkuLadderEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    public void saveBatch(List<SkuLadderEntity> skuLadderEntities, Predicate<? super SkuLadderEntity> predicate) {
+        List<SkuLadderEntity> filteredList = skuLadderEntities.stream()
+                                                              .filter(predicate)
+                                                              .collect(Collectors.toList());
+        this.saveBatch(filteredList);
+    }
 }

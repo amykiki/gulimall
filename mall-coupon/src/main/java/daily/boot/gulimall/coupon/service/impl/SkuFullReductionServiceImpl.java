@@ -1,5 +1,6 @@
 package daily.boot.gulimall.coupon.service.impl;
 
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import daily.boot.gulimall.common.utils.BeanCollectionUtil;
 import daily.boot.gulimall.coupon.entity.MemberPriceEntity;
 import daily.boot.gulimall.coupon.entity.SkuLadderEntity;
@@ -20,8 +21,11 @@ import daily.boot.gulimall.coupon.entity.SkuFullReductionEntity;
 import daily.boot.gulimall.coupon.service.SkuFullReductionService;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 
 @Service("skuFullReductionService")
@@ -57,23 +61,32 @@ public class SkuFullReductionServiceImpl extends ServiceImpl<SkuFullReductionDao
             ladderEntity.setAddOther(to.getCountStatus());
             skuLadderEntities.add(ladderEntity);
     
-            MemberPriceEntity memberPriceEntity = new MemberPriceEntity();
-            List<MemberPriceEntity> memberPrices = BeanCollectionUtil.copyProperties(to.getMemberPrice(), MemberPriceEntity::new, (s, t) -> {
-                t.setSkuId(to.getSkuId());
-            });
-            memberPriceEntities.addAll(memberPrices);
-            
+            if (CollectionUtils.isNotEmpty(to.getMemberPrice())) {
+                List<MemberPriceEntity> memberPrices = BeanCollectionUtil.copyProperties(to.getMemberPrice(), MemberPriceEntity::new, (s, t) -> {
+                    t.setSkuId(to.getSkuId());
+                });
+                memberPriceEntities.addAll(memberPrices);
+            }
     
         });
         
-        //1. 保存满减信息
-        this.saveBatch(skuFullReductionEntities);
+        //1. 保存满减信息, 如果前端页面没有填写，默认为0，要过滤为0的值
+        this.saveBatch(skuFullReductionEntities, p -> p.getFullPrice() != null && p.getFullPrice().compareTo(new BigDecimal(0)) > 0);
         
         //2. 保存阶梯折扣信息
-        skuLadderService.saveBatch(skuLadderEntities);
+        skuLadderService.saveBatch(skuLadderEntities, l -> l.getFullCount() != null && l.getFullCount() > 0);
         
         //3. 保存会员价格
-        memberPriceService.saveBatch(memberPriceEntities);
+        memberPriceService.saveBatch(memberPriceEntities, m -> m.getMemberPrice() != null && m.getMemberPrice().compareTo(new BigDecimal(0)) > 0);
+        
+    }
+    
+    @Override
+    public void saveBatch(List<SkuFullReductionEntity> skuFullReductionEntities, Predicate<? super SkuFullReductionEntity> predicate) {
+        List<SkuFullReductionEntity> filteredList = skuFullReductionEntities.stream()
+                                                                            .filter(predicate)
+                                                                            .collect(Collectors.toList());
+        this.saveBatch(filteredList);
         
     }
 }
