@@ -1,6 +1,7 @@
 package daily.boot.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -94,6 +95,25 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         //2 保存sku信息
         skuInfoService.save(spuInfoEntity, spuSaveVo.getSkus());
         
+        
+    }
+    
+    @Override
+    public void updateStatusById(Long id, int status) {
+        SpuInfoEntity entity = new SpuInfoEntity();
+        entity.setPublishStatus(status);
+        entity.setId(id);
+        this.updateById(entity);
+    
+        /**
+           注意：如果只通过updateWrapper更新，没有entity实体，那么更新的时候是不会自动填充属性的
+           通过下列方式更新，不会自动填充updateTime字段
+         */
+        //LambdaUpdateWrapper<SpuInfoEntity> wrapper =
+        //        Wrappers.lambdaUpdate(SpuInfoEntity.class)
+        //                .set(SpuInfoEntity::getPublishStatus, status)
+        //                .eq(SpuInfoEntity::getId, id);
+        //this.update(wrapper);
         
     }
 }

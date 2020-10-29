@@ -100,5 +100,28 @@ public class SpuInfoController {
         PageInfo<SpuInfoEntity> pageInfo = spuInfoService.queryPage(pageQueryVo, spuInfoEntity);
         return R.ok().put("page", pageInfo);
     }
+    
+    /**
+     * 修改
+     */
+    @PutMapping("/{id}/up")
+    @ApiOperation(value = "上架")
+    //@RequiresPermissions("product:spuinfo:update")
+    public R upSpu(@PathVariable("id") Long id){
+        spuInfoService.updateStatusById(id, 1);
+        
+        return R.ok();
+    }
+    
+    /**
+     * 修改
+     */
+    @PutMapping("/{id}/down")
+    @ApiOperation(value = "下架")
+    //@RequiresPermissions("product:spuinfo:update")
+    public R downSpu(@PathVariable("id") Long id){
+        spuInfoService.updateStatusById(id, 2);
+        return R.ok();
+    }
 
 }
