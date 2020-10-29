@@ -1,6 +1,9 @@
 package daily.boot.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
@@ -11,7 +14,6 @@ import daily.boot.gulimall.product.entity.SpuInfoEntity;
 import daily.boot.gulimall.product.service.*;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
 import daily.boot.gulimall.service.api.feign.CouponFeignService;
-import daily.boot.gulimall.service.api.to.SkuReductionTo;
 import daily.boot.gulimall.service.api.to.SpuBoundsTo;
 import daily.boot.unified.dispose.exception.BusinessException;
 import daily.boot.unified.dispose.exception.error.CommonErrorCode;
@@ -19,8 +21,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.stream.Collectors;
 
 
 @Service("spuInfoService")
@@ -35,10 +35,28 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     private SkuInfoService skuInfoService;
     @Autowired
     private CouponFeignService couponFeignService;
-
+    
     @Override
-    public PageInfo<SpuInfoEntity> queryPage(PageQueryVo queryVo) {
-        IPage<SpuInfoEntity> page = this.page(Query.getPage(queryVo));
+    public PageInfo<SpuInfoEntity> queryPage(PageQueryVo queryVo, SpuInfoEntity spuInfoEntity) {
+        SpuInfoEntity queryEntity = new SpuInfoEntity();
+        if (spuInfoEntity.getBrandId() != null && spuInfoEntity.getBrandId() > 0) {
+            queryEntity.setBrandId(spuInfoEntity.getBrandId());
+        }
+        if (spuInfoEntity.getCatelogId() != null && spuInfoEntity.getCatelogId() > 0) {
+            queryEntity.setCatelogId(spuInfoEntity.getCatelogId());
+        }
+        queryEntity.setPublishStatus(spuInfoEntity.getPublishStatus());
+        LambdaQueryWrapper<SpuInfoEntity> queryWrapper = Wrappers.lambdaQuery(queryEntity);
+        
+        String key = queryVo.getKey();
+        if (StringUtils.isNotBlank(key)) {
+            queryWrapper.and(q -> {
+                q.like(SpuInfoEntity::getSpuName, key)
+                 .or()
+                 .like(SpuInfoEntity::getSpuDescription, key);
+            });
+        }
+        IPage<SpuInfoEntity> page = this.page(Query.getPage(queryVo), queryWrapper);
         return PageInfo.of(page);
     }
     
@@ -72,7 +90,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                                         "SpuInfoServiceImpl#saveSpuInfo-->远程调用couponFeignService.saveSpuBounds失败--->"
                                         + spuBoundsTo);
         }
-    
+        
         //2 保存sku信息
         skuInfoService.save(spuInfoEntity, spuSaveVo.getSkus());
         

@@ -1,7 +1,6 @@
 package daily.boot.gulimall.product.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import daily.boot.gulimall.common.utils.BeanCollectionUtil;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.product.entity.SpuInfoEntity;
 import daily.boot.gulimall.product.service.SkuImagesService;
@@ -55,7 +54,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         skus.forEach(sku -> {
             SkuInfoEntity skuInfoEntity = new SkuInfoEntity();
             BeanUtils.copyProperties(sku, skuInfoEntity);
-            skuInfoEntity.setCatalogId(spuInfoEntity.getCatalogId());
+            skuInfoEntity.setCatalogId(spuInfoEntity.getCatelogId());
             skuInfoEntity.setBrandId(spuInfoEntity.getBrandId());
             skuInfoEntity.setSpuId(spuInfoEntity.getId());
             skuInfoEntity.setSkuDesc(String.join(",", sku.getDescar()));

@@ -18,9 +18,10 @@ public interface SpuInfoService extends IService<SpuInfoEntity> {
     /**
      * 无条件翻页查询
      * @param queryVo 分页查询参数
+     * @param spuInfoEntity
      * @return
      */
-    PageInfo<SpuInfoEntity> queryPage(PageQueryVo queryVo);
+    PageInfo<SpuInfoEntity> queryPage(PageQueryVo queryVo, SpuInfoEntity spuInfoEntity);
     
     /**
      * 保存前台传入的spuSaveVo

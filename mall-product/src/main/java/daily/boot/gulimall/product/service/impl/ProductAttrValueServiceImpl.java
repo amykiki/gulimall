@@ -1,5 +1,10 @@
 package daily.boot.gulimall.product.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import daily.boot.gulimall.product.entity.AttrEntity;
 import daily.boot.gulimall.product.service.AttrService;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
@@ -16,6 +21,7 @@ import daily.boot.gulimall.product.service.ProductAttrValueService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -46,5 +52,29 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
             return entity;
         }).collect(Collectors.toList());
         this.saveBatch(entities);
+    }
+    
+    @Override
+    public List<ProductAttrValueEntity> listBySpuId(Long spuId) {
+        LambdaQueryWrapper<ProductAttrValueEntity> queryWrapper =
+                Wrappers.lambdaQuery(ProductAttrValueEntity.class)
+                        .eq(spuId != null && spuId > 0, ProductAttrValueEntity::getSpuId, spuId);
+    
+        return this.list(queryWrapper);
+    }
+    
+    @Override
+    public void updateBySpuId(Long spuId, List<ProductAttrValueEntity> productAttrValueEntities) {
+        productAttrValueEntities.stream().filter(p -> Objects.nonNull(p.getAttrId())).forEach(p -> {
+            LambdaUpdateWrapper<ProductAttrValueEntity> update =
+                    Wrappers.lambdaUpdate(ProductAttrValueEntity.class)
+                            .set(StringUtils.isNotBlank(p.getAttrValue()), ProductAttrValueEntity::getAttrValue, p.getAttrValue())
+                            .set(Objects.nonNull(p.getQuickShow()), ProductAttrValueEntity::getQuickShow, p.getQuickShow())
+                            .eq(ProductAttrValueEntity::getSpuId, spuId)
+                            .eq(ProductAttrValueEntity::getAttrId, p.getAttrId())
+                    ;
+    
+            this.update(update);
+        });
     }
 }

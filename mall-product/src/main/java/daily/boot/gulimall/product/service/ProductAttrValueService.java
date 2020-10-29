@@ -25,5 +25,9 @@ public interface ProductAttrValueService extends IService<ProductAttrValueEntity
     PageInfo<ProductAttrValueEntity> queryPage(PageQueryVo queryVo);
     
     void save(Long spuId, List<SpuSaveVo.BaseAttrs> baseAttrs);
+    
+    List<ProductAttrValueEntity> listBySpuId(Long spuId);
+    
+    void updateBySpuId(Long spuId, List<ProductAttrValueEntity> productAttrValueEntities);
 }
 

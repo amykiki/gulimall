@@ -99,5 +99,20 @@ public class ProductAttrValueController {
         PageInfo<ProductAttrValueEntity> pageInfo = productAttrValueService.queryPage(pageQueryVo);
         return R.ok().put("page", pageInfo);
     }
+    
+    @GetMapping("/listforspu/{spuId}")
+    @ApiOperation(value = "根据spuId查询商品规格属性")
+    public R baseAttrForSpu(@PathVariable("spuId") Long spuId) {
+        List<ProductAttrValueEntity> list = productAttrValueService.listBySpuId(spuId);
+        return R.ok().putData(list);
+    }
+    
+    @PostMapping("/update/{spuId}")
+    @ApiOperation(value = "修改spu的商品规格属性")
+    public R updateBySpuId(@PathVariable("spuId") Long spuId, @RequestBody List<ProductAttrValueEntity> productAttrValueEntities) {
+        productAttrValueService.updateBySpuId(spuId, productAttrValueEntities);
+        return R.ok();
+    }
+    
 
 }

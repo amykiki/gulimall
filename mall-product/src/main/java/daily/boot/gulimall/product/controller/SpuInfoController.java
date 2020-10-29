@@ -94,10 +94,10 @@ public class SpuInfoController {
      * 无条件分页查询
      */
     @GetMapping("/list")
-    @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
+    @ApiOperation(value = "条件分页查询", notes = "条件分页查询")
     //@RequiresPermissions("product:spuinfo:pagelist")
-    public R pageList(PageQueryVo pageQueryVo){
-        PageInfo<SpuInfoEntity> pageInfo = spuInfoService.queryPage(pageQueryVo);
+    public R pageList(PageQueryVo pageQueryVo, SpuInfoEntity spuInfoEntity){
+        PageInfo<SpuInfoEntity> pageInfo = spuInfoService.queryPage(pageQueryVo, spuInfoEntity);
         return R.ok().put("page", pageInfo);
     }
 
