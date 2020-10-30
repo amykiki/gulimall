@@ -2,7 +2,7 @@
   {
     "spuName": "Apple iPhone 12 Pro (A2408) 支持移动联通电信5G 双卡双待手机",
     "spuDescription": "Apple iPhone 12 Pro (A2408)  ",
-    "catalogId": 225,
+    "catelogId": 225,
     "brandId": 272,
     "weight": 0.35,
     "publishStatus": 0,
@@ -1338,7 +1338,7 @@
   {
     "spuName": "Redmi 10X 5G 天玑820 双5G待机 4800万流光相机 水滴全面屏",
     "spuDescription": "Redmi 10X 5G 天玑820 双5G待机 4800万流光相机 水滴全面屏 游戏智能手机 小米 红米【这就是街舞】",
-    "catalogId": 225,
+    "catelogId": 225,
     "brandId": 47,
     "weight": 0.205,
     "publishStatus": 0,
@@ -1646,7 +1646,7 @@
   {
     "spuName": "Redmi 10X 5G 天玑820 双5G待机 4800万流光相机 水滴全面屏",
     "spuDescription": "Redmi 10X 5G 天玑820 双5G待机 4800万流光相机 水滴全面屏 游戏智能手机 小米 红米【这就是街舞】",
-    "catalogId": 225,
+    "catelogId": 225,
     "brandId": 47,
     "weight": 0.205,
     "publishStatus": 0,

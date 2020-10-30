@@ -27,3 +27,4 @@ gulimall:
   feign:
     order: gulimall-order
     coupon: gulimall-coupon
+    product: gulimall-product

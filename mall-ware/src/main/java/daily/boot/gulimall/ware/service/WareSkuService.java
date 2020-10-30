@@ -17,8 +17,9 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     /**
      * 无条件翻页查询
      * @param queryVo 分页查询参数
+     * @param wareSkuEntity
      * @return
      */
-    PageInfo<WareSkuEntity> queryPage(PageQueryVo queryVo);
+    PageInfo<WareSkuEntity> queryPage(PageQueryVo queryVo, WareSkuEntity wareSkuEntity);
 }
 

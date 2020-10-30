@@ -31,7 +31,7 @@ public class WareOrderTaskDetailController {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("ware:wareordertaskdetail:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -68,7 +68,7 @@ public class WareOrderTaskDetailController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("ware:wareordertaskdetail:update")
     public R update(@RequestBody WareOrderTaskDetailEntity wareOrderTaskDetail){
@@ -92,7 +92,7 @@ public class WareOrderTaskDetailController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("ware:wareordertaskdetail:pagelist")
     public R pageList(PageQueryVo pageQueryVo){

@@ -12,7 +12,6 @@ import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.product.dao.SkuInfoDao;
 import daily.boot.gulimall.product.entity.SkuInfoEntity;
-import daily.boot.gulimall.product.entity.SpuInfoDescEntity;
 import daily.boot.gulimall.product.entity.SpuInfoEntity;
 import daily.boot.gulimall.product.service.SkuImagesService;
 import daily.boot.gulimall.product.service.SkuInfoService;
@@ -48,8 +47,8 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     @Override
     public PageInfo<SkuInfoEntity> queryPage(PageQueryVo queryVo, SkuInfoEntity skuInfoEntity) {
         SkuInfoEntity queryEntity = new SkuInfoEntity();
-        if (Objects.nonNull(skuInfoEntity.getCatalogId()) && skuInfoEntity.getCatalogId() > 0) {
-            queryEntity.setCatalogId(skuInfoEntity.getCatalogId());
+        if (Objects.nonNull(skuInfoEntity.getCatelogId()) && skuInfoEntity.getCatelogId() > 0) {
+            queryEntity.setCatelogId(skuInfoEntity.getCatelogId());
         }
         if (Objects.nonNull(skuInfoEntity.getBrandId()) && skuInfoEntity.getBrandId() > 0) {
             queryEntity.setBrandId(skuInfoEntity.getBrandId());
@@ -94,7 +93,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         skus.forEach(sku -> {
             SkuInfoEntity skuInfoEntity = new SkuInfoEntity();
             BeanUtils.copyProperties(sku, skuInfoEntity);
-            skuInfoEntity.setCatalogId(spuInfoEntity.getCatelogId());
+            skuInfoEntity.setCatelogId(spuInfoEntity.getCatelogId());
             skuInfoEntity.setBrandId(spuInfoEntity.getBrandId());
             skuInfoEntity.setSpuId(spuInfoEntity.getId());
             skuInfoEntity.setSkuDesc(String.join(",", sku.getDescar()));

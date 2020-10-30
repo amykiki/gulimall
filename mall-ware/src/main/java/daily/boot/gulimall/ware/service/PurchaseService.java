@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.ware.entity.PurchaseEntity;
+import daily.boot.gulimall.ware.vo.MergeVo;
+import daily.boot.gulimall.ware.vo.PurchaseDoneVo;
+
+import java.util.List;
 
 
 /**
@@ -20,5 +24,17 @@ public interface PurchaseService extends IService<PurchaseEntity> {
      * @return
      */
     PageInfo<PurchaseEntity> queryPage(PageQueryVo queryVo);
+    
+    List<PurchaseEntity> unreceivePurchase();
+    
+    void mergePurchase(MergeVo mergeVo);
+    
+    /**
+     * 采购员领取采购单
+     * @param ids
+     */
+    void received(List<Long> ids);
+    
+    void done(PurchaseDoneVo purchaseDoneVo);
 }
 

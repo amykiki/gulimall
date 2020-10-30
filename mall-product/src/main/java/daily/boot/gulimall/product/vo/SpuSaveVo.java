@@ -11,7 +11,7 @@ public class SpuSaveVo {
     /**
      * spuName : Apple iPhone 12 Pro (A2408) 支持移动联通电信5G 双卡双待手机
      * spuDescription : Apple iPhone 12 Pro (A2408)
-     * catalogId : 225
+     * catelogId : 225
      * brandId : 272
      * weight : 0.35
      * publishStatus : 0
@@ -24,7 +24,7 @@ public class SpuSaveVo {
     
     private String spuName;
     private String spuDescription;
-    private Long catalogId;
+    private Long catelogId;
     private Long brandId;
     private BigDecimal weight;
     private int publishStatus;

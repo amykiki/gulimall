@@ -1,14 +1,11 @@
-package daily.boot.gulimall.product.entity;
+package daily.boot.gulimall.service.api.to;
 
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.math.BigDecimal;
-import java.io.Serializable;
-import java.util.Date;
 import lombok.Data;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * sku信息
@@ -17,15 +14,13 @@ import lombok.Data;
  * @date 2020-10-14 15:18:58
  */
 @Data
-@TableName("pms_sku_info")
 @ApiModel(value = "sku信息类")
-public class SkuInfoEntity implements Serializable {
+public class SkuInfoVo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
      * skuId
      */
-    @TableId
     @ApiModelProperty(value = "skuId")
     private Long skuId;
     /**

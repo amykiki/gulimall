@@ -3,6 +3,9 @@ package daily.boot.gulimall.ware.dao;
 import daily.boot.gulimall.ware.entity.PurchaseEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 采购信息
@@ -13,5 +16,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface PurchaseDao extends BaseMapper<PurchaseEntity> {
-	
+    
+    void updateBatchAssgined(@Param("list") List<PurchaseEntity> purchaseList);
 }

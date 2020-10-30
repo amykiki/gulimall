@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.ware.entity.PurchaseEntity;
 import daily.boot.gulimall.ware.service.PurchaseService;
+import daily.boot.gulimall.ware.vo.MergeVo;
+import daily.boot.gulimall.ware.vo.PurchaseDoneVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +29,39 @@ import java.util.List;
 public class PurchaseController {
     @Autowired
     private PurchaseService purchaseService;
+    
+    @PostMapping("/done")
+    @ApiOperation(value = "采购员完成采购单")
+    public R finish(@RequestBody PurchaseDoneVo purchaseDoneVo) {
+        purchaseService.done(purchaseDoneVo);
+        return R.ok();
+    }
+    
+    @GetMapping("/unreceive/list")
+    @ApiOperation(value = "查找还未被领取的采购单")
+    public R unreceiveList() {
+        List<PurchaseEntity> unreceivePurchase= purchaseService.unreceivePurchase();
+        return R.ok().putData(unreceivePurchase);
+    }
+    
+    @PostMapping("/received")
+    @ApiOperation(value = "采购员领取采购单")
+    public R received(@RequestBody List<Long> ids) {
+        purchaseService.received(ids);
+        return R.ok();
+    }
+    
+    @PostMapping("/merge")
+    @ApiOperation(value = "合并采购需求")
+    public R meger(@RequestBody MergeVo mergeVo) {
+        purchaseService.mergePurchase(mergeVo);
+        return R.ok();
+    }
 
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("ware:purchase:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -68,7 +98,7 @@ public class PurchaseController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("ware:purchase:update")
     public R update(@RequestBody PurchaseEntity purchase){
@@ -92,7 +122,7 @@ public class PurchaseController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("ware:purchase:pagelist")
     public R pageList(PageQueryVo pageQueryVo){

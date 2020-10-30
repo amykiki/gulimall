@@ -31,7 +31,7 @@ public class PurchaseDetailController {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("ware:purchasedetail:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -68,7 +68,7 @@ public class PurchaseDetailController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("ware:purchasedetail:update")
     public R update(@RequestBody PurchaseDetailEntity purchaseDetail){
@@ -90,13 +90,13 @@ public class PurchaseDetailController {
     }
 
     /**
-     * 无条件分页查询
+     * 条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("ware:purchasedetail:pagelist")
-    public R pageList(PageQueryVo pageQueryVo){
-        PageInfo<PurchaseDetailEntity> pageInfo = purchaseDetailService.queryPage(pageQueryVo);
+    public R pageList(PageQueryVo pageQueryVo, PurchaseDetailEntity purchaseDetailEntity){
+        PageInfo<PurchaseDetailEntity> pageInfo = purchaseDetailService.queryPage(pageQueryVo, purchaseDetailEntity);
         return R.ok().put("page", pageInfo);
     }
 

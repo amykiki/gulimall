@@ -21,3 +21,10 @@ mybatis-plus:
 logging:
   level:
     daily.boot.gulimall.ware: debug
+
+gulimall:
+  feign:
+    coupon: gulimall-coupon
+    order: gulimall-order
+    product: gulimall-product
+

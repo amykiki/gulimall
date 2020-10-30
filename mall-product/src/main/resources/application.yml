@@ -33,6 +33,7 @@ gulimall:
   feign:
     coupon: gulimall-coupon
     order: gulimall-order
+    product: gulimall-product
 
 feign:
   client:

@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.ware.entity.PurchaseDetailEntity;
 
+import java.util.List;
+
 
 /**
  * 采购详情
@@ -17,8 +19,21 @@ public interface PurchaseDetailService extends IService<PurchaseDetailEntity> {
     /**
      * 无条件翻页查询
      * @param queryVo 分页查询参数
+     * @param purchaseDetailEntity
      * @return
      */
-    PageInfo<PurchaseDetailEntity> queryPage(PageQueryVo queryVo);
+    PageInfo<PurchaseDetailEntity> queryPage(PageQueryVo queryVo, PurchaseDetailEntity purchaseDetailEntity);
+    
+    /**
+     * 根据采购ID查询采购需求
+     * @param purchaseIds
+     */
+    List<PurchaseDetailEntity> listByPurchaseId(List<Long> purchaseIds);
+    
+    /**
+     * 通过Id和purchaseId批量更新
+     * @param finishedItems
+     */
+    void updateBatchByIdAndPurchaseId(List<PurchaseDetailEntity> finishedItems);
 }
 

@@ -31,7 +31,7 @@ public class WareSkuController {
     /**
      * 列表
      */
-    @GetMapping("/list")
+    @GetMapping("/lists")
     //@RequiresPermissions("ware:waresku:list")
     @ApiOperation(value = "所有列表")
     public R list(){
@@ -68,7 +68,7 @@ public class WareSkuController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("ware:waresku:update")
     public R update(@RequestBody WareSkuEntity wareSku){
@@ -90,13 +90,13 @@ public class WareSkuController {
     }
 
     /**
-     * 无条件分页查询
+     * 条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("ware:waresku:pagelist")
-    public R pageList(PageQueryVo pageQueryVo){
-        PageInfo<WareSkuEntity> pageInfo = wareSkuService.queryPage(pageQueryVo);
+    public R pageList(PageQueryVo pageQueryVo, WareSkuEntity wareSkuEntity){
+        PageInfo<WareSkuEntity> pageInfo = wareSkuService.queryPage(pageQueryVo, wareSkuEntity);
         return R.ok().put("page", pageInfo);
     }
 
