@@ -18,6 +18,7 @@ import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.product.dao.ProductAttrValueDao;
 import daily.boot.gulimall.product.entity.ProductAttrValueEntity;
 import daily.boot.gulimall.product.service.ProductAttrValueService;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -64,17 +65,26 @@ public class ProductAttrValueServiceImpl extends ServiceImpl<ProductAttrValueDao
     }
     
     @Override
+    @Transactional
     public void updateBySpuId(Long spuId, List<ProductAttrValueEntity> productAttrValueEntities) {
-        productAttrValueEntities.stream().filter(p -> Objects.nonNull(p.getAttrId())).forEach(p -> {
-            LambdaUpdateWrapper<ProductAttrValueEntity> update =
-                    Wrappers.lambdaUpdate(ProductAttrValueEntity.class)
-                            .set(StringUtils.isNotBlank(p.getAttrValue()), ProductAttrValueEntity::getAttrValue, p.getAttrValue())
-                            .set(Objects.nonNull(p.getQuickShow()), ProductAttrValueEntity::getQuickShow, p.getQuickShow())
-                            .eq(ProductAttrValueEntity::getSpuId, spuId)
-                            .eq(ProductAttrValueEntity::getAttrId, p.getAttrId())
-                    ;
+        //由于不知道前端是否对属性有增删，所以先删除之前的属性在同一新增
+        this.removeBySpuId(spuId);
+        
+        //统一新增
+        List<ProductAttrValueEntity> list = productAttrValueEntities.stream()
+                                                                    .filter(p -> Objects.nonNull(p.getAttrId()) && Objects.nonNull(p.getAttrValue()))
+                                                                    .peek(p -> p.setSpuId(spuId))
+                                                                    .collect(Collectors.toList());
+        this.saveBatch(list);
     
-            this.update(update);
-        });
+    }
+    
+    @Override
+    public void removeBySpuId(Long spuId) {
+        if (Objects.nonNull(spuId)) {
+            this.lambdaUpdate()
+                .eq(ProductAttrValueEntity::getSpuId, spuId)
+                .remove();
+        }
     }
 }
