@@ -20,7 +20,6 @@ import daily.boot.gulimall.ware.service.PurchaseDetailService;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Service("purchaseDetailService")
@@ -51,7 +50,7 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
     }
     
     @Override
-    public void updateBatchByIdAndPurchaseId(List<PurchaseDetailEntity> finishedItems) {
+    public void updateBatchByIdAndPurchaseId(List<PurchaseDetailEntity> finishedItems, int oldStatus) {
         List<Map<PurchaseDetailEntity, Wrapper<PurchaseDetailEntity>>> paramPairList = finishedItems.stream().map(item -> {
             PurchaseDetailEntity updateEntity = new PurchaseDetailEntity();
             updateEntity.setStatus(item.getStatus());
@@ -59,7 +58,7 @@ public class PurchaseDetailServiceImpl extends ServiceImpl<PurchaseDetailDao, Pu
             map.put(updateEntity, Wrappers.lambdaQuery(PurchaseDetailEntity.class)
                                   .eq(PurchaseDetailEntity::getId, item.getId())
                                   .eq(PurchaseDetailEntity::getPurchaseId, item.getPurchaseId())
-                                  .eq(PurchaseDetailEntity::getStatus, WareConstant.PurchaseDetailStatusEnum.BUYING.getCode()));
+                                  .eq(PurchaseDetailEntity::getStatus, oldStatus));
             return map;
         }).collect(Collectors.toList());
     

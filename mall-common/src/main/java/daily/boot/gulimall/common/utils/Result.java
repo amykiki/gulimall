@@ -66,4 +66,12 @@ public class Result<T> implements Serializable {
         return new Result<>(data, message);
     }
     
+    @Override
+    public String toString() {
+        return "Result{" +
+               "code=" + code +
+               ", msg='" + msg + '\'' +
+               ", data=" + data +
+               '}';
+    }
 }

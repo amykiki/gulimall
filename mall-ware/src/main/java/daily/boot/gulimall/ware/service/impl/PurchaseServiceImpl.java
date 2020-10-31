@@ -1,6 +1,7 @@
 package daily.boot.gulimall.ware.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -9,17 +10,18 @@ import daily.boot.gulimall.common.constant.WareConstant;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
-import daily.boot.gulimall.service.api.feign.ProductFeignService;
 import daily.boot.gulimall.ware.dao.PurchaseDao;
 import daily.boot.gulimall.ware.entity.PurchaseDetailEntity;
 import daily.boot.gulimall.ware.entity.PurchaseEntity;
 import daily.boot.gulimall.ware.exception.WareErrorCode;
 import daily.boot.gulimall.ware.service.PurchaseDetailService;
 import daily.boot.gulimall.ware.service.PurchaseService;
+import daily.boot.gulimall.ware.service.WareSkuService;
 import daily.boot.gulimall.ware.vo.MergeVo;
 import daily.boot.gulimall.ware.vo.PurchaseDoneVo;
 import daily.boot.gulimall.ware.vo.PurchaseItemDoneVo;
 import daily.boot.unified.dispose.exception.BusinessException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,16 +31,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @Service("purchaseService")
+@Slf4j
 public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity> implements PurchaseService {
     @Autowired
     private PurchaseDetailService purchaseDetailService;
     @Autowired
-    private ProductFeignService productFeignService;
-
+    private WareSkuService wareSkuService;
+    
     @Override
     public PageInfo<PurchaseEntity> queryPage(PageQueryVo queryVo) {
         IPage<PurchaseEntity> page = this.page(Query.getPage(queryVo));
@@ -59,29 +61,29 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
     public void mergePurchase(MergeVo mergeVo) {
         //1. 确定采购需求存在且状态是0或1才能合并
         if (CollectionUtils.isEmpty(mergeVo.getItems())) {
-            throw new BusinessException(WareErrorCode.WARE_PURCHASE_DETAIL_NOT_EXIST_MERGED);
+            throw new BusinessException(WareErrorCode.WARE_PURCHASE_DETAIL_NOT_EXIST);
         }
         List<PurchaseDetailEntity> detailEntities = purchaseDetailService.listByIds(mergeVo.getItems());
         if (CollectionUtils.isEmpty(detailEntities) || detailEntities.size() != mergeVo.getItems().size()) {
-            throw new BusinessException(WareErrorCode.WARE_PURCHASE_DETAIL_NOT_EXIST_MERGED);
+            throw new BusinessException(WareErrorCode.WARE_PURCHASE_DETAIL_NOT_EXIST);
         }
         boolean cannotMerge = detailEntities.stream()
                                             .anyMatch(e -> (WareConstant.PurchaseDetailStatusEnum.CREATED.getCode() != e.getStatus())
-                                                   && (WareConstant.PurchaseDetailStatusEnum.ASSIGNED.getCode() != e.getStatus()));
+                                                           && (WareConstant.PurchaseDetailStatusEnum.ASSIGNED.getCode() != e.getStatus()));
         if (cannotMerge) {
             throw new BusinessException(WareErrorCode.WARE_PURCHASE_DETAIL_CANNOT_MERGED);
         }
-    
+        
         Long purchaseId = mergeVo.getPurchaseId();
         if (Objects.nonNull(purchaseId)) {
             //已有订购单，校验订购单状态
-            PurchaseEntity entity  = this.getById(purchaseId);
+            PurchaseEntity entity = this.getById(purchaseId);
             if (Objects.isNull(entity)) {
                 throw new BusinessException(WareErrorCode.WARE_PURCHASE_NOT_EXIST_ERROR);
             }
             if (WareConstant.PurchaseStatusEnum.CREATED.getCode() != entity.getStatus()
                 &&
-                WareConstant.PurchaseStatusEnum.ASSIGNED.getCode() != entity.getStatus() ) {
+                WareConstant.PurchaseStatusEnum.ASSIGNED.getCode() != entity.getStatus()) {
                 throw new BusinessException(WareErrorCode.WARE_PURCHASE_STATUS_ERROR);
             }
         } else {
@@ -102,10 +104,10 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
             entity.setStatus(WareConstant.PurchaseDetailStatusEnum.ASSIGNED.getCode());
             return entity;
         }).collect(Collectors.toList());
-    
+        
         purchaseDetailService.updateBatchById(detailList);
-    
-    
+        
+        
         //更新采购单时间
         PurchaseEntity updateEntity = new PurchaseEntity();
         updateEntity.setId(purchaseId);
@@ -125,8 +127,11 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
             entity.setUpdateTime(LocalDateTime.now());
             return entity;
         }).collect(Collectors.toList());
-        this.baseMapper.updateBatchAssgined(purchaseList);
-        
+        int updated = this.baseMapper.updateBatchAssgined(purchaseList);
+        log.debug("更新采购单数目...[{}]", updated);
+        if (updated != ids.size()) {
+            throw new BusinessException(WareErrorCode.WARE_PURCHASE_NOT_VALID);
+        }
         //2. 批量更新采购需求
         List<PurchaseDetailEntity> detailList =
                 purchaseDetailService.listByPurchaseId(ids)
@@ -138,36 +143,62 @@ public class PurchaseServiceImpl extends ServiceImpl<PurchaseDao, PurchaseEntity
                                          return detailEntity;
                                      }).collect(Collectors.toList());
         purchaseDetailService.updateBatchById(detailList);
-    
+        
     }
     
     @Override
+    @Transactional
     public void done(PurchaseDoneVo purchaseDoneVo) {
         // 1. 验证采购单
         PurchaseEntity oldPurchase = this.getById(purchaseDoneVo.getId());
-        if(Objects.isNull(oldPurchase)) return;
+        if (Objects.isNull(oldPurchase) || oldPurchase.getStatus() != WareConstant.PurchaseStatusEnum.RECEIVE.getCode())
+            throw new BusinessException(WareErrorCode.WARE_PURCHASE_NOT_VALID);
+        
         
         // 2. 更新采购需求状态
         if (CollectionUtils.isEmpty(purchaseDoneVo.getItems())) {
-            throw new BusinessException(WareErrorCode.WARE_PURCHASE_DONE_EMPTY_MERGED);
+            throw new BusinessException(WareErrorCode.WARE_PURCHASE_DONE_EMPTY);
         }
         
         //采购单完成状态
-        boolean flag = true;
-        List<PurchaseDetailEntity> finishedItems = new ArrayList<>();
+        boolean purchaseDone = true;
+        List<PurchaseDetailEntity> detailList = new ArrayList<>();
+        List<Long> finishedIds = new ArrayList<>();
+        
         for (PurchaseItemDoneVo item : purchaseDoneVo.getItems()) {
             PurchaseDetailEntity detail = new PurchaseDetailEntity();
             detail.setPurchaseId(purchaseDoneVo.getId());
             detail.setId(item.getItemId());
             if (item.getStatus() == WareConstant.PurchaseDetailStatusEnum.HASERROR.getCode()) {
-                flag = false;
+                purchaseDone = false;
                 detail.setStatus(item.getStatus());
             } else {
                 detail.setStatus(WareConstant.PurchaseDetailStatusEnum.FINISH.getCode());
-                finishedItems.add(detail);
+                //保存完成采购需求id
+                finishedIds.add(item.getItemId());
             }
+            detailList.add(detail);
         }
-        purchaseDetailService.updateBatchByIdAndPurchaseId(finishedItems);
+        //修改采购需求状态
+        purchaseDetailService.updateBatchByIdAndPurchaseId(detailList, WareConstant.PurchaseDetailStatusEnum.BUYING.getCode());
         
+        //修改仓库商品库存
+        wareSkuService.addStockByPurchaseDetail(finishedIds);
+        
+        // 改变采购单状态
+        int newStatus = purchaseDone
+                        ? WareConstant.PurchaseStatusEnum.FINISH.getCode()
+                        : WareConstant.PurchaseStatusEnum.HASERROR.getCode();
+        this.updateStatus(purchaseDoneVo.getId(), newStatus, WareConstant.PurchaseStatusEnum.RECEIVE.getCode());
+    }
+    
+    @Override
+    public void updateStatus(Long id, int newStatus, int oldStatus) {
+        LambdaUpdateWrapper<PurchaseEntity> updateWrapper = Wrappers.lambdaUpdate(PurchaseEntity.class);
+        updateWrapper.set(PurchaseEntity::getStatus, newStatus)
+                     .set(PurchaseEntity::getUpdateTime, LocalDateTime.now())
+                     .eq(PurchaseEntity::getId, id)
+                     .eq(PurchaseEntity::getStatus, oldStatus);
+        this.update(updateWrapper);
     }
 }

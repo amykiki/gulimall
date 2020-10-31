@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.ware.entity.WareSkuEntity;
 
+import java.util.List;
+
 
 /**
  * 商品库存
@@ -21,5 +23,11 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @return
      */
     PageInfo<WareSkuEntity> queryPage(PageQueryVo queryVo, WareSkuEntity wareSkuEntity);
+    
+    /**
+     * 依据完成采购需求更新商品库存量
+     * @param finishedIds
+     */
+    void addStockByPurchaseDetail(List<Long> finishedIds);
 }
 

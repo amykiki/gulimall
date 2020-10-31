@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient(name = "${gulimall.feign.product}")
 public interface ProductFeignService {
     
-    @GetMapping("/info/{skuId}")
+    @GetMapping("/product/skuinfo/info/{skuId}")
     Result<SkuInfoVo> info(@PathVariable("skuId") Long skuId);
 }

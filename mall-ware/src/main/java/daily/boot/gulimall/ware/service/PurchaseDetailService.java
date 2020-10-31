@@ -33,7 +33,8 @@ public interface PurchaseDetailService extends IService<PurchaseDetailEntity> {
     /**
      * 通过Id和purchaseId批量更新
      * @param finishedItems
+     * @param oldStatus
      */
-    void updateBatchByIdAndPurchaseId(List<PurchaseDetailEntity> finishedItems);
+    void updateBatchByIdAndPurchaseId(List<PurchaseDetailEntity> finishedItems, int oldStatus);
 }
 

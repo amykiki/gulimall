@@ -17,5 +17,5 @@ import java.util.List;
 @Mapper
 public interface PurchaseDao extends BaseMapper<PurchaseEntity> {
     
-    void updateBatchAssgined(@Param("list") List<PurchaseEntity> purchaseList);
+    int updateBatchAssgined(@Param("list") List<PurchaseEntity> purchaseList);
 }
