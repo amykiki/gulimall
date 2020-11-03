@@ -16,6 +16,7 @@
         <commons.lang.version>2.6</commons.lang.version>
         <mysql.version>8.0.17</mysql.version>
         <javax.servlet.version>2.5</javax.servlet.version>
+        <fastjson.version>1.2.72</fastjson.version>
     </properties>
 
     <dependencies>
@@ -83,6 +84,12 @@
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.5.Final</version>
             <scope>compile</scope>
+        </dependency>
+        <!--fastjson-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
     </dependencies>
 

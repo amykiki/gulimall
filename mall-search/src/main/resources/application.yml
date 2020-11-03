@@ -1,0 +1,28 @@
+server:
+  port: 21000
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
+  elasticsearch:
+    rest:
+      uris:
+        - http://docker-serv:9200
+
+logging:
+  level:
+    daily.boot.gulimall.search: debug
+
+gulimall:
+  search:
+    es:
+      map-underscore-to-camel-case: true
+      index:
+        number-of-shards: 1
+        number-of-replicas: 0-1
+        auto-expand-replicas: true
+
+
+
