@@ -1,24 +1,23 @@
 package daily.boot.gulimall.ware.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import daily.boot.gulimall.common.utils.Result;
-import daily.boot.gulimall.service.api.feign.ProductFeignService;
-import daily.boot.gulimall.service.api.to.SkuInfoVo;
-import daily.boot.gulimall.ware.entity.PurchaseDetailEntity;
-import daily.boot.gulimall.ware.service.PurchaseDetailService;
-import jdk.nashorn.internal.ir.IfNode;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
+import daily.boot.gulimall.service.api.feign.ProductFeignService;
+import daily.boot.gulimall.service.api.to.SkuInfoVo;
 import daily.boot.gulimall.ware.dao.WareSkuDao;
+import daily.boot.gulimall.ware.entity.PurchaseDetailEntity;
 import daily.boot.gulimall.ware.entity.WareSkuEntity;
+import daily.boot.gulimall.ware.service.PurchaseDetailService;
 import daily.boot.gulimall.ware.service.WareSkuService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
@@ -64,7 +63,7 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 try {
                     Result<SkuInfoVo> info = productFeignService.info(detail.getSkuId());
                     log.info(info.toString());
-                    if (Objects.nonNull(info)) {
+                    if (Objects.nonNull(info) && info.isOk()) {
                         entity.setSkuName(info.getData().getSkuName());
                     } else {
                         log.warn("远程查询productFeignService.info({})信息为空！！", detail.getSkuId());

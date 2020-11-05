@@ -1,9 +1,9 @@
 package daily.boot.gulimall.order.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
-import daily.boot.gulimall.common.utils.Result;
 import daily.boot.gulimall.order.entity.OrderEntity;
 import daily.boot.gulimall.order.service.OrderService;
 import io.swagger.annotations.Api;

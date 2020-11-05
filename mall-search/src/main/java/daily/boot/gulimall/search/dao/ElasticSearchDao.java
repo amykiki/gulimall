@@ -1,14 +1,13 @@
 package daily.boot.gulimall.search.dao;
 
 import com.alibaba.fastjson.JSON;
-import daily.boot.gulimall.search.dto.ESPageInfo;
+import daily.boot.common.exception.BusinessException;
 import daily.boot.gulimall.search.elasticsearch.config.ElasticSearchConfig;
 import daily.boot.gulimall.search.elasticsearch.enums.ESFieldType;
 import daily.boot.gulimall.search.elasticsearch.metadata.ESDocHelper;
 import daily.boot.gulimall.search.elasticsearch.metadata.ESDocInfo;
 import daily.boot.gulimall.search.elasticsearch.metadata.ESFieldInfo;
 import daily.boot.gulimall.search.exception.ESErrorCode;
-import daily.boot.unified.dispose.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
@@ -30,10 +29,6 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.metrics.Avg;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,10 +37,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -149,7 +141,7 @@ public class ElasticSearchDao {
             client.update(updateRequest, COMMON_OPTIONS);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BusinessException(ESErrorCode.ES_DOC_ERROR, "更新索引文档 {" + indexName + "} 数据 {" + object + "} 失败");
+            throw new BusinessException(ESErrorCode.ES_UPDATE_ERROR, "更新索引文档 {" + indexName + "} 数据 {" + object + "} 失败");
         }
     }
     
@@ -159,7 +151,7 @@ public class ElasticSearchDao {
             client.delete(deleteRequest, COMMON_OPTIONS);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new BusinessException(ESErrorCode.ES_DOC_ERROR, "删除索引文档 {" + indexName + "} 数据id {" + id + "} 失败");
+            throw new BusinessException(ESErrorCode.ES_DELETE_ERROR, "删除索引文档 {" + indexName + "} 数据id {" + id + "} 失败");
         }
     }
     

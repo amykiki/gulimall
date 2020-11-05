@@ -4,6 +4,7 @@ import daily.boot.gulimall.search.elasticsearch.annotation.ESDocument;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESField;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESId;
 import daily.boot.gulimall.search.elasticsearch.enums.ESFieldType;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -11,7 +12,8 @@ import java.util.List;
 
 @Data
 @ESDocument(indexName = "gulimall_product", autoExpandReplicas = true, replicas = "0-1")
-public class SkuES {
+@ApiModel
+public class SkuEs {
     @ESId
     private Long skuId;
     
@@ -46,5 +48,5 @@ public class SkuES {
     private String catalogName;
     
     @ESField(type = ESFieldType.Nested)
-    private List<SkuAttrES> attrs;
+    private List<SkuAttrEs> attrs;
 }

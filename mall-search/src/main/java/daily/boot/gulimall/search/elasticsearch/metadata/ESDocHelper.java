@@ -1,5 +1,6 @@
 package daily.boot.gulimall.search.elasticsearch.metadata;
 
+import daily.boot.common.exception.BusinessException;
 import daily.boot.gulimall.common.utils.ReflectionUtil;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESDocument;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESField;
@@ -7,7 +8,6 @@ import daily.boot.gulimall.search.elasticsearch.annotation.ESId;
 import daily.boot.gulimall.search.elasticsearch.config.ElasticSearchConfig;
 import daily.boot.gulimall.search.elasticsearch.utils.StringExtUtils;
 import daily.boot.gulimall.search.exception.ESErrorCode;
-import daily.boot.unified.dispose.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.core.annotation.AnnotationUtils;

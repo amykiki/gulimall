@@ -3,10 +3,12 @@ package daily.boot.gulimall.search.entity;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESField;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESId;
 import daily.boot.gulimall.search.elasticsearch.enums.ESFieldType;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 @Data
-public class SkuAttrES {
+@ApiModel
+public class SkuAttrEs {
     @ESId
     private Long attrId;
     
