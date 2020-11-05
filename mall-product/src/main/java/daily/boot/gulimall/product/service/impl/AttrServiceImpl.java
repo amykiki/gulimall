@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import daily.boot.common.exception.BusinessException;
+import daily.boot.common.exception.error.CommonErrorCode;
 import daily.boot.gulimall.common.constant.ProductConstant;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
@@ -19,8 +21,6 @@ import daily.boot.gulimall.product.service.AttrService;
 import daily.boot.gulimall.product.service.CategoryService;
 import daily.boot.gulimall.product.vo.AttrRespVo;
 import daily.boot.gulimall.product.vo.AttrVo;
-import daily.boot.unified.dispose.exception.BusinessException;
-import daily.boot.unified.dispose.exception.error.CommonErrorCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -190,6 +190,11 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     
         IPage<AttrEntity> page = this.page(Query.getPage(pageQueryVo), queryWrapper);
         return PageInfo.of(page);
+    }
+    
+    @Override
+    public List<Long> selectableIds(List<Long> attrIds) {
+        return this.baseMapper.selectableIds(attrIds);
     }
     
     private String getCatelogName(Long catelogId) {

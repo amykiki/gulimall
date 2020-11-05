@@ -1,6 +1,6 @@
 package daily.boot.gulimall.ware.exception;
 
-import daily.boot.unified.dispose.exception.error.ErrorCode;
+import daily.boot.common.exception.error.ErrorCode;
 
 public enum WareErrorCode implements ErrorCode {
     WARE_PURCHASE_STATUS_ERROR("WARE_001", "采购单已不能合并采购需求"),

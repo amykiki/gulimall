@@ -11,6 +11,9 @@ import daily.boot.gulimall.search.exception.ESErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
+import org.elasticsearch.action.bulk.BulkItemResponse;
+import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -37,6 +40,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -230,5 +236,52 @@ public class ElasticSearchDao {
             }
         }
         builder.endObject();
+    }
+    
+    public boolean bulkSaveOrUpdate(List list, String indexName, Field idField) {
+        BulkRequest bulkRequest = null;
+        try {
+            bulkRequest = new BulkRequest();
+            for (Object instance : list) {
+                bulkRequest.add(new IndexRequest(indexName)
+                                             .id(getIdValue(idField, instance))
+                                             .source(JSON.toJSONString(instance, esConfig.getConfig()), XContentType.JSON));
+            }
+           
+            log.debug("bulkSaveOrUpdate -- bulkRequest : :{}", bulkRequest);
+            BulkResponse bulkResponse = client.bulk(bulkRequest, COMMON_OPTIONS);
+            List<String> succussIds = new ArrayList<>();
+            boolean hasFailures = false;
+            for (BulkItemResponse resp : bulkResponse) {
+                if (resp.isFailed()) {
+                    BulkItemResponse.Failure failure = resp.getFailure();
+                    log.warn("bulkSaveOrUpdate -- 批量失败，失败信息:{}", failure);
+                    hasFailures = true;
+                } else {
+                    succussIds.add(resp.getId());
+                }
+            }
+            return !hasFailures;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException(ESErrorCode.ES_BULK_ERROR, "批量创建/更新索引文档 {" + indexName + "} bulkRequest {" + bulkRequest + "} 失败");
+        }
+        
+    }
+    
+    /**
+     * 获取当前操作的genericInstance的主键ID
+     *
+     * @param object 实例对象
+     * @return 返回主键ID值
+     */
+    private String getIdValue(Field idField, Object object) {
+        try {
+            Object idValue = idField.get(object);
+            return idValue.toString();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

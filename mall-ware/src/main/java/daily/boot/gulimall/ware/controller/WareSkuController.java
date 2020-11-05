@@ -1,8 +1,10 @@
 package daily.boot.gulimall.ware.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.service.api.to.SkuHasStockTo;
 import daily.boot.gulimall.ware.entity.WareSkuEntity;
 import daily.boot.gulimall.ware.service.WareSkuService;
 import io.swagger.annotations.Api;
@@ -99,5 +101,11 @@ public class WareSkuController {
         PageInfo<WareSkuEntity> pageInfo = wareSkuService.queryPage(pageQueryVo, wareSkuEntity);
         return R.ok().put("page", pageInfo);
     }
-
+    
+    @PostMapping("/hasStock")
+    @ApiOperation(value = "sku是否有库存")
+    public Result<List<SkuHasStockTo>> getSkuHasStock(@RequestBody List<Long> skuIds) {
+        List<SkuHasStockTo> tos = wareSkuService.getSkuHasStock(skuIds);
+        return Result.ok(tos);
+    }
 }

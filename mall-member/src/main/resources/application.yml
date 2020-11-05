@@ -28,3 +28,4 @@ gulimall:
     order: gulimall-order
     coupon: gulimall-coupon
     product: gulimall-product
+    search: gulimall-search

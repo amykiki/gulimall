@@ -9,7 +9,7 @@ public enum ESErrorCode implements ErrorCode {
     ES_DOC_ERROR("ES_004", "ES-DOC操作失败"),
     ES_UPDATE_ERROR("ES_005", "ES-DELETE操作失败"),
     ES_DELETE_ERROR("ES_006", "ES-UPDATE操作失败"),
-    ES_BATCH_ERROR("ES_007", "ES-BATCH操作失败"),
+    ES_BULK_ERROR("ES_007", "ES-BATCH操作失败"),
     ES_SEARCH_ERROR("ES_008", "ES-SEARCH操作失败");
     
     private String code;

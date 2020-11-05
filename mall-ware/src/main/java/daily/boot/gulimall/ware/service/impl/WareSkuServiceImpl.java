@@ -1,6 +1,7 @@
 package daily.boot.gulimall.ware.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -9,6 +10,7 @@ import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.service.api.feign.ProductFeignService;
+import daily.boot.gulimall.service.api.to.SkuHasStockTo;
 import daily.boot.gulimall.service.api.to.SkuInfoVo;
 import daily.boot.gulimall.ware.dao.WareSkuDao;
 import daily.boot.gulimall.ware.entity.PurchaseDetailEntity;
@@ -19,8 +21,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 @Service("wareSkuService")
@@ -85,5 +90,29 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
             }
         
         });
+    }
+    
+    @Override
+    public List<SkuHasStockTo> getSkuHasStock(List<Long> skuIds) {
+        String ids = skuIds.stream().map(String::valueOf).collect(Collectors.joining(","));
+        QueryWrapper<WareSkuEntity> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("sku_id as skuId, ifnull(sum(stock - stock_locked), 0) as stockSum").inSql("sku_id", ids).groupBy("sku_id");
+        List<Map<String, Object>> mapList = this.listMaps(queryWrapper);
+        Map<Long, Integer> stockMap = mapList.stream()
+                                             //不知道为什么这里mp自动把stockSum的类型转为BigDecimal了
+                                             .collect(Collectors.toMap(item -> (Long) item.get("skuId"), item -> ((BigDecimal)item.get("stockSum")).intValue()));
+    
+        List<SkuHasStockTo> skuHasStockList = skuIds.stream().map(skuId -> {
+            SkuHasStockTo to = new SkuHasStockTo();
+            to.setSkuId(skuId);
+            if (stockMap.containsKey(skuId)) {
+                to.setHasStock(true);
+            } else {
+                to.setHasStock(false);
+            }
+            return to;
+        }).collect(Collectors.toList());
+    
+        return skuHasStockList;
     }
 }

@@ -15,6 +15,8 @@ public interface BaseESService<T> {
      */
     IndexResponse saveOrUpdate(T genericInstance);
     
+    boolean bulkSaveOrUpdate(List<T> list);
+    
     /**
      * 创建实体类T相关Index
      */

@@ -10,6 +10,6 @@ import java.util.List;
 public class SkuEsServiceImpl extends BaseESServiceImpl<SkuEs> implements SkuEsService {
     @Override
     public boolean statusUp(List<SkuEs> skuEsList) {
-        return false;
+        return this.bulkSaveOrUpdate(skuEsList);
     }
 }

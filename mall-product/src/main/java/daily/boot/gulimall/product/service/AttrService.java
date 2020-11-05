@@ -40,5 +40,7 @@ public interface AttrService extends IService<AttrEntity> {
     List<AttrEntity> listRelationAttr(Long attrGroupId);
     
     PageInfo<AttrEntity> getNoAttrRelation(PageQueryVo pageQueryVo, Long attrGroupId);
+    
+    List<Long> selectableIds(List<Long> attrIds);
 }
 

@@ -32,8 +32,9 @@ logging:
 gulimall:
   feign:
     coupon: gulimall-coupon
-    order: gulimall-order
     product: gulimall-product
+    search: gulimall-search
+    ware: gulimall-ware
 
 feign:
   client:

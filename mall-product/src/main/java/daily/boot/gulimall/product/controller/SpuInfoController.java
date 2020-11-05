@@ -108,7 +108,7 @@ public class SpuInfoController {
     @ApiOperation(value = "上架")
     //@RequiresPermissions("product:spuinfo:update")
     public R upSpu(@PathVariable("id") Long id){
-        spuInfoService.updateStatusById(id, 1);
+        spuInfoService.upStatus(id);
         
         return R.ok();
     }

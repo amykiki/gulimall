@@ -3,6 +3,7 @@ package daily.boot.gulimall.ware.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
+import daily.boot.gulimall.service.api.to.SkuHasStockTo;
 import daily.boot.gulimall.ware.entity.WareSkuEntity;
 
 import java.util.List;
@@ -29,5 +30,7 @@ public interface WareSkuService extends IService<WareSkuEntity> {
      * @param finishedIds
      */
     void addStockByPurchaseDetail(List<Long> finishedIds);
+    
+    List<SkuHasStockTo> getSkuHasStock(List<Long> skuIds);
 }
 

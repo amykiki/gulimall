@@ -50,6 +50,11 @@ public abstract class BaseESServiceImpl<T> implements BaseESService<T>, Initiali
     }
     
     @Override
+    public boolean bulkSaveOrUpdate(List<T> list) {
+        return esDao.bulkSaveOrUpdate(list, docInfo.getIndexName(), docInfo.getIdField());
+    }
+    
+    @Override
     public void createIndex() {
         boolean rtn = esDao.createIndexRequest(docInfo.getIndexName(), docInfo.getShards(), docInfo.isAutoExpandReplicas(), docInfo.getReplicas());
         if (rtn) {

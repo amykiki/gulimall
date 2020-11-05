@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import daily.boot.common.exception.BusinessException;
+import daily.boot.common.exception.error.CommonErrorCode;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
@@ -20,8 +22,6 @@ import daily.boot.gulimall.product.vo.SpuSaveVo;
 import daily.boot.gulimall.service.api.feign.CouponFeignService;
 import daily.boot.gulimall.service.api.to.MemberPriceTo;
 import daily.boot.gulimall.service.api.to.SkuReductionTo;
-import daily.boot.unified.dispose.exception.BusinessException;
-import daily.boot.unified.dispose.exception.error.CommonErrorCode;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -140,5 +140,10 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             }
         }
     
+    }
+    
+    @Override
+    public List<SkuInfoEntity> listBySpuId(Long spuId) {
+        return this.lambdaQuery().eq(SkuInfoEntity::getSpuId, spuId).list();
     }
 }

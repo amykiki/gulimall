@@ -39,3 +39,7 @@ build/
 *.~vsdx
 /daily-boot-basis/iotest/*
 /doc/RedBlack.pdf
+
+*.jpg
+/resources/static/**
+/mall-product/src/main/resources/static/index/**
