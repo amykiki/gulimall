@@ -11,7 +11,8 @@ public enum ESFieldType {
     Double("double"),
     Boolean("boolean"),
     Object("object"),
-    Keyword("keyword");
+    Keyword("keyword"),
+    Nested("nested");
     
     
     ESFieldType(String typeName) {

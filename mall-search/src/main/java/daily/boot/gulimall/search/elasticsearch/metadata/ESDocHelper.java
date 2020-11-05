@@ -36,6 +36,10 @@ public class ESDocHelper {
      * @return ES反射信息
      */
     public synchronized static ESDocInfo initTableInfo(Class<?> clazz, ElasticSearchConfig esConfig) {
+        boolean match = esConfig.getDocLocation().stream().anyMatch(location -> clazz.getName().contains(location));
+        if (!match) {
+            return null;
+        }
         ESDocInfo esDocInfo = ESDOC_INFO_CACHE.get(clazz);
         if (Objects.nonNull(esDocInfo)) {
             return esDocInfo;
@@ -53,6 +57,10 @@ public class ESDocHelper {
         ESDOC_INFO_CACHE.put(clazz, esDocInfo);
         
         return esDocInfo;
+    }
+    
+    public static ESDocInfo getEsDocInfo(Class<?> clazz) {
+        return ESDOC_INFO_CACHE.get(clazz);
     }
     
     private static void initESFields(Class<?> clazz, ESDocInfo esDocInfo, ElasticSearchConfig esConfig) {

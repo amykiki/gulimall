@@ -9,6 +9,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @Component
@@ -22,6 +26,10 @@ public class ElasticSearchConfig implements InitializingBean {
      * indexName是否使用下划线命名（默认 true:默认es-index下划线命名）
      */
     private boolean indexUnderline = true;
+    /**
+     * es实体类扫描包路径
+     */
+    private List<String> docLocation;
     
     /**
      * 索引配置信息

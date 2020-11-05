@@ -1,6 +1,8 @@
 package daily.boot.gulimall.search.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import daily.boot.gulimall.search.dao.ElasticSearchDao;
+import daily.boot.gulimall.search.dto.ESPageInfo;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESDocument;
 import daily.boot.gulimall.search.elasticsearch.annotation.ESId;
 import daily.boot.gulimall.search.elasticsearch.config.ElasticSearchConfig;
@@ -12,13 +14,22 @@ import daily.boot.unified.dispose.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.metrics.Avg;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.GenericTypeResolver;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 public abstract class BaseESServiceImpl<T> implements BaseESService<T>, InitializingBean {
@@ -54,6 +65,30 @@ public abstract class BaseESServiceImpl<T> implements BaseESService<T>, Initiali
             esDao.putMappingRequest(docInfo.getIndexName(), docInfo);
         }
         
+    }
+    
+    @Override
+    public ESPageInfo<T> search(SearchSourceBuilder searchSourceBuilder) {
+        SearchResponse searchResponse = esDao.search(docInfo.getIndexName(), searchSourceBuilder);
+        if (Objects.isNull(searchResponse)) {
+            return null;
+        }
+        ESPageInfo<T> info = new ESPageInfo<>();
+        SearchHits searchHits = searchResponse.getHits();
+        SearchHit[] hits = searchHits.getHits();
+        //获取查询结果
+        List<T> entities = Arrays.stream(hits).map(hit -> {
+            String sourceAsString = hit.getSourceAsString();
+            return JSON.parseObject(sourceAsString, genericClass);
+        }).collect(Collectors.toList());
+        info.setList(entities);
+    
+        //总查询结果
+        info.setTotalCount(searchHits.getTotalHits().value);
+        
+        //汇总结果
+        info.setAggregations(searchResponse.getAggregations());
+        return info;
     }
     
     /**

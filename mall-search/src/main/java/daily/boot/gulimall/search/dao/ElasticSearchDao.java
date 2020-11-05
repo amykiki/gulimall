@@ -1,8 +1,10 @@
 package daily.boot.gulimall.search.dao;
 
 import com.alibaba.fastjson.JSON;
+import daily.boot.gulimall.search.dto.ESPageInfo;
 import daily.boot.gulimall.search.elasticsearch.config.ElasticSearchConfig;
 import daily.boot.gulimall.search.elasticsearch.enums.ESFieldType;
+import daily.boot.gulimall.search.elasticsearch.metadata.ESDocHelper;
 import daily.boot.gulimall.search.elasticsearch.metadata.ESDocInfo;
 import daily.boot.gulimall.search.elasticsearch.metadata.ESFieldInfo;
 import daily.boot.gulimall.search.exception.ESErrorCode;
@@ -13,6 +15,8 @@ import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.support.master.AcknowledgedResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.HttpAsyncResponseConsumerFactory;
@@ -26,17 +30,26 @@ import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.springframework.beans.factory.InitializingBean;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.metrics.Avg;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Component
 @Slf4j
-public class ElasticSearchDao{
+public class ElasticSearchDao {
     
     private static final int ES_SHARDS = 1;
     private static final String ES_REPLICAS = "0";
@@ -45,7 +58,6 @@ public class ElasticSearchDao{
     
     @Resource(name = "elasticSearchConfig")
     private ElasticSearchConfig esConfig;
-    
     
     
     public static final RequestOptions COMMON_OPTIONS;
@@ -79,7 +91,7 @@ public class ElasticSearchDao{
         if (existIndex(indexName)) {
             return false;
         }
-    
+        
         try {
             CreateIndexRequest request = new CreateIndexRequest(indexName);
             request.settings(Settings.builder()
@@ -102,44 +114,18 @@ public class ElasticSearchDao{
         if (CollectionUtils.isEmpty(esDocInfo.getFieldList())) {
             return;
         }
-    
+        
         try {
             PutMappingRequest request = new PutMappingRequest(indexName);
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.startObject();
             {
-                builder.startObject("properties");
-                {
-                    for (ESFieldInfo esFieldInfo : esDocInfo.getFieldList()) {
-                        builder.startObject(esFieldInfo.getEsFieldName());
-                        {
-                            builder.field("type", esFieldInfo.getEsFieldType().typeName);
-                            String analyzer = esFieldInfo.getAnalyzer();
-                            if (StringUtils.isNotBlank(analyzer)) {
-                                builder.field("analyzer", analyzer);
-                            }
-                            if (ESFieldType.Text == esFieldInfo.getEsFieldType()) {
-                                builder.startObject("fields");
-                                {
-                                    builder.startObject("keyword");
-                                    {
-                                        builder.field("type", "keyword");
-                                        builder.field("ignore_above", 256);
-                                    }
-                                    builder.endObject();
-                                }
-                                builder.endObject();
-                            }
-                        }
-                        builder.endObject();
-                    }
-                }
-                builder.endObject();
+                buildDocMapping(builder, esDocInfo);
             }
             builder.endObject();
             request.source(builder);
             AcknowledgedResponse putMappingResponse = client.indices().putMapping(request, RequestOptions.DEFAULT);
-            log.info("PutMapping -- acknowledged : :{}", putMappingResponse.isAcknowledged());
+            log.debug("PutMapping -- acknowledged : :{}", putMappingResponse.isAcknowledged());
         } catch (IOException e) {
             e.printStackTrace();
             throw new BusinessException(ESErrorCode.ES_MAPPING_ERROR, "putMappingRequest方法异常");
@@ -181,7 +167,7 @@ public class ElasticSearchDao{
         try {
             IndexRequest request = new IndexRequest(indexName).id(id).source(JSON.toJSONString(instance, esConfig.getConfig()), XContentType.JSON);
             IndexResponse response = client.index(request, COMMON_OPTIONS);
-            log.info("saveOrUpdateRequest -- IndexResponse : :{}",response);
+            log.debug("saveOrUpdateRequest -- IndexResponse : :{}", response);
             return response;
         } catch (IOException e) {
             e.printStackTrace();
@@ -189,5 +175,68 @@ public class ElasticSearchDao{
         }
     }
     
+    public SearchResponse search(String indexName, SearchSourceBuilder sourceBuilder) {
+        try {
+            Assert.notNull(sourceBuilder, "search-SourceBuilder不能为空");
+            SearchRequest searchRequest = new SearchRequest(indexName);
+            searchRequest.source(sourceBuilder);
+            SearchResponse searchResponse = client.search(searchRequest, COMMON_OPTIONS);
+            log.debug("search -- searchResponse:{}", searchResponse);
+            return searchResponse;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new BusinessException(ESErrorCode.ES_SEARCH_ERROR, "查询索引文档 {" + sourceBuilder + "}异常-->" + e.getMessage());
+        }
+    }
     
+    private void buildDocMapping(XContentBuilder builder, ESDocInfo esDocInfo) throws IOException {
+        if (Objects.isNull(esDocInfo) || CollectionUtils.isEmpty(esDocInfo.getFieldList())) {
+            return;
+        }
+        
+        builder.startObject("properties");
+        {
+            for (ESFieldInfo esFieldInfo : esDocInfo.getFieldList()) {
+                builder.startObject(esFieldInfo.getEsFieldName());
+                {
+                    //分词器设置
+                    String analyzer = esFieldInfo.getAnalyzer();
+                    if (StringUtils.isNotBlank(analyzer)) {
+                        builder.field("analyzer", analyzer);
+                    }
+                    //是否索引
+                    if (!esFieldInfo.isIndex()) {
+                        builder.field("index", false);
+                    }
+                    //排序和数据聚合支持
+                    if (!esFieldInfo.isDocValues()) {
+                        builder.field("doc_values", false);
+                    }
+                    //类型
+                    builder.field("type", esFieldInfo.getEsFieldType().typeName);
+                    //类型为Text，增加默认的keyword字段
+                    if (ESFieldType.Text == esFieldInfo.getEsFieldType()) {
+                        builder.startObject("fields");
+                        {
+                            builder.startObject("keyword");
+                            {
+                                builder.field("type", "keyword");
+                                builder.field("ignore_above", 256);
+                            }
+                            builder.endObject();
+                        }
+                        builder.endObject();
+                    }
+                    //类型为nested，递归写
+                    if (ESFieldType.Nested == esFieldInfo.getEsFieldType()) {
+                        Class<?> nestedClazz = esFieldInfo.getPropertyType();
+                        ESDocInfo nestedDocInfo = ESDocHelper.getEsDocInfo(nestedClazz);
+                        buildDocMapping(builder, nestedDocInfo);
+                    }
+                }
+                builder.endObject();
+            }
+        }
+        builder.endObject();
+    }
 }

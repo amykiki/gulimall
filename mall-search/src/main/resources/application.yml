@@ -19,10 +19,14 @@ gulimall:
   search:
     es:
       map-underscore-to-camel-case: true
+      index-underline: true
       index:
         number-of-shards: 1
         number-of-replicas: 0-1
         auto-expand-replicas: true
+      doc-location:
+        - daily.boot.gulimall.search
+
 
 
 

@@ -30,4 +30,21 @@ public @interface ESField {
     boolean exist() default true;
     
     String analyzer() default "";
+    
+    /**
+     * 默认true会检索该字段
+     * false 不检索该字段
+     * @return
+     */
+    boolean index() default true;
+    
+    /**
+     * 倒排索引可以提供全文检索能力，但是无法提供对排序和数据聚合的支持。
+     * doc_value采用了面向列的存储方式存储一个field的内容，
+     * 可以实现高效的排序和聚合。
+     * 默认情况下，ES几乎会为所有类型的字段存储doc_value
+     * 如果不需要对某个字段进行排序或者聚合，则可以关闭该字段的doc_value存储
+     * @return
+     */
+    boolean docValues() default true;
 }
