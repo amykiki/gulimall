@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.CategoryEntity;
+import daily.boot.gulimall.product.vo.Catelog2Vo;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -40,5 +42,10 @@ public interface CategoryService extends IService<CategoryEntity> {
     CategoryEntity getSimpleCategoryEntityById(Long catId);
     
     void updateCascaded(CategoryEntity category);
+    
+    //查出所有一级分类
+    List<CategoryEntity> getLevel1Categorys();
+    
+    Map<String, List<Catelog2Vo>> getCatalogJson();
 }
 

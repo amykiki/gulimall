@@ -12,7 +12,7 @@ public class SkuAttrEs {
     @ESId
     private Long attrId;
     
-    @ESField(type = ESFieldType.Keyword, index = false, docValues = false)
+    @ESField(type = ESFieldType.Keyword)
     private String attrName;
     
     @ESField(type = ESFieldType.Keyword)

@@ -156,7 +156,23 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
                                                       BeanUtils.copyProperties(attr, skuAttr);
                                                       return skuAttr;
                                                   }).collect(Collectors.toList());
-    
+        //把4G:5G类似这样的一个属性包含多个值的情况扁平化，使得es搜索时更方便
+        List<SkuEsTo.Attr> skuEssAttrs = new ArrayList<>();
+        for (SkuEsTo.Attr attr : skuEsAttr) {
+            if (attr.getAttrValue().contains(";")) {
+                String[] attrValues = attr.getAttrValue().split(";");
+                for (String attrValue : attrValues) {
+                    SkuEsTo.Attr newAttr = new SkuEsTo.Attr();
+                    newAttr.setAttrName(attr.getAttrName());
+                    newAttr.setAttrId(attr.getAttrId());
+                    newAttr.setAttrValue(attrValue);
+                    skuEssAttrs.add(newAttr);
+                }
+            }else {
+                skuEssAttrs.add(attr);
+            }
+        }
+                 
         List<Long> skuIds = new ArrayList<>();
         Set<Long> categorySet = new HashSet<>();
         Set<Long> brandSet = new HashSet<>();
@@ -217,7 +233,7 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             esTo.setCatalogName(categoryEntity.getName());
             
             //设置可检索的规格属性
-            esTo.setAttrs(skuEsAttr);
+            esTo.setAttrs(skuEssAttrs);
             
             //复制相同其他属性
             BeanUtils.copyProperties(sku, esTo);

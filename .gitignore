@@ -41,5 +41,6 @@ build/
 /doc/RedBlack.pdf
 
 *.jpg
-/resources/static/**
+**/resources/static/**
 /mall-product/src/main/resources/static/index/**
+/mall-product/src/main/resources/static/static/index/

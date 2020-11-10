@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@ESDocument(indexName = "gulimall_product", autoExpandReplicas = true, replicas = "0-1")
+@ESDocument(indexName = "cy_gulimall", autoExpandReplicas = true, replicas = "0-1")
 @ApiModel
 public class SkuEs {
     @ESId
@@ -25,7 +25,7 @@ public class SkuEs {
     @ESField(type = ESFieldType.Keyword)
     private BigDecimal skuPrice;
     
-    @ESField(type = ESFieldType.Keyword, index = false, docValues = false)
+    @ESField(type = ESFieldType.Keyword)
     private String skuImg;
     
     private Long saleCount;
@@ -38,13 +38,13 @@ public class SkuEs {
     
     private Long catalogId;
     
-    @ESField(type = ESFieldType.Keyword, index = false, docValues = false)
+    @ESField(type = ESFieldType.Keyword)
     private String brandName;
     
-    @ESField(type = ESFieldType.Keyword, index = false, docValues = false)
+    @ESField(type = ESFieldType.Keyword)
     private String brandImg;
     
-    @ESField(type = ESFieldType.Keyword, index = false, docValues = false)
+    @ESField(type = ESFieldType.Keyword)
     private String catalogName;
     
     @ESField(type = ESFieldType.Nested)

@@ -10,6 +10,9 @@ spring:
     rest:
       uris:
         - http://docker-serv:9200
+  # 关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
 
 logging:
   level:

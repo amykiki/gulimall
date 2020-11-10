@@ -1,0 +1,85 @@
+# GET /gulimall_products/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "sku_title": "华为"
+          }
+        }
+      ],
+      "filter": [
+        {
+          "term": {
+            "catalog_id": "225"
+          }
+        },
+        {
+          "terms": {
+            "brand_id": [
+              "24",
+              "47",
+              "272"
+            ]
+          }
+        },
+        {
+          "nested": {
+            "path": "attrs",
+            "query": {
+              "bool": {
+                "must": [
+                  {
+                    "term": {
+                      "attrs.attr_id": {
+                        "value": "12"
+                      }
+                    }
+                  },
+                  {
+                    "terms": {
+                      "attrs.attr_value": [
+                        "高通(Qualcomm)",
+                        "海思(Hisilicon)"
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "range": {
+            "sku_price": {
+              "gte": 5000,
+              "lte": 9000
+            }
+          }
+        },
+        {
+          "term": {
+            "has_stock": "true"
+          }
+        }
+      ]
+    }
+  },
+  "sort": [
+    {
+      "sku_price": {
+        "order": "desc"
+      }
+    }
+  ],
+  "from": 0,
+  "size": 8,
+  "highlight": {
+    "fields": {
+      "sku_title": {}
+    },
+    "pre_tags": "<b style='color:red'>",
+    "post_tags": "</b>"
+  }
+}
