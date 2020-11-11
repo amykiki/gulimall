@@ -1260,7 +1260,7 @@
                                 </a>
                                 <a class="page_a"
                                    th:attr="pn=${navs},style=${navs == result.pageNum?'border: 0;color:#ee2222;background: #fff':''}"
-                                   th:each="navs : ${result.pageNavs}">[[${navs}]]</a>
+                                   th:each="navs : ${#numbers.sequence(1,result.totalPages)}">[[${navs}]]</a>
                                 <a class="page_a" th:attr="pn=${result.pageNum + 1}"
                                    th:if="${result.pageNum<result.totalPages}">
                                     下一页 >
@@ -2035,12 +2035,16 @@
         var href = location.href;
         if (href.indexOf("pageNum") != -1) {
             //替换pageNum
-            location.href = replaceParamVal(href, "pageNum", pn) + "&pageSize=" + 4;
+            href = replaceParamVal(href, "pageNum", pn);
         } else {
-            location.href = location.href + "&pageNum=" + pn + "&pageSize=" + 4;
+            href = location.href + "&pageNum=" + pn;
         }
+        if (href.indexOf("pageSize") === -1) {
+            href = replaceParamVal(href, "pageSize", 4);
+        }
+        location.href = href;
         return false;
-    })
+    });
 
     function replaceParamVal(url, paramName, replaceVal,forceAdd) {
         var oUrl = url.toString();

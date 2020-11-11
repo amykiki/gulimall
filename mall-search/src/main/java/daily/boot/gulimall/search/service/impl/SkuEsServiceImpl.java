@@ -74,7 +74,7 @@ public class SkuEsServiceImpl extends BaseESServiceImpl<SkuEs> implements SkuEsS
             }
             return skuEs;
         }).collect(Collectors.toList());
-        result.setProducts(skuEsList);
+        result.setProduct(skuEsList);
     
         //3. 设置聚合数据
         Map<String, Aggregation> aggregationMap = searchInfo.getAggregations().asMap();
@@ -134,10 +134,10 @@ public class SkuEsServiceImpl extends BaseESServiceImpl<SkuEs> implements SkuEsS
             List<String> attrValues = attrValueAgg.getBuckets().stream()
                                                   .map(MultiBucketsAggregation.Bucket::getKeyAsString)
                                                   .collect(Collectors.toList());
-            vo.setAttrValues(attrValues);
+            vo.setAttrValue(attrValues);
             return vo;
         }).collect(Collectors.toList());
-        result.setAttr(attrVos);
+        result.setAttrs(attrVos);
         
         return result;
     }
