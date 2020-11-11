@@ -35,4 +35,9 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueDao
         }).collect(Collectors.toList());
         this.saveBatch(entities);
     }
+    
+    @Override
+    public List<SkuSaleAttrValueEntity> listBySkuIds(List<Long> skuIds) {
+        return this.lambdaQuery().in(SkuSaleAttrValueEntity::getSkuId, skuIds).list();
+    }
 }

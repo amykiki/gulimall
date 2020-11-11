@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @ApiModel("搜索页面结果Model")
-public class SearchResult {
+public class SkuSearchResult {
     @ApiModelProperty("查询到的所有商品信息")
     private List<SkuEs> products;
     @ApiModelProperty("当前页码")

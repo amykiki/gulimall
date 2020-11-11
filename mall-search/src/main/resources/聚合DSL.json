@@ -1,5 +1,3 @@
-# 嵌入式属性的查询，聚合，分析都应该用嵌入式的方式
-GET /gulimall_products/_search
 {
   "query": {
     "match_all": {}

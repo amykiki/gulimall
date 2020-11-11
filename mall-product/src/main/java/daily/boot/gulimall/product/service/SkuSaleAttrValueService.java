@@ -25,5 +25,12 @@ public interface SkuSaleAttrValueService extends IService<SkuSaleAttrValueEntity
     PageInfo<SkuSaleAttrValueEntity> queryPage(PageQueryVo queryVo);
     
     void save(Long skuId, List<SpuSaveVo.Skus.SaleAttr> attrs);
+    
+    /**
+     * 根据skuId查询销售属性
+     * @param skuIds
+     * @return
+     */
+    List<SkuSaleAttrValueEntity> listBySkuIds(List<Long> skuIds);
 }
 

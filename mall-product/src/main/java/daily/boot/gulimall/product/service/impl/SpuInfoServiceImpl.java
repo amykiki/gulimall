@@ -42,6 +42,8 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
     @Autowired
     private ProductAttrValueService productAttrValueService;
     @Autowired
+    private SkuSaleAttrValueService skuSaleAttrValueService;
+    @Autowired
     private SkuInfoService skuInfoService;
     @Autowired
     private CouponFeignService couponFeignService;
@@ -203,49 +205,60 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         List<BrandEntity> brandEntities = brandService.listByIds(new ArrayList<>(brandSet));
         Map<Long, BrandEntity> brandEntityMap = brandEntities.stream().collect(Collectors.toMap(BrandEntity::getBrandId, Function.identity()));
         
-        //6. 封装每个SKU的ES消息
+        //6. 批量获取每个SKU的销售属性
+        List<SkuSaleAttrValueEntity> skuSaleAttrs = skuSaleAttrValueService.listBySkuIds(skuIds);
+        Map<Long, List<SkuEsTo.Attr>> skuSaleAttrMap = skuSaleAttrs.stream()
+                                                            .collect(Collectors.toMap(SkuSaleAttrValueEntity::getSkuId,
+                                                                                      a -> new ArrayList<>(Collections.singletonList(new SkuEsTo.Attr(a.getAttrId(), a.getAttrName(), a.getAttrValue()))),
+                                                                                      (List<SkuEsTo.Attr> oldList, List<SkuEsTo.Attr> newList) -> {
+                                                                                          oldList.addAll(newList);
+                                                                                          return oldList;
+                                                                                      }));
+        //7. 封装每个SKU的ES消息
         Map<Long, Boolean> finalSkuStockMap = skuStockMap;
         List<SkuEsTo> skuEsToList = skuInfoEntities.stream().map(sku -> {
             //组装需要的数据
             SkuEsTo esTo = new SkuEsTo();
             esTo.setSkuPrice(sku.getPrice());
             esTo.setSkuImg(sku.getSkuDefaultImg());
-            
+
             //设置库存信息,远程服务调用失败，则默认有库存
             if (finalSkuStockMap == null) {
                 esTo.setHasStock(true);
             } else {
                 esTo.setHasStock(finalSkuStockMap.get(sku.getSkuId()));
             }
-            
+
             //设置默认热度评分
             esTo.setHotScore(0L);
-            
+
             //设置品牌信息
             BrandEntity brandEntity = brandEntityMap.get(sku.getBrandId());
             esTo.setBrandId(brandEntity.getBrandId());
             esTo.setBrandName(brandEntity.getName());
             esTo.setBrandImg(brandEntity.getLogo());
-            
+
             //设置分类信息
             CategoryEntity categoryEntity = categoryEntityMap.get(sku.getCatelogId());
             esTo.setCatalogId(categoryEntity.getCatId());
             esTo.setCatalogName(categoryEntity.getName());
-            
+
+            //设置每个sku单独销售属性
+            esTo.setAttrs(skuSaleAttrMap.get(sku.getSkuId()));
             //设置可检索的规格属性
-            esTo.setAttrs(skuEssAttrs);
-            
+            esTo.getAttrs().addAll(skuEssAttrs);
+
             //复制相同其他属性
             BeanUtils.copyProperties(sku, esTo);
             return esTo;
         }).collect(Collectors.toList());
-    
+
         Result<Boolean> esRtn = null;
         try {
-            //7. 将数据发送给es保存
+            //8. 将数据发送给es保存
             esRtn = searchFeignService.productStatusUp(skuEsToList);
             //远程调用成功
-            //8修改当前spu的状态
+            //9修改当前spu的状态
             if (Objects.nonNull(esRtn) && esRtn.getData()) {
                 this.updateStatusById(spuId, ProductConstant.ProductStatusEnum.SPU_UP.getCode());
             }

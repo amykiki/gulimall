@@ -1,7 +1,9 @@
 package daily.boot.gulimall.service.api.to;
 
 import io.swagger.annotations.ApiModel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -27,9 +29,12 @@ public class SkuEsTo {
     
     @Data
     @ApiModel
+    @AllArgsConstructor
+    @NoArgsConstructor
     public static class Attr {
         private Long attrId;
         private String attrName;
         private String attrValue;
+        
     }
 }

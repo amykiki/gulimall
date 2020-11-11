@@ -1,4 +1,4 @@
-# GET /gulimall_products/_search
+
 {
   "query": {
     "bool": {
@@ -64,6 +64,69 @@
           }
         }
       ]
+    }
+  },
+  "aggs": {
+    "brand_agg": {
+      "terms": {
+        "field": "brand_id",
+        "size": 10
+      },
+      "aggs": {
+        "brand_name_agg": {
+          "terms": {
+            "field": "brand_name",
+            "size": 10
+          }
+        },
+        "brand_img_agg": {
+          "terms": {
+            "field": "brand_img",
+            "size": 10
+          }
+        }
+      }
+    },
+    "catalog_aggs": {
+      "terms": {
+        "field": "catalog_id",
+        "size": 10
+      },
+      "aggs": {
+        "catalog_name_agg": {
+          "terms": {
+            "field": "catalog_name",
+            "size": 10
+          }
+        }
+      }
+    },
+    "attr_agg": {
+      "nested": {
+        "path": "attrs"
+      },
+      "aggs": {
+        "attr_id_agg": {
+          "terms": {
+            "field": "attrs.attr_id",
+            "size": 10
+          },
+          "aggs": {
+            "attr_name_agg": {
+              "terms": {
+                "field": "attrs.attr_name",
+                "size": 10
+              }
+            },
+            "attr_value_agg": {
+              "terms": {
+                "field": "attrs.attr_value",
+                "size": 10
+              }
+            }
+          }
+        }
+      }
     }
   },
   "sort": [

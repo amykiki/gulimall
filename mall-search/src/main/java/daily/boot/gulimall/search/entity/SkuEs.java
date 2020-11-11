@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
-@ESDocument(indexName = "cy_gulimall", autoExpandReplicas = true, replicas = "0-1")
+@ESDocument(indexName = "gulimall_products", autoExpandReplicas = true, replicas = "0-1")
 @ApiModel
 public class SkuEs {
     @ESId

@@ -1,5 +1,6 @@
 package daily.boot.gulimall.product.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
@@ -27,6 +28,12 @@ import java.util.List;
 public class SkuSaleAttrValueController {
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
+    
+    @GetMapping("/listbySkuIds")
+    public Result<List<SkuSaleAttrValueEntity>> listBySkuIds(@RequestParam("skuIds") List<Long> skuIds) {
+        List<SkuSaleAttrValueEntity> skuSaleAttrValueEntities = skuSaleAttrValueService.listBySkuIds(skuIds);
+        return Result.ok(skuSaleAttrValueEntities);
+    }
 
     /**
      * 列表

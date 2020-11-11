@@ -2035,9 +2035,9 @@
         var href = location.href;
         if (href.indexOf("pageNum") != -1) {
             //替换pageNum
-            location.href = replaceParamVal(href, "pageNum", pn);
+            location.href = replaceParamVal(href, "pageNum", pn) + "&pageSize=" + 4;
         } else {
-            location.href = location.href + "&pageNum=" + pn;
+            location.href = location.href + "&pageNum=" + pn + "&pageSize=" + 4;
         }
         return false;
     })
