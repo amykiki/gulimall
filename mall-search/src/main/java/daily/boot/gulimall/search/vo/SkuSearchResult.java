@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -26,6 +27,8 @@ public class SkuSearchResult {
     private List<CatalogVo> catalogs;
     @ApiModelProperty("面包屑导航数据")
     private List<NavVo> navs;
+    @ApiModelProperty("面包屑筛选的属性的ID，包括在这里面的属性在筛选条件不显示")
+    private List<Long> attrIds = new ArrayList<>();
     
     @Data
     @ApiModel("返回给前端品牌信息")

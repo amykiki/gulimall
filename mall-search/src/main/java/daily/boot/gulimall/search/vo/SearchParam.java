@@ -27,4 +27,6 @@ public class SearchParam {
     private Integer pageNum = 1;
     @ApiModelProperty("每页显示个数")
     private Integer pageSize = 4;
+    @ApiModelProperty(value = "用来生成面包屑导航连接", required = false)
+    private String reqUrl;
 }

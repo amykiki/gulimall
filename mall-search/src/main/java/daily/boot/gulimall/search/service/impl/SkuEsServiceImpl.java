@@ -29,9 +29,11 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,14 +45,14 @@ public class SkuEsServiceImpl extends BaseESServiceImpl<SkuEs> implements SkuEsS
     }
     
     @Override
-    public SkuSearchResult skuSearch(SearchParam param) {
+    public SkuSearchResult skuSearch(SearchParam param, String queryString) {
         
         SearchSourceBuilder sourceBuilder = buildSearchSouceBuilder(param);
         ESPageInfo<SkuEs> search = this.search(sourceBuilder);
-        return buildSearchResult(search, param);
+        return buildSearchResult(search, param, queryString);
     }
     
-    private SkuSearchResult buildSearchResult(ESPageInfo<SkuEs> searchInfo, SearchParam param) {
+    private SkuSearchResult buildSearchResult(ESPageInfo<SkuEs> searchInfo, SearchParam param, String queryString) {
         SkuSearchResult result = new SkuSearchResult();
         //1. 设置分页参数
         Integer pageSize = param.getPageSize();
@@ -139,7 +141,60 @@ public class SkuEsServiceImpl extends BaseESServiceImpl<SkuEs> implements SkuEsS
         }).collect(Collectors.toList());
         result.setAttrs(attrVos);
         
+        List<SkuSearchResult.NavVo> navVoList = new ArrayList<>();
+        //设置面包屑导航
+        if (!CollectionUtils.isEmpty(param.getBrandId())) {
+            Map<Long, String> brandMap = brandVos.stream()
+                                                 .collect(Collectors.toMap(SkuSearchResult.BrandVo::getBrandId, SkuSearchResult.BrandVo::getBrandName));
+    
+            SkuSearchResult.NavVo brandNav = new SkuSearchResult.NavVo();
+            brandNav.setNavName("品牌");
+            String values = param.getBrandId().stream().map(brandMap::get).collect(Collectors.joining(", "));
+            brandNav.setNavValue(values);
+            String regex = "(&)?brandId=.*?(?=&|$)";
+            String link = queryString.replaceAll(regex, "");
+            brandNav.setLink(getNavLink(param.getReqUrl(), link));
+            navVoList.add(brandNav);
+        }
+    
+        //设置属性的面包屑导航
+        //catalog3Id=225&pageSize=8&attrs=4_%E7%9F%B3%E5%A2%A8%E8%89%B2:%E6%B5%B7%E8%93%9D%E8%89%B2&attrs=1_5G
+        //catalog3Id=225&pageSize=8&attrs=4_%E7%9F%B3%E5%A2%A8%E8%89%B2:%E6%B5%B7%E8%93%9D%E8%89%B2&attrs=1_5G&brandId=47
+        //attrs=4_%E7%9F%B3%E5%A2%A8%E8%89%B2:%E6%B5%B7%E8%93%9D%E8%89%B2&attrs=1_5G&brandId=47
+        if (!CollectionUtils.isEmpty(param.getAttrs())) {
+            Map<Long, String> attrMap = attrVos.stream()
+                                                 .collect(Collectors.toMap(SkuSearchResult.AttrVo::getAttrId, SkuSearchResult.AttrVo::getAttrName));
+            List<SkuSearchResult.NavVo> attrNavs = param.getAttrs().stream().map(a -> {
+                String[] s = a.split("_");
+                Long attrId = Long.valueOf(s[0]);
+                //把筛选出的attrId加到面包屑筛选的属性的ID，包括在这里面的属性在筛选条件不显示
+                result.getAttrIds().add(attrId);
+                SkuSearchResult.NavVo vo = new SkuSearchResult.NavVo();
+                vo.setNavName(attrMap.get(attrId));
+                vo.setNavValue(s[1].replace(":", ", "));
+                String regex = "(&)?attrs=" + attrId + "_.*?(?=&|$)";
+                String link = queryString.replaceAll(regex, "");
+                vo.setLink(getNavLink(param.getReqUrl(), link));
+                return vo;
+            }).collect(Collectors.toList());
+            navVoList.addAll(attrNavs);
+        }
+        
+        if (!CollectionUtils.isEmpty(navVoList)) {
+            result.setNavs(navVoList);
+        }
+        
         return result;
+    }
+    
+    private String getNavLink(String url, String link) {
+        if (link.startsWith("&")) {
+            link = link.substring(1);
+        }
+        if (StringUtils.isNotBlank(link)) {
+            return url + "?" + link;
+        }
+        return url;
     }
     
     private SearchSourceBuilder buildSearchSouceBuilder(SearchParam param) {
