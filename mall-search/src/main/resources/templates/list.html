@@ -1061,19 +1061,19 @@
                                th:attr="style=${(#strings.isEmpty(p) || #strings.startsWith(p,'hotScore')) ?
                                    'color: #fff; border-color: #e4393c; background: #e4393c;':'color: #333; border-color: #ccc; background: #fff;' }">
                                 综合排序[[${(!#strings.isEmpty(p) && #strings.startsWith(p,'hotScore') &&
-                                #strings.endsWith(p,'desc')) ?'↑':'↓' }]]</a>
+                                #strings.endsWith(p,'asc')) ?'↑':'↓' }]]</a>
                             <a sort="saleCount"
                                th:class="${(!#strings.isEmpty(p) && #strings.startsWith(p,'saleCount') && #strings.endsWith(p,'desc')) ? 'sort_a desc' : 'sort_a'}"
                                th:attr="style=${(!#strings.isEmpty(p) && #strings.startsWith(p,'saleCount')) ?
                                    'color: #fff; border-color: #e4393c; background: #e4393c;':'color: #333; border-color: #ccc; background: #fff;' }">
                                 销量[[${(!#strings.isEmpty(p) && #strings.startsWith(p,'saleCount') &&
-                                #strings.endsWith(p,'desc'))?'↑':'↓' }]]</a>
+                                #strings.endsWith(p,'asc'))?'↑':'↓' }]]</a>
                             <a sort="skuPrice"
                                th:class="${(!#strings.isEmpty(p) && #strings.startsWith(p,'skuPrice') && #strings.endsWith(p,'desc')) ? 'sort_a desc' : 'sort_a'}"
                                th:attr="style=${(!#strings.isEmpty(p) && #strings.startsWith(p,'skuPrice')) ?
                                    'color: #fff; border-color: #e4393c; background: #e4393c;':'color: #333; border-color: #ccc; background: #fff;' }">
                                 价格[[${(!#strings.isEmpty(p) && #strings.startsWith(p,'skuPrice') &&
-                                #strings.endsWith(p,'desc'))?'↑':'↓' }]]</a>
+                                #strings.endsWith(p,'asc'))?'↑':'↓' }]]</a>
                             <a sort="hotScore" class="sort_a">评论分</a>
                             <a sort="hotScore" class="sort_a">上架时间</a>
                             <input id="skuPriceFrom" type="number"
@@ -2029,11 +2029,13 @@
             url = replaceParamVal(url, "pageNum", 1);
         }
         location.href = url;
+        return false;
     }
 
 
     function searchByKeyword() {
-        searchProducts("keyword", $("#keyword_input").val());
+        location.href = replaceParamVal(location.href, "keyword", $("#keyword_input").val(),false);
+        return false;
     }
 
     function showNavs(name, navs) {
@@ -2106,6 +2108,7 @@
         // color: #fff; border-color: #e4393c; background: #e4393c
         $(".sort_a").css({"color": "#333", "border-color": "#ccc", "background": "#fff"});
         $(".sort_a").each(function () {
+            console.log("去除其他排序标志...", $(this).text())
             let text = $(this).text().replace("↓", "").replace("↑", "");
             $(this).text(text);
         })
@@ -2128,9 +2131,17 @@
     $("#skuPriceSearchBtn").click(function () {
         let from = $(`#skuPriceFrom`).val();
         let to = $(`#skuPriceTo`).val();
-
+        if ((from === null || from === undefined || from === '') && (to === null || to === undefined || to === '')) {
+            location.href = removeParamVal(location.href, "skuPrice");
+            return false;
+        }
         let query = from + "_" + to;
-        location.href = replaceParamVal(location.href, "skuPrice", query,false);
+        var url = replaceParamVal(location.href, "skuPrice", query,false);
+        if (url.indexOf("pageNum") !== -1) {
+            //替换pageNum
+            url = replaceParamVal(url, "pageNum", 1);
+        }
+        location.href = url;
     });
 
 
@@ -2141,12 +2152,7 @@
         if( $(this).prop("checked") ) {
             url = replaceParamVal(url,"hasStock",1,false);
         } else {
-            var re = eval('/(&)?(hasStock=)([^&]*)/gi');
-            url = (url+"").replace(re,"");
-        }
-        //去除hasStock后，按照这个正则，可能会出现?&的情况，仍需替换
-        if (url.indexOf("?&") !== -1) {
-            url = (url+"").replace("?&","?");
+            url = removeParamVal(url, "hasStock")
         }
         if (url.indexOf("pageNum") !== -1) {
             //替换pageNum
@@ -2156,6 +2162,15 @@
         return false;
     });
 
+    function removeParamVal(url, paramName) {
+        var re = eval('/(&)?(' + paramName + '=)([^&]*)/gi');
+        url = (url+"").replace(re,"");
+        //去除param后，按照这个正则，可能会出现?&的情况，仍需替换
+        if (url.indexOf("?&") !== -1) {
+            url = (url+"").replace("?&","?");
+        }
+        return url;
+    }
 
 </script>
 </body>
