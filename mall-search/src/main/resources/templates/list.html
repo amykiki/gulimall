@@ -2022,8 +2022,13 @@
 
 
     function searchProducts(name, value) {
-        //原來的页面
-        location.href = replaceParamVal(location.href,name,value,true)
+        //原來的页面，每次搜索，pageNumer都应该从1开始
+        var url  = replaceParamVal(location.href,name,value,true);
+        if (url.indexOf("pageNum") !== -1) {
+            //替换pageNum
+            url = replaceParamVal(url, "pageNum", 1);
+        }
+        location.href = url;
     }
 
 
@@ -2130,13 +2135,24 @@
 
 
     $("#showHasStock").change(function () {
-        alert( $(this).prop("checked") );
+        // alert( $(this).prop("checked") );
+        //查看有无货，也是搜索条件变动，因此需要把pageNum重置为1
+        var url = location.href;
         if( $(this).prop("checked") ) {
-            location.href = replaceParamVal(location.href,"hasStock",1,false);
+            url = replaceParamVal(url,"hasStock",1,false);
         } else {
-            let re = eval('/(hasStock=)([^&]*)/gi');
-            location.href = (location.href+"").replace(re,"");
+            var re = eval('/(&)?(hasStock=)([^&]*)/gi');
+            url = (url+"").replace(re,"");
         }
+        //去除hasStock后，按照这个正则，可能会出现?&的情况，仍需替换
+        if (url.indexOf("?&") !== -1) {
+            url = (url+"").replace("?&","?");
+        }
+        if (url.indexOf("pageNum") !== -1) {
+            //替换pageNum
+            url = replaceParamVal(url, "pageNum", 1);
+        }
+        location.href = url;
         return false;
     });
 
