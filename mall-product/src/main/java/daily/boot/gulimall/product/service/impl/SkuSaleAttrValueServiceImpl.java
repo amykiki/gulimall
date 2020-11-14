@@ -1,5 +1,6 @@
 package daily.boot.gulimall.product.service.impl;
 
+import daily.boot.gulimall.product.vo.SkuItemVo;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,10 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueDao
     @Override
     public List<SkuSaleAttrValueEntity> listBySkuIds(List<Long> skuIds) {
         return this.lambdaQuery().in(SkuSaleAttrValueEntity::getSkuId, skuIds).list();
+    }
+    
+    @Override
+    public List<SkuItemVo.SkuItemSaleAttr> listSaleAttrBySpuId(Long spuId) {
+        return this.baseMapper.listSaleAttrBySpuId(spuId);
     }
 }

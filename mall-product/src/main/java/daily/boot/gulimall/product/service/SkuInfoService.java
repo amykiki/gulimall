@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.product.entity.SkuInfoEntity;
 import daily.boot.gulimall.product.entity.SpuInfoEntity;
+import daily.boot.gulimall.product.vo.SkuItemVo;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
 
 import java.util.List;
@@ -29,5 +30,7 @@ public interface SkuInfoService extends IService<SkuInfoEntity> {
     void save(SpuInfoEntity spuInfoEntity, List<SpuSaveVo.Skus> skus);
     
     List<SkuInfoEntity> listBySpuId(Long spuId);
+    
+    SkuItemVo item(Long skuId);
 }
 

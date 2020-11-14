@@ -7,6 +7,7 @@ import daily.boot.gulimall.product.entity.AttrEntity;
 import daily.boot.gulimall.product.service.AttrService;
 import daily.boot.gulimall.product.vo.AttrGroupWithAttrsVo;
 import daily.boot.gulimall.product.vo.AttrVo;
+import daily.boot.gulimall.product.vo.SkuItemVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,5 +67,10 @@ public class AttrGroupServiceImpl extends ServiceImpl<AttrGroupDao, AttrGroupEnt
             vo.setAttrs(attrVos);
             return vo;
         }).collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<SkuItemVo.SpuItemAttrGroup> listAttrGroupWithAttrsBySpuId(Long spuId) {
+        return  this.baseMapper.listAttrGroupWithAttrsBySpuId(spuId);
     }
 }

@@ -3,6 +3,7 @@ package daily.boot.gulimall.product.web;
 import daily.boot.gulimall.product.entity.CategoryEntity;
 import daily.boot.gulimall.product.service.CategoryService;
 import daily.boot.gulimall.product.vo.Catelog2Vo;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@ApiModel
+@Api(tags = "首页")
 public class IndexController {
     @Autowired
     private CategoryService categoryService;

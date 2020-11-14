@@ -3,6 +3,7 @@ package daily.boot.gulimall.product.service.impl;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -35,5 +36,11 @@ public class SkuImagesServiceImpl extends ServiceImpl<SkuImagesDao, SkuImagesEnt
             return entity;
         }).filter(imageEntity -> StringUtils.isNotBlank(imageEntity.getImgUrl())).collect(Collectors.toList());
         this.saveBatch(imageEntites);
+    }
+    
+    @Override
+    @Cacheable(value = {"sku"}, key = "#root.methodName +'-' + #skuId")
+    public List<SkuImagesEntity> listSkuImagesBySkuId(Long skuId) {
+        return this.lambdaQuery().eq(SkuImagesEntity::getSkuId, skuId).list();
     }
 }

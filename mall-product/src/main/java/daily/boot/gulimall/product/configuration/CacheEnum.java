@@ -9,7 +9,11 @@ public enum CacheEnum {
     /**
      * 验证码缓存 5分钟ttl
      */
-    SMS_CAPTCHA_CACHE("smsCode", 5 * 60);
+    SMS_CAPTCHA_CACHE("smsCode", 5 * 60),
+    /**
+     * 商品SKU信息缓存，5分钟
+     */
+    SKU_CACHE("sku", 5 * 60);
     /**
      * 缓存名称
      */

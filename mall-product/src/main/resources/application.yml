@@ -47,6 +47,14 @@ gulimall:
     product: gulimall-product
     search: gulimall-search
     ware: gulimall-ware
+  #自定义线程池参数
+  threadpool:
+    core-size: 10
+    max-size: 30
+    max-queue: 150
+    keepalive-time: 20 # 最大等待时间，单位为秒
+
+
 
 feign:
   client:

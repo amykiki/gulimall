@@ -13,28 +13,35 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.product.dao.SkuInfoDao;
+import daily.boot.gulimall.product.entity.SkuImagesEntity;
 import daily.boot.gulimall.product.entity.SkuInfoEntity;
+import daily.boot.gulimall.product.entity.SpuInfoDescEntity;
 import daily.boot.gulimall.product.entity.SpuInfoEntity;
-import daily.boot.gulimall.product.service.SkuImagesService;
-import daily.boot.gulimall.product.service.SkuInfoService;
-import daily.boot.gulimall.product.service.SkuSaleAttrValueService;
+import daily.boot.gulimall.product.service.*;
+import daily.boot.gulimall.product.vo.SkuItemVo;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
 import daily.boot.gulimall.service.api.feign.CouponFeignService;
 import daily.boot.gulimall.service.api.to.MemberPriceTo;
 import daily.boot.gulimall.service.api.to.SkuReductionTo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 
 @Service("skuInfoService")
+@Slf4j
 public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> implements SkuInfoService {
 
     @Autowired
@@ -42,8 +49,15 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
     @Autowired
+    private SpuInfoDescService spuInfoDescService;
+    @Autowired
     private CouponFeignService couponFeignService;
-    
+    @Autowired
+    private AttrGroupService attrGroupService;
+    @Autowired
+    private FeignService feignService;
+    @Resource(name = "productExecutor")
+    private ExecutorService executor;
     @Override
     public PageInfo<SkuInfoEntity> queryPage(PageQueryVo queryVo, SkuInfoEntity skuInfoEntity) {
         SkuInfoEntity queryEntity = new SkuInfoEntity();
@@ -145,5 +159,61 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     @Override
     public List<SkuInfoEntity> listBySpuId(Long spuId) {
         return this.lambdaQuery().eq(SkuInfoEntity::getSpuId, spuId).list();
+    }
+    
+    @Override
+    public SkuItemVo item(Long skuId) {
+        SkuItemVo skuItemVo = new SkuItemVo();
+        //1. 异步获取sku基本信息
+        CompletableFuture<SkuInfoEntity> skuInfoFuture = CompletableFuture.supplyAsync(() -> {
+            logThreadInfo("skuInfoFuture...");
+            SkuInfoEntity skuInfo = this.getById(skuId);
+            skuItemVo.setInfo(skuInfo);
+            return skuInfo;
+        }, executor);
+        //2. 异步获取库存信息
+        CompletableFuture<Void> hasStockFuture = CompletableFuture.runAsync(() -> {
+            logThreadInfo("hasStockFuture...");
+            boolean hasStock = feignService.skuHasStock(skuId);
+            skuItemVo.setHasStock(hasStock);
+        }, executor);
+        
+        //3. 异步获取sku图片信息
+        CompletableFuture<Void> skuImageFuture = CompletableFuture.runAsync(() -> {
+            logThreadInfo("skuImageFuture...");
+            List<SkuImagesEntity> imagesEntities = skuImagesService.listSkuImagesBySkuId(skuId);
+            skuItemVo.setImages(imagesEntities);
+        }, executor);
+        
+        //4. 在1完成后获取Spu的销售属性集合
+        CompletableFuture<Void> saleAttrFuture = skuInfoFuture.thenAcceptAsync(info -> {
+            logThreadInfo("saleAttrFuture");
+            List<SkuItemVo.SkuItemSaleAttr> saleAttrs = skuSaleAttrValueService.listSaleAttrBySpuId(info.getSpuId());
+            skuItemVo.setSaleAttr(saleAttrs);
+        }, executor);
+        //5. 在1完成后获取Spu的介绍
+        CompletableFuture<Void> spuDescFuture = skuInfoFuture.thenAcceptAsync(info -> {
+            logThreadInfo("spuDescFuture");
+            SpuInfoDescEntity spuInfoDescEntity = spuInfoDescService.getById(info.getSpuId());
+            skuItemVo.setDesc(spuInfoDescEntity);
+        }, executor);
+        //6. 在1完成后获取SPU的规格参数信息
+        CompletableFuture<Void> spuAttrFuture = skuInfoFuture.thenAcceptAsync((info) -> {
+            logThreadInfo("spuAttrFuture");
+            List<SkuItemVo.SpuItemAttrGroup> attrGroup = attrGroupService.listAttrGroupWithAttrsBySpuId(info.getSpuId());
+            skuItemVo.setGroupAttrs(attrGroup);
+        }, executor);
+    
+        try {
+            CompletableFuture.allOf(hasStockFuture, skuImageFuture, saleAttrFuture, spuDescFuture, spuAttrFuture).get();
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            throw new BusinessException(CommonErrorCode.BUSINESS_ERROR, e, "SkuInfoService#item调用异常");
+        }
+        return skuItemVo;
+    }
+    
+    private void logThreadInfo(String desc) {
+        log.debug(desc + "当前线程:{}-{}", Thread.currentThread().getName(), Thread.currentThread().getId());
     }
 }

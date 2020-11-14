@@ -523,17 +523,6 @@
                             <span>￥</span>
                             <span th:text="${#numbers.formatDecimal(item.info.price,3,2)}">4499.00</span>
                         </li>
-                        <li style="color: red" th:if="${item.seckillSkuVo != null}">
-
-                            <span th:if="${#dates.createNow().getTime() < item.seckillSkuVo.startTime}">
-                                商品将会在[[${#dates.format(new java.util.Date(item.seckillSkuVo.startTime),"yyyy-MM-dd HH:mm:ss")}]]进行秒杀
-                            </span>
-
-                            <span th:if="${#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime}">
-                                秒杀价  [[${#numbers.formatDecimal(item.seckillSkuVo.seckillPrice,1,2)}]]
-                            </span>
-
-                        </li>
                         <li>
                             <a href="/static/item/">
                                 预约说明
@@ -678,20 +667,19 @@
                         </div>
                     </div>
 
-                    <div class="box-btns-two"
-                         th:if="${item.seckillSkuVo == null }">
+                    <div class="box-btns-two">
                         <a class="addToCart" href="#" th:attr="skuId=${item.info.skuId}">
                             加入购物车
                         </a>
                     </div>
 
-                    <div class="box-btns-two"
-                         th:if="${item.seckillSkuVo != null && (#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime)}">
-                        <a class="seckill" href="#"
-                           th:attr="skuId=${item.info.skuId},sessionId=${item.seckillSkuVo.promotionSessionId},code=${item.seckillSkuVo.randomCode}">
-                            立即抢购
-                        </a>
-                    </div>
+                    <!--<div class="box-btns-two"-->
+                    <!--     th:if="${item.seckillSkuVo != null && (#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime)}">-->
+                    <!--    <a class="seckill" href="#"-->
+                    <!--       th:attr="skuId=${item.info.skuId},sessionId=${item.seckillSkuVo.promotionSessionId},code=${item.seckillSkuVo.randomCode}">-->
+                    <!--        立即抢购-->
+                    <!--    </a>-->
+                    <!--</div>-->
 
                     <div class="box-btns-three">
                         <img src="/static/item/img/e4ed3606843f664591ff1f68f7fda12d.png" alt=""/> 分享
@@ -854,19 +842,19 @@
         <div class="allquanbushop">
             <ul class="shopjieshao">
                 <li class="jieshoa" style="background: #e4393c;">
-                    <a href="/static/item/##" style="color: white;">商品介绍</a>
+                    <a style="color: white;">商品介绍</a>
                 </li>
                 <li class="baozhuang">
-                    <a href="/static/item/##">规格与包装</a>
+                    <a>规格与包装</a>
                 </li>
                 <li class="baozhang">
-                    <a href="/static/item/##">售后保障</a>
+                    <a>售后保障</a>
                 </li>
                 <li class="pingjia">
-                    <a href="/static/item/##">商品评价(4万+)</a>
+                    <a>商品评价(4万+)</a>
                 </li>
                 <li class="shuoming">
-                    <a href="/static/item/##">预约说明</a>
+                    <a>预约说明</a>
                 </li>
 
             </ul>
@@ -894,6 +882,7 @@
             <!--商品详情-->
             <div class="huawei">
                 <ul class="xuanxiangka">
+                    <!--商品介绍-->
                     <li class="jieshoa actives" id="li1">
                         <div class="shanpinsssss">
                             <!--									<p>-->
@@ -966,7 +955,7 @@
                             <!--                            </div>-->
                         </div>
                     </li>
-                    <li class="baozhuang actives" id="li2">
+                    <!--包装-->
                     <li class="baozhuang actives" id="li2">
                         <div class="guiGebox">
                             <div class="guiGe" th:each="group : ${item.groupAttrs}">
@@ -985,7 +974,7 @@
                             </div>
                         </div>
                     </li>
-                    <!--包装-->
+                    <!--售后保障-->
                     <li class="baozhang actives" id="li3">
                         <div class="oBox">
                             <div class="shuoHou">
@@ -1129,6 +1118,7 @@
                             </ul>
                         </div>
                     </li>
+                    <!--预约说明-->
                     <li class="shuoming actives" id="li5"></li>
                 </ul>
             </div>
@@ -1357,6 +1347,10 @@
 
 <script>
     $(".sku_attr_value").click(function () {
+        //如果元素css含有nocheck，则不可点击，返回
+        if ($(this).hasClass("nocheck")) {
+            return  false;
+        }
         // 1、点击的元素添加上自定义的属性
         let skus = new Array();
         let curr = $(this).attr("skus").split(",");
@@ -1373,18 +1367,66 @@
         for (let i = 1; i < skus.length; i++) {
             filterEle = $(filterEle).filter(skus[i])[0];
         }
-
         location.href = "http://item.gulimall.com/" + filterEle + ".html";
 
         return false;
     });
     $(function () {
+        //检查销售属性不存在的sku
+        let $checked = $("a[class='sku_attr_value checked']");
+        let filterArr = new Array($checked.length);
+        let filterIndex = 0;
+        $checked.each(function () {
+            let curr = $(this).attr("skus").split(",");
+            for (let i = 0; i < filterArr.length; i++) {
+                if (i !== filterIndex) {
+                    if (filterArr[i] === undefined) {
+                        filterArr[i] = new Array();
+                        filterArr[i] = filterArr[i].concat(curr);
+                    } else {
+                        let filtered = $(filterArr[i]).filter(curr);
+                        let skuIds = new Array();
+                        for (let i = 0; i < filtered.size(); i++) {
+                            skuIds.push(filtered[i]);
+                        }
+                        filterArr[i] = filterArr[i].concat(skuIds);
+                    }
+                }
+            }
+            filterIndex++;
+        });
+
+        let index = 0;
+        $checked.each(function() {
+            $(this).parent().parent().find(".sku_attr_value").each(function() {
+                if (!$(this).hasClass("checked")) {
+                    //没有被选中
+                    let skuIds = $(this).attr("skus").split(",");
+                    let filterEle = filterArr[index];
+                    //如果属性与上一个有效属性之间没有重叠sku
+                   if ($(filterEle).filter(skuIds).size() === 0) {
+                       $(this).addClass("nocheck");
+                   }
+                }
+            });
+            index++;
+        });
         changeCheckedStyle();
     });
+
+    function getFilter(skus, level) {
+        let filters = new Array();
+        filters.concat(skus[0]);
+        for (let i = 1; i < level; i++) {
+            filters = $(filters).filter(sku[i]);
+        }
+        return filters;
+    }
 
     function changeCheckedStyle() {
         $(".sku_attr_value").parent().css({"border": "solid 1px #ccc"});
         $("a[class='sku_attr_value checked']").parent().css({"border": "solid 1px red"});
+        $("a[class='sku_attr_value nocheck']").parent().css({"border": "dashed 1px #ccc"});
     };
 
 

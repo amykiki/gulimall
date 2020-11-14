@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.product.entity.AttrGroupEntity;
 import daily.boot.gulimall.product.vo.AttrGroupWithAttrsVo;
+import daily.boot.gulimall.product.vo.SkuItemVo;
 
 import java.util.List;
 
@@ -34,5 +35,7 @@ public interface AttrGroupService extends IService<AttrGroupEntity> {
     List<AttrGroupEntity> listByCatelogId(Long catelogId);
     
     List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
+    
+    List<SkuItemVo.SpuItemAttrGroup> listAttrGroupWithAttrsBySpuId(Long spuId);
 }
 
