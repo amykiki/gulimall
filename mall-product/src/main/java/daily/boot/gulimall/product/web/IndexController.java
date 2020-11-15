@@ -26,7 +26,7 @@ public class IndexController {
         model.addAttribute("categories", categoryEntities);
         return "index";
     }
-    
+
     //index/json/catalog.json
     @GetMapping(value = "/index/catalog.json")
     @ResponseBody
@@ -34,11 +34,11 @@ public class IndexController {
         Map<String, List<Catelog2Vo>> catalogJson = categoryService.getCatalogJson();
         return catalogJson;
     }
-    
+
     @GetMapping(value = "/hello")
     @ResponseBody
     public String hello() {
         return "hello" + Thread.currentThread().getName() + "-" + Thread.currentThread().getId();
     }
-    
+
 }

@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="daily.boot.gulimall.product.dao.AttrGroupDao">
+    <cache-ref namespace="daily.boot.gulimall.product.dao.AttrGroupDao"></cache-ref>
 
 	<!-- 可根据自己的需求，是否要使用 -->
     <resultMap type="daily.boot.gulimall.product.entity.AttrGroupEntity" id="attrGroupMap">
@@ -20,7 +21,7 @@
             <result column="attr_value" property="attrValue"/>
         </collection>
     </resultMap>
-    <select id="listAttrGroupWithAttrsBySpuId" resultMap="spuItemAttrGroupMap">
+    <select id="listAttrGroupWithAttrsBySpuId" resultMap="spuItemAttrGroupMap" useCache="false">
         select pag.attr_group_name, pa.attr_id, attr.attr_name, pa.attr_value
         from pms_product_attr_value pa
                  left join pms_attr_attrgroup_relation ag on pa.attr_id = ag.attr_id

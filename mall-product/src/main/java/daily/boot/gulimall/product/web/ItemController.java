@@ -16,7 +16,7 @@ public class ItemController {
     @Autowired
     private SkuInfoService skuInfoService;
     
-    @GetMapping("/{skuId}.html")
+    @GetMapping("/{skuId:\\d+}.html")
     @ApiOperation("当前SKU详情")
     public String skuItem(@PathVariable("skuId") Long skuId, Model model) {
         SkuItemVo itemVo = skuInfoService.item(skuId);

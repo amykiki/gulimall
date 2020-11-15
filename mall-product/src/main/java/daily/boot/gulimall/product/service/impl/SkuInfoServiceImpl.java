@@ -214,6 +214,6 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     }
     
     private void logThreadInfo(String desc) {
-        log.debug(desc + "当前线程:{}-{}", Thread.currentThread().getName(), Thread.currentThread().getId());
+        //log.debug(desc + "当前线程:{}-{}", Thread.currentThread().getName(), Thread.currentThread().getId());
     }
 }
