@@ -47,6 +47,12 @@ spring:
           uri: lb://gulimall-search
           predicates:
             - Host=search.gulimall.com
+        - id: gulimall_auth_route
+          uri: lb://gulimall-auth-server
+          filters:
+            - PreserveHostHeader
+          predicates:
+            - Host=auth.gulimall.com
 logging:
   level:
     daily.boot.gulimall.gateway: debug

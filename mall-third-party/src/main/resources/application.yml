@@ -11,3 +11,8 @@ logging:
   level:
     daily.boot.gulimall.thirdparty: debug
 
+gulimall:
+  httpclient:
+    max-per-route: 25
+    max-total: 50
+    socket-timeout: 1500

@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 @Slf4j
 public class TestServiceImpl implements TestService {
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
     
     @Override
     @Cacheable(value = "smsCode", key = "'phone-' + #phone")

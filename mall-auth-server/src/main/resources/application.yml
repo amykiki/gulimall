@@ -1,0 +1,56 @@
+env: 本地测试开发
+
+server:
+  port: 22000
+  forward-headers-strategy: native # 使用了反向代理的情况下，内嵌tomcat要读取真正的请求header才能保证跳转正确
+#  tomcat:
+#    remoteip:
+#      remote-ip-header: "X-Forwarded-For"
+#    use-relative-redirects: true
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+  # 关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
+  redis:
+    host: docker-serv
+    port: 6379
+    password: abc123
+    lettuce:
+      pool:
+        max-idle: 15
+        min-idle: 5
+        max-active: 20
+        max-wait: 5000
+        time-between-eviction-runs: 30000
+logging:
+  level:
+    daily.boot.gulimall.authserver: debug
+    daily.boot.unified.dispose.advice: debug
+    org.springframework.security: debug
+
+
+gulimall:
+  feign:
+    member: gulimall-member
+  #自定义线程池参数
+  threadpool:
+    core-size: 10
+    max-size: 30
+    max-queue: 150
+    keepalive-time: 20 # 最大等待时间，单位为秒
+
+
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 60000
+        read-timeout: 60000
