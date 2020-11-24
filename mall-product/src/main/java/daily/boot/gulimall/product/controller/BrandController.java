@@ -1,6 +1,5 @@
 package daily.boot.gulimall.product.controller;
 
-import daily.boot.gulimall.common.exception.BizCodeEnum;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
@@ -10,15 +9,11 @@ import daily.boot.gulimall.product.service.BrandService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 /**

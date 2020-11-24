@@ -16,3 +16,5 @@ gulimall:
     max-per-route: 25
     max-total: 50
     socket-timeout: 1500
+    connect-timeout: 1500
+    connect-request-timeout: 1000
