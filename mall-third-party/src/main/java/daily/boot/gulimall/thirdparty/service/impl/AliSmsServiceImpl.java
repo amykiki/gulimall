@@ -4,6 +4,7 @@ import daily.boot.gulimall.common.httpclient.*;
 import daily.boot.gulimall.thirdparty.service.AliSmsService;
 import daily.boot.gulimall.thirdparty.util.AliRequestConfig;
 import daily.boot.gulimall.thirdparty.util.AliRequestSign;
+import daily.boot.gulimall.thirdparty.vo.SmsVo;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,14 +27,12 @@ public class AliSmsServiceImpl implements AliSmsService {
     private String appSecret;
     
     @Override
-    public boolean sendRegVerifyCode(String phoneNum, String verifyCode, int validMin) {
-        String templateParam = "**code**:" + verifyCode + ",**minute**:" + validMin;
-        HttpClientReq clientReq = genSendRequest(phoneNum, SMS_REG_TEMPLATE, templateParam);
-        HttpClientResp httpClientResp = httpClientPool.sendRequest(clientReq);
-        if (httpClientResp != null && httpClientResp.getCode() == HttpStatus.SC_OK) {
-            return true;
-        }
-        return false;
+    public boolean sendRegVerifyCode(SmsVo smsVo) {
+        String templateParam = "**code**:" + smsVo.getVerifyCode() + ",**minute**:" + smsVo.getExpire();
+        HttpClientReq clientReq = genSendRequest(smsVo.getPhone(), SMS_REG_TEMPLATE, templateParam);
+        return true;
+        //HttpClientResp httpClientResp = httpClientPool.sendRequest(clientReq);
+        //return httpClientResp != null && httpClientResp.getCode() == HttpStatus.SC_OK;
     }
     
     private HttpClientReq genSendRequest(String phoneNum, String templateId, String templateParam) {

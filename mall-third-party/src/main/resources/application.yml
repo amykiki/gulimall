@@ -10,6 +10,7 @@ spring:
 logging:
   level:
     daily.boot.gulimall.thirdparty: debug
+    org.apache.http: debug
 
 gulimall:
   httpclient:

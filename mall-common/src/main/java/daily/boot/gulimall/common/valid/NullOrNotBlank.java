@@ -17,6 +17,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Repeatable(NullOrNotBlank.List.class)
 /**
  * 用来注解字段，可以为Null，或者不为Null时，字段值不能为空字符串
+ * 不写实现方法，参考，使用@ConstraintComposition(OR)注解
+ * https://stackoverflow.com/questions/31132477/java-annotation-for-null-but-neither-empty-nor-blank/43716689#43716689
  */
 public @interface NullOrNotBlank {
     String message() default "{javax.validation.constraints.Size.message}";
