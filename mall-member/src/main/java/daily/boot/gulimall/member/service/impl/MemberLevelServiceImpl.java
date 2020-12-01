@@ -1,5 +1,6 @@
 package daily.boot.gulimall.member.service.impl;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -19,5 +20,10 @@ public class MemberLevelServiceImpl extends ServiceImpl<MemberLevelDao, MemberLe
         IPage<MemberLevelEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    @Cacheable(value = {"member_level"}, key = "#root.methodName")
+    public MemberLevelEntity defaultLevel() {
+        return this.lambdaQuery().eq(MemberLevelEntity::getDefaultStatus, 1).one();
+    }
 }

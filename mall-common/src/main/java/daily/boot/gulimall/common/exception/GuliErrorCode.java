@@ -1,5 +1,7 @@
 package daily.boot.gulimall.common.exception;
 
+import daily.boot.common.exception.error.ErrorCode;
+
 /**
  * <p>Title: BizCodeEnum</p>
  * Description：
@@ -17,23 +19,22 @@ package daily.boot.gulimall.common.exception;
  * 13: 购物车
  * 14: 物流
  */
-public enum BizCodeEnum {
-    SUCCESS(10000, "调用成功"),
-    VALID_EXCEPTION(10001, "参数格式校验失败"),
-    UNKNOW_EXCEPTION(10999, "系统未知异常");
-    private int code;
-    private String msg;
+public enum GuliErrorCode implements ErrorCode {
+    SMS_CODE_EXCEPTION("SMS_001", "验证码获取频率调高，请稍后再试"),
+    SMS_SEND_EXCEPTION("SMS-002", "短信发送异常");
+    private String code;
+    private String message;
     
-    BizCodeEnum(int code, String msg) {
+    GuliErrorCode(String code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
     
-    public int getCode() {
+    public String  getCode() {
         return code;
     }
     
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 }

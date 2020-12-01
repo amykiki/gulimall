@@ -1,16 +1,20 @@
 package daily.boot.gulimall.thirdparty.service.impl;
 
+import daily.boot.common.exception.BusinessException;
+import daily.boot.gulimall.common.exception.GuliErrorCode;
 import daily.boot.gulimall.common.httpclient.*;
 import daily.boot.gulimall.thirdparty.service.AliSmsService;
 import daily.boot.gulimall.thirdparty.util.AliRequestConfig;
 import daily.boot.gulimall.thirdparty.util.AliRequestSign;
 import daily.boot.gulimall.thirdparty.vo.SmsVo;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class AliSmsServiceImpl implements AliSmsService {
     private static final String SMS_HOST = "gyytz.market.alicloudapi.com";
     private static final Scheme SMS_SCHEME = Scheme.HTTP;
@@ -30,9 +34,17 @@ public class AliSmsServiceImpl implements AliSmsService {
     public boolean sendRegVerifyCode(SmsVo smsVo) {
         String templateParam = "**code**:" + smsVo.getVerifyCode() + ",**minute**:" + smsVo.getExpire();
         HttpClientReq clientReq = genSendRequest(smsVo.getPhone(), SMS_REG_TEMPLATE, templateParam);
+        log.debug("发送注册短信验证码成功:{}-{}", smsVo.getPhone(), smsVo.getVerifyCode());
         return true;
         //HttpClientResp httpClientResp = httpClientPool.sendRequest(clientReq);
-        //return httpClientResp != null && httpClientResp.getCode() == HttpStatus.SC_OK;
+        //if (httpClientResp != null && httpClientResp.getCode() == HttpStatus.SC_OK) {
+        //    log.debug("发送注册短信验证码成功:{}-{}", smsVo.getPhone(), smsVo.getVerifyCode());
+        //    return true;
+        //} else {
+        //    String desc = httpClientResp != null ? httpClientResp.getMessage() + ":" + httpClientResp.getContent() : "未知错误";
+        //    log.warn("发送注册短信验证码失败:{}", httpClientResp);
+        //    throw new BusinessException(GuliErrorCode.SMS_SEND_EXCEPTION, desc);
+        //}
     }
     
     private HttpClientReq genSendRequest(String phoneNum, String templateId, String templateParam) {

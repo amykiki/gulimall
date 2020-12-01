@@ -1,21 +1,27 @@
 package daily.boot.gulimall.member.controller;
 
 import daily.boot.common.Result;
+import daily.boot.common.exception.BusinessException;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.member.entity.MemberEntity;
+import daily.boot.gulimall.member.exception.MemberErrorCode;
 import daily.boot.gulimall.member.service.MemberService;
+import daily.boot.gulimall.member.vo.MemberUserRegisterVo;
 import daily.boot.gulimall.service.api.feign.OrderFeignService;
+import daily.boot.gulimall.service.api.to.MemberUserTo;
 import daily.boot.gulimall.service.api.to.OrderTo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.Objects;
 
 
 /**
@@ -33,7 +39,27 @@ public class MemberController {
     
     @Autowired
     private OrderFeignService orderFeignService;
-
+    
+    /**
+     * 注册
+     */
+    @PostMapping("/register")
+    public Result register(@Valid @RequestBody MemberUserRegisterVo registerVo) {
+        memberService.register(registerVo);
+        return Result.ok();
+    }
+    
+    @GetMapping("/userinfo-by-username")
+    public Result<MemberUserTo> getUserInfoByUsername(@RequestParam("username") String username) {
+        MemberEntity entity = memberService.getMemberUserInfoByUsername(username);
+        if (Objects.nonNull(entity)) {
+            MemberUserTo to = new MemberUserTo();
+            BeanUtils.copyProperties(entity, to);
+            return Result.ok(to);
+        } else {
+            throw new BusinessException(MemberErrorCode.USERNAME_NOT_EXIST);
+        }
+    }
     /**
      * 列表
      */

@@ -5964,7 +5964,7 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
 <!--		<div style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'msg') ? errors.msg : '') : ''}">-->
 		<div class="register-box">
 			<label class="username_label">用 户 名
-				<input name="userName" maxlength="20" type="text" placeholder="您的用户名和登录名">
+				<input name="userName" maxlength="20" type="text" placeholder="您的用户名和登录名" th:value="${userName}">
 			</label>
 			<div class="tips" style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'userName') ? errors.userName : '') : ''}">
 
@@ -5989,7 +5989,7 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
 		<div class="register-box">
 			<label class="other_label">
 				<span>中国 0086∨</span>
-				<input name="phone" class="phone" id="phoneNum" maxlength="20" type="text" placeholder="建议使用常用手机">
+				<input name="phone" class="phone" id="phoneNum" maxlength="20" type="text" placeholder="建议使用常用手机" th:value="${phone}">
 			</label>
 			<div class="tips" style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'phone') ? errors.phone : '') : ''}">
 
@@ -6167,7 +6167,8 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
             } else {
                 $(this).parent().next("div").text("");
             }
-        })
+        });
+
         // 	验证码
         //	 验证码刷新
         function code() {
@@ -6176,7 +6177,7 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
             for (var i = 0; i < 4; i++) {
                 str1 += str.charAt(Math.floor(Math.random() * 62))
             }
-            str1 = str1.substring(1)
+            str1 = str1.substring(1);
             $("#code").text(str1);
         }
 
@@ -6193,7 +6194,8 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
             } else {
                 $(this).parent().next().next("div").text("");
             }
-        })
+        });
+
         //	提交按钮
         // $("#submit_btn").click(function (e) {
         //     for (var j = 0; j < 5; j++) {
@@ -6272,12 +6274,13 @@ Cookie</span>是由网页服务器存放在您的访问设备上的文本文件�
 		});
     });
 
-    var num = 60;
+    // var num = 60;
+    var num = 10;
     function timeoutChangeStyle() {
     	$("#sendCode").attr("class","disabled");
     	if(num == 0) {
 			$("#sendCode").text("发送验证码");
-			num = 60;
+			num = 10;
 			$("#sendCode").attr("class","");
 		} else {
 			var str = num + "s 后再次发送";

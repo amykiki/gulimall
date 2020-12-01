@@ -27,6 +27,10 @@
         <result property="accessToken" column="access_token"/>
         <result property="expiresIn" column="expires_in"/>
     </resultMap>
+    <select id="getMemberUserInfo" resultType="daily.boot.gulimall.member.entity.MemberEntity">
+        select id, level_id, username, password, mobile, status from gulimall_ums.ums_member
+        where username = #{username}
+    </select>
 
 
 </mapper>

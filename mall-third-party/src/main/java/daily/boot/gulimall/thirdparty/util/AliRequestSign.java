@@ -52,7 +52,6 @@ public class AliRequestSign {
         if (config.isNeedSignature() && !HttpCommonUtil.isEmpty(config.getSignatureMethod())) {
             request.addHeader(SdkConstant.CLOUDAPI_X_CA_SIGNATURE_METHOD, config.getSignatureMethod());
         }
-        request.addHeader(SdkConstant.CLOUDAPI_X_CA_SIGNATURE_METHOD, HMacSHA256SignerFactory.METHOD);
     
         /**
          *  如果formParams不为空

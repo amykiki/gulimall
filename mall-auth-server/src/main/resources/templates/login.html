@@ -37,11 +37,11 @@
 
         </div>
         <div class="si_cen">
-            <h2 class="act btn1">扫码登录</h2>
+            <h2 class="btn1">扫码登录</h2>
             <span>|</span>
-            <h2 class="btn1">账户登录</h2>
+            <h2 class="act btn1">账户登录</h2>
         </div>
-        <div class="si_bom tab">
+        <div class="si_bom tab" style="display: none;">
             <img src="/static/login/JD_img/show.png" class="bom_1"/>
             <a href="/static/login/#"><img src="/static/login/JD_img/phone-orange.png" class="bom_2"/></a>
             <h6>打开<span class="red">手机谷粒商城</span> 扫描二维码</h6>
@@ -54,13 +54,14 @@
                 <span><a href="/static/login/#">更安全</a></span>
             </p>
         </div>
-        <div class="si_bom1 tab" style="display: none;">
-            <div class="error">
+        <div class="si_bom1 tab">
+            <div class="error" th:if="${failed}">
                 <div></div>
-                请输入账户名和密码
+                [[${error}]]
             </div>
             <form action="/doLogin" method="post">
-                <div style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'msg') ? errors.msg : '') : ''}"></div>
+                <!--<div style="color: red" th:text="${errors != null ? (#maps.containsKey(errors, 'msg') ? errors.msg : '') : ''}"></div>-->
+                <!--<div style="color: red" th:text="${error}"></div>-->
                 <ul>
                     <li class="top_1">
                         <img src="/static/login/JD_img/user_03.png" class="err_img1"/>
@@ -69,6 +70,10 @@
                     <li>
                         <img src="/static/login/JD_img/user_06.png" class="err_img2"/>
                         <input type="password" name="password" placeholder=" 密码" class="password"/>
+                    </li>
+                    <li>
+                        <img src="/static/login/JD_img/user_03.png" class="err_img2"/>
+                        <input type="checkbox" name="remember-me" value="on">记住我<br>
                     </li>
                     <li class="bri">
                         <a href="/static/login/">忘记密码</a>
@@ -135,9 +140,15 @@
 
 </body>
 <script type="text/javascript">
+    var err = document.getElementsByClassName('error')[0];
+    $(function () {
+        if (err.innerText !== '') {
+            err.style.display = 'block';
+        }
+    });
     var alDiv = document.getElementsByClassName('tab');
     var alBtn = document.getElementsByTagName('h2');
-    alDiv[0].style.display = 'block';
+    alDiv[1].style.display = 'block';
     var act = alBtn[0]
     for (var i = 0; i < alBtn.length; i++) {
         alBtn[i].indent = i;
@@ -145,7 +156,7 @@
             act.className = '';
             alDiv[act.indent].style.display = 'none';
             this.className = 'act'
-            alDiv[this.indent].style.display = 'block'
+            alDiv[this.indent].style.display = 'block';
             act = this
         }
     }
@@ -153,7 +164,7 @@
     var btn2 = document.getElementsByClassName('btn2')[0];
     var user = document.getElementsByClassName('user')[0];
     var pass = document.getElementsByClassName('password')[0];
-    var err = document.getElementsByClassName('error')[0];
+
     var err_img1 = document.getElementsByClassName('err_img1')[0];
     var err_img2 = document.getElementsByClassName('err_img2')[0];
 

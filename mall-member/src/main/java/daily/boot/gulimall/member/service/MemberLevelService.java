@@ -20,5 +20,7 @@ public interface MemberLevelService extends IService<MemberLevelEntity> {
      * @return
      */
     PageInfo<MemberLevelEntity> queryPage(PageQueryVo queryVo);
+    
+    MemberLevelEntity defaultLevel();
 }
 

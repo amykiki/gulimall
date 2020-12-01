@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/sms")
+import javax.faces.annotation.RequestMap;
+
+@RestController
+@RequestMapping("/sms")
 @Api(tags = "短信发送接口")
 public class SmsController {
     @Autowired

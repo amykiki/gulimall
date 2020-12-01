@@ -105,7 +105,7 @@ public class MemberEntity implements Serializable {
     /**
      * 启用状态
      */
-    @ApiModelProperty(value = "启用状态")
+    @ApiModelProperty(value = "启用状态, 0 = inuse, 1 = disable, 2 = lock, 3 = password expire, 4 = account expire")
     private Integer status;
     /**
      * 注册时间

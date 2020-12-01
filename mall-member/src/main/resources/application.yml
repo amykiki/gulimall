@@ -11,6 +11,18 @@ spring:
     nacos:
       discovery:
         server-addr: docker-serv:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: docker-serv
+    port: 6379
+    password: abc123
+  cache:
+    type: redis
+    redis:
+      use-key-prefix: true
+      time-to-live: 900000
 
 
 mybatis-plus:
