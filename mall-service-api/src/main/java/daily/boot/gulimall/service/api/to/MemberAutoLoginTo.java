@@ -4,6 +4,7 @@ import daily.boot.gulimall.common.valid.ValidateGroup;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -22,10 +23,12 @@ public class MemberAutoLoginTo implements Serializable {
     @NotBlank(message = "自动登录标识用户名不能为空", groups = {ValidateGroup.Add.class})
     private String username;
     @ApiModelProperty("自动登录token")
-    @NotBlank(message = "自动登录标识token不能为空", groups = {ValidateGroup.Add.class})
-    private String tokenValue;
+    @NotBlank(message = "自动登录标识token不能为空")
+    private String token;
+    @ApiModelProperty("上次自动登录token")
+    private Integer version;
     @ApiModelProperty("创建/修改时间")
-    @NotNull(message = "自动登录标识Date不能为空", groups = {ValidateGroup.Add.class})
-    private Date date;
+    @NotNull(message = "自动登录标识Date不能为空")
+    private Date updateTime;
     
 }

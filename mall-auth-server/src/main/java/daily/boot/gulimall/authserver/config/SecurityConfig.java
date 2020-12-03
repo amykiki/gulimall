@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.annotation.Resource;
@@ -28,6 +29,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Autowired
     private PersistentTokenRepository persistentTokenRepository;
+    
+    @Autowired
+    private AbstractRememberMeServices rememberMeServices;
     
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -48,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     
         http.authorizeRequests()
-            .antMatchers("/reg.html", "/register","/sms/**", "/home.html", "/favicon.ico").permitAll()
+            .antMatchers("/reg.html", "/register","/sms/**", "/home.html", "favicon.ico").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
@@ -70,7 +74,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .tokenValiditySeconds(2419200)
             .rememberMeCookieDomain("gulimall.com")
             .key("123Gulimall*") //如果不设定，应用每次重启，都会使用一个随机的UUID字符串，这会使应用每次重启后rememberMe失效
-            .tokenRepository(persistentTokenRepository)
+            //.tokenRepository(persistentTokenRepository)
+            .rememberMeServices(rememberMeServices)
             .and()
             .csrf().disable();
 

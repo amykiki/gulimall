@@ -29,7 +29,7 @@ public interface MemberFeignService {
     Result createNewToken(@RequestBody MemberAutoLoginTo token);
     
     @PostMapping("/member/autologin/updateToken")
-    Result updateToken(@RequestParam("series") String series, @RequestParam("tokenValue") String tokenValue, @RequestParam("lastUsed") Date lastUsed);
+    Result updateToken(@RequestBody MemberAutoLoginTo updateToken);
     
     @GetMapping("/member/autologin/getTokenForSeries")
     Result<MemberAutoLoginTo> getTokenForSeries(@RequestParam("seriesId") String seriesId);

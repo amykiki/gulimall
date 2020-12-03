@@ -24,8 +24,8 @@ public class MemberAutoLoginController {
         return Result.ok();
     }
     @PostMapping("/updateToken")
-    public Result updateToken(String series, String tokenValue, Date lastUsed){
-        autoLoginService.updateToken(series, tokenValue, lastUsed);
+    public Result updateToken(@RequestBody @Validated({ValidateGroup.Update.class}) MemberAutoLoginEntity updateToken){
+        autoLoginService.updateToken(updateToken);
         return Result.ok();
     }
     

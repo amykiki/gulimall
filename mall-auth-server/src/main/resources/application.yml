@@ -34,7 +34,7 @@ logging:
   level:
     daily.boot.gulimall.authserver: debug
     daily.boot.unified.dispose.advice: debug
-    org.springframework.security.web: debug
+    org.springframework.security.web.authentication: debug
 
 
 gulimall:

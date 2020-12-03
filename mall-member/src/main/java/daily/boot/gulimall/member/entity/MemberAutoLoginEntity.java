@@ -29,10 +29,12 @@ public class MemberAutoLoginEntity implements Serializable {
     private String username;
     @ApiModelProperty("自动登录token")
     @NotBlank(message = "自动登录标识token不能为空")
-    private String tokenValue;
+    private String token;
+    @ApiModelProperty("乐观锁")
+    private Integer version;
     @ApiModelProperty("创建/修改时间")
-    @NotNull(message = "自动登录标识Date不能为空", groups = {ValidateGroup.Add.class})
+    @NotNull(message = "自动登录标识Date不能为空")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date date;
+    private Date updateTime;
     
 }
