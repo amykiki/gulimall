@@ -19,6 +19,9 @@ spring:
   # 关闭thymeleaf缓存
   thymeleaf:
     cache: false
+  session:
+    store-type: redis
+    timeout: 30m
   redis:
     host: docker-serv
     port: 6379

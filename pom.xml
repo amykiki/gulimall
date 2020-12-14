@@ -23,6 +23,7 @@
         <module>mall-third-party</module>
         <module>mall-search</module>
         <module>mall-auth-server</module>
+        <module>mall-auth-client</module>
     </modules>
     <packaging>pom</packaging>
 

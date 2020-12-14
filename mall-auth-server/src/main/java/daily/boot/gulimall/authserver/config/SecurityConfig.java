@@ -1,6 +1,8 @@
 package daily.boot.gulimall.authserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,8 +15,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSessionListener;
 
 @Configuration
 @EnableWebSecurity
@@ -50,9 +54,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-    
+        
         http.authorizeRequests()
-            .antMatchers("/reg.html", "/register","/sms/**", "/home.html", "favicon.ico").permitAll()
+            .antMatchers("/reg.html", "/register", "/sms/**", "/home.html", "favicon.ico").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
@@ -77,8 +81,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             //.tokenRepository(persistentTokenRepository)
             .rememberMeServices(rememberMeServices)
             .and()
-            .csrf().disable();
-
+            .csrf().disable()
+            .sessionManagement()
+            .maximumSessions(1)
+            .maxSessionsPreventsLogin(true);
+        
+    }
+    
+    @Bean
+    /**
+     * 使用了security session concurrent control后，
+     * 比如
+     * sessionManagement()
+     * .maximumSessions(1)
+     * 参考 https://www.baeldung.com/spring-security-session
+     * 必须配置该bean，来监听session的注销，否则session统计不正确，不能实现并发控制
+     *
+     * 当然也可以自定义 HttpSessionListener，参考 security/MySessionListener，使用@@WebListener注解，并在应用上注解@ServletComponentScan
+     */
+    public ServletListenerRegistrationBean<HttpSessionListener> sessionListener() {
+        ServletListenerRegistrationBean<HttpSessionListener> registrationBean = new ServletListenerRegistrationBean<>();
+        registrationBean.setListener(new HttpSessionEventPublisher());
+        return registrationBean;
     }
     
     
