@@ -38,12 +38,12 @@
             <groupId>daily.boot.guli</groupId>
             <artifactId>mall-common</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
-                    <groupId>com.baomidou</groupId>
-                </exclusion>
-            </exclusions>
+            <!--<exclusions>-->
+            <!--    <exclusion>-->
+            <!--        <artifactId>mybatis-plus-boot-starter</artifactId>-->
+            <!--        <groupId>com.baomidou</groupId>-->
+            <!--    </exclusion>-->
+            <!--</exclusions>-->
         </dependency>
         <dependency>
             <groupId>daily.boot.guli</groupId>

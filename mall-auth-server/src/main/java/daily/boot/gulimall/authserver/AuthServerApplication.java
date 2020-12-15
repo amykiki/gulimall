@@ -3,6 +3,7 @@ package daily.boot.gulimall.authserver;
 import daily.boot.gulimall.service.api.feign.MemberFeignService;
 import daily.boot.gulimall.service.api.feign.ThirdPartyFeignService;
 import daily.boot.unified.dispose.annotation.EnableGlobalDispose;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -20,6 +21,7 @@ import java.util.Locale;
 @EnableDiscoveryClient
 @EnableFeignClients(clients = {ThirdPartyFeignService.class, MemberFeignService.class})
 @EnableGlobalDispose
+@MapperScan({"daily.boot.gulimall.authserver.dao"})
 public class AuthServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(AuthServerApplication.class);

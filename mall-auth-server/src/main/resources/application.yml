@@ -9,6 +9,11 @@ server:
 #    use-relative-redirects: true
 
 spring:
+  datasource:
+    url: jdbc:mysql://docker-serv:3306/gulimall_auth?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: abc123
   cloud:
     nacos:
       discovery:
@@ -39,6 +44,9 @@ logging:
     daily.boot.unified.dispose.advice: debug
     org.springframework.security.web.authentication: debug
 
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**/*.xml
+  type-handlers-package: daily.boot.gulimall.authserver.typehandlers
 
 gulimall:
   feign:
