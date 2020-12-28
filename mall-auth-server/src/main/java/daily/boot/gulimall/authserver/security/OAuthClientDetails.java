@@ -25,6 +25,7 @@ import java.util.*;
  * 加了autoResultMap = true的确解决了问题
  */
 public class OAuthClientDetails implements ClientDetails {
+    private static final long serialVersionUID = 2513143924911134373L;
     @TableId
     private String clientId;
     private String clientSecret;

@@ -6,6 +6,7 @@ import daily.boot.gulimall.authserver.security.jacksonmixins.DisabledExceptionMi
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.jackson2.SecurityJackson2Modules;
+import org.springframework.security.web.authentication.session.SessionAuthenticationException;
 
 @Slf4j
 public class MySecurityJackson2Module extends SimpleModule {
@@ -20,6 +21,7 @@ public class MySecurityJackson2Module extends SimpleModule {
     public void setupModule(SetupContext context) {
         SecurityJackson2Modules.enableDefaultTyping(context.getOwner());
         context.setMixInAnnotations(DisabledException.class, DisabledExceptionMixin.class);
+        context.setMixInAnnotations(SessionAuthenticationException.class, SessionAuthenticationException.class);
     }
     
 }

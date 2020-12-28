@@ -1,10 +1,13 @@
 package daily.boot.gulimall.authserver.config;
 
+import daily.boot.gulimall.authserver.security.OAuth2SessionRelationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -16,6 +19,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.AbstractRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.data.redis.RedisIndexedSessionRepository;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSessionListener;
@@ -25,6 +31,7 @@ import javax.servlet.http.HttpSessionListener;
 /**
  * 默认sessionStragy是CompositeSessionAuthenticationStragtegy
  * Delegating to org.springframework.security.web.authentication.session.ChangeSessionIdAuthenticationStrategy
+ * 测试账号密码 123**
  */
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
@@ -37,9 +44,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AbstractRememberMeServices rememberMeServices;
     
+    @Autowired
+    private RedisIndexedSessionRepository sessionRepository;
+    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+    
+    @Override
+    /**
+     * 暴露authenticationManager供OAuth2使用
+     */
+    @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
     
     @Override
@@ -54,7 +73,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                                    "/doc.html/**",
                                    "/v2/**",
                                    "/webjars/**",
-                                   "/swagger-resources/**");
+                                   "/swagger-resources/**",
+                                   "/isLogin");
     }
     
     @Override
@@ -88,8 +108,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .csrf().disable()
             .sessionManagement()
-            .maximumSessions(1)
-            .maxSessionsPreventsLogin(true);
+            .maximumSessions(5)
+            .maxSessionsPreventsLogin(true)
+            //集群化部署的session共享问题
+            .sessionRegistry(sessionRegistry());
         
     }
     
@@ -110,5 +132,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return registrationBean;
     }
     
+    @Bean
+    /**
+     * 集群化部署，Spring Security 要如何处理 session 共享
+     * https://blog.csdn.net/u012702547/article/details/106185753
+     */
+    SpringSessionBackedSessionRegistry sessionRegistry() {
+        return new SpringSessionBackedSessionRegistry(sessionRepository);
+    }
     
+    @Bean
+    public OAuth2SessionRelationService oAuth2SessionRelationService() {
+        return new OAuth2SessionRelationService(sessionRepository);
+    }
 }

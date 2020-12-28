@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.ClientRegistrationException;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("mpClientDetailsService")
 public class OAuthClientDetailsServiceImpl extends ServiceImpl<OAuthClientDetailsDao, OAuthClientDetails> implements OAuthClientDetailsService, ClientDetailsService {
     
     @Override

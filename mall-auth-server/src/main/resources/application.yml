@@ -3,6 +3,10 @@ env: 本地测试开发
 server:
   port: 22000
   forward-headers-strategy: native # 使用了反向代理的情况下，内嵌tomcat要读取真正的请求header才能保证跳转正确
+  servlet:
+    session:
+      cookie:
+        name: GML-AUTH-SESSIONID
 #  tomcat:
 #    remoteip:
 #      remote-ip-header: "X-Forwarded-For"
@@ -43,6 +47,15 @@ logging:
     daily.boot.gulimall.authserver: debug
     daily.boot.unified.dispose.advice: debug
     org.springframework.security.web.authentication: debug
+    org.springframework.security.oauth2: debug
+    org.springframework.jdbc.core.StatementCreatorUtils: TRACE
+    org.springframework.jdbc.core: debug
+    java.sql.Connection: debug
+    java.sql.Statement: debug
+    java.sql.PreparedStatement: debug
+    java.sql.ResultSett: debug
+
+
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml

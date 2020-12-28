@@ -2,6 +2,7 @@ package daily.boot.gulimall.authserver.controller;
 
 import daily.boot.common.Result;
 import daily.boot.common.exception.BusinessException;
+import daily.boot.gulimall.authserver.security.OAuth2SessionRelationService;
 import daily.boot.gulimall.authserver.service.FeignService;
 import daily.boot.gulimall.authserver.vo.UserRegisterVo;
 import daily.boot.gulimall.common.constant.AuthServerConstant;
@@ -22,16 +23,14 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sun.security.krb5.internal.AuthContext;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -47,6 +46,9 @@ public class LoginController {
     
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
+    
+    @Autowired
+    private OAuth2SessionRelationService relationService;
     
     @GetMapping("/login.html")
     public String loginPage(HttpSession session, Model model) {
@@ -168,4 +170,20 @@ public class LoginController {
         attributes.addFlashAttribute("phone", registerVo.getPhone());
         return "redirect:/reg.html";
     }
+    
+    /**
+     * @param username 登录用户名
+     * @param accessToken oauth2服务端颁发accessToken
+     * 给其他内部服务调用，查看用户是否还是已登录状态
+     */
+    @ResponseBody
+    @GetMapping("/isLogin")
+    public Result<Boolean> isLogin(@NotNull(message = "用户名不能为空") String username,
+                                   @NotNull(message = "请求host不能为空") String clientId,
+                                   @NotNull(message = "accessToken不能为空") String accessToken) {
+    
+        boolean result = relationService.isUserLoginIn(username, clientId, accessToken);
+        return Result.ok(result);
+    }
+    
 }

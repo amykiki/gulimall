@@ -1,11 +1,13 @@
 package daily.boot.gulimall.authserver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import daily.boot.gulimall.service.api.feign.MemberFeignService;
 import daily.boot.gulimall.service.api.feign.ThirdPartyFeignService;
 import daily.boot.unified.dispose.annotation.EnableGlobalDispose;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.MessageSource;
@@ -44,4 +46,5 @@ public class AuthServerApplication {
         messageSource.addBasenames("classpath:org/springframework/security/messages");
         return messageSource;
     }
+    
 }
