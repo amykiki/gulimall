@@ -1,4 +1,4 @@
-package daily.boot.gulimall.product.configuration;
+package daily.boot.gulimall.cart.configuration;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import daily.boot.gulimall.common.configuration.ThreadPoolConfiguration;
@@ -12,10 +12,10 @@ import java.util.concurrent.*;
 @EnableConfigurationProperties(ThreadPoolConfiguration.class)
 public class MyThreadPoolConfig {
     
-    @Bean(name = "productExecutor")
+    @Bean(name = "cartExecutor")
     public ExecutorService executorService(ThreadPoolConfiguration poolConfig) {
         ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
-                .setNameFormat("gulimall-product-thread-%d").build();
+                .setNameFormat("gulimall-cart-thread-%d").build();
     
         return new ThreadPoolExecutor(poolConfig.getCoreSize(), poolConfig.getMaxSize(),
                                poolConfig.getKeepaliveTime(), TimeUnit.SECONDS,

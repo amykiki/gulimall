@@ -1,4 +1,4 @@
-package daily.boot.gulimall.authserver.security;
+package daily.boot.gulimall.cart.security;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;

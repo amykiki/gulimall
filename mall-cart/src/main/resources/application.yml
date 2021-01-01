@@ -1,63 +1,32 @@
-env: 本地测试开发
 server:
-  port: 18000
+  port: 23000
   forward-headers-strategy: native # 使用了反向代理的情况下，内嵌tomcat要读取真正的请求header才能保证跳转正确
   servlet:
     session:
       cookie:
-        name: GM-PRO-SESSIONID
-        domain: gulimall.com
-        path: /
-
+        name: GM-CART-SESSIONID
 spring:
-  datasource:
-    url: jdbc:mysql://docker-serv:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=Asia/Shanghai
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: abc123
   cloud:
     nacos:
       discovery:
         server-addr: docker-serv:8848
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-  # 关闭thymeleaf缓存
-  thymeleaf:
-    cache: false
   redis:
     host: docker-serv
     port: 6379
     password: abc123
-    database: 6
-  cache:
-    type: redis
-    redis:
-      time-to-live: 1800000
-      use-key-prefix: true
-
-mybatis-plus:
-  mapper-locations: classpath:/mapper/**/*.xml
-  configuration:
-    cache-enabled: true
-  global-config:
-    db-config:
-      id-type: auto # id自增
-      logic-delete-value: 1
-      logic-not-delete-value: 0
+    database: 1
+  # 关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
 
 logging:
   level:
-    daily.boot.gulimall.product: debug
-    daily.boot.unified.dispose.advice: debug
-
+    daily.boot.gulimall.cart: debug
 
 gulimall:
   feign:
-    coupon: gulimall-coupon
-    product: gulimall-product
-    search: gulimall-search
-    ware: gulimall-ware
     member: gulimall-member
+    product: gulimall-product
   #自定义线程池参数
   threadpool:
     core-size: 10
@@ -70,20 +39,27 @@ gulimall:
     request-matchers: /**
     auth-request-matchers: /**/user/**
     logout-url: /user/logout
+  #购物车配置项
+  cart:
+    user-key-cookie-name: user-key
+    user-key-cookie-max-age: 2592000 #1个月
+
+
 
 security:
   oauth2:
     #OAuth2 Client配置，对应OAuth2ClientProperties类
     client:
-      client-id: gulimall-product
+      client-id: gulimall-cart
       client-secret: abc123
       user-authorization-uri: ${gulimall.sso.auth-server}/oauth/authorize # 获取用户的授权码地址
       access-token-uri: ${gulimall.sso.auth-server}/oauth/token # 获取访问令牌的地址
       use-current-uri: false
-      pre-established-redirect-uri: http://item.gulimall.com/user/login
+      pre-established-redirect-uri: http://cart.gulimall.com/user/login
     # OAuth2 Resource 配置，对应 ResourceServerProperties 类
     resource:
       token-info-uri: ${gulimall.sso.auth-server}/oauth/check_token # 校验访问令牌是否有效的地址
+
     sso:
       login-path: /user/login  #自定义登录url
 
@@ -94,3 +70,4 @@ feign:
       default:
         connect-timeout: 60000
         read-timeout: 60000
+

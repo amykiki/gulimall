@@ -29,6 +29,12 @@ public class SkuSaleAttrValueController {
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
     
+    @GetMapping("/stringList/{skuId}")
+    public Result<List<String>> getSKuSaleAttrValues(@PathVariable("skuId") Long skuId) {
+        List<String> stringList = skuSaleAttrValueService.getSkuSaleAttrValuesAsString(skuId);
+        return Result.ok(stringList);
+    }
+    
     @GetMapping("/listbySkuIds")
     public Result<List<SkuSaleAttrValueEntity>> listBySkuIds(@RequestParam("skuIds") List<Long> skuIds) {
         List<SkuSaleAttrValueEntity> skuSaleAttrValueEntities = skuSaleAttrValueService.listBySkuIds(skuIds);

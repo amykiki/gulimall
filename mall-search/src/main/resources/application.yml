@@ -43,7 +43,7 @@ security:
   oauth2:
     #OAuth2 Client配置，对应OAuth2ClientProperties类
     client:
-      client-id: gulimall_search
+      client-id: gulimall-search
       client-secret: abc123
       user-authorization-uri: ${gulimall.sso.auth-server}/oauth/authorize # 获取用户的授权码地址
       access-token-uri: ${gulimall.sso.auth-server}/oauth/token # 获取访问令牌的地址

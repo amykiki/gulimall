@@ -1,7 +1,6 @@
 package daily.boot.gulimall.authserver.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import daily.boot.gulimall.authserver.security.MySecurityJackson2Module;
 import org.springframework.beans.factory.BeanClassLoaderAware;
 import org.springframework.context.annotation.Bean;

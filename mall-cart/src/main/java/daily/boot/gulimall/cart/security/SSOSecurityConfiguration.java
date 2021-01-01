@@ -1,12 +1,12 @@
-package daily.boot.gulimall.product.security;
+package daily.boot.gulimall.cart.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 @Configuration
@@ -26,6 +26,13 @@ public class SSOSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private SSOIsLoginFilter ssoIsLoginFilter;
     @Autowired
     private UserInfoFilter userInfoFilter;
+    @Autowired
+    private CartUserKeyFilter cartUserKeyFilter;
+    
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/favicon.ico", "/error");
+    }
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -45,6 +52,6 @@ public class SSOSecurityConfiguration extends WebSecurityConfigurerAdapter {
     
         http.addFilterBefore(ssoIsLoginFilter, FilterSecurityInterceptor.class);
         http.addFilterAfter(userInfoFilter, FilterSecurityInterceptor.class);
-        
+        http.addFilterAfter(cartUserKeyFilter, UserInfoFilter.class);
     }
 }

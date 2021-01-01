@@ -1,4 +1,4 @@
-package daily.boot.gulimall.product.configuration;
+package daily.boot.gulimall.common.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

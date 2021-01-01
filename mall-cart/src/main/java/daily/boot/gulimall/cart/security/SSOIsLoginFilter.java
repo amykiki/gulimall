@@ -1,4 +1,4 @@
-package daily.boot.gulimall.product.security;
+package daily.boot.gulimall.cart.security;
 
 import daily.boot.common.Result;
 import daily.boot.gulimall.service.api.feign.SSOFeignService;

@@ -24,6 +24,7 @@
         <module>mall-search</module>
         <module>mall-auth-server</module>
         <module>mall-auth-client</module>
+        <module>mall-cart</module>
     </modules>
     <packaging>pom</packaging>
 
