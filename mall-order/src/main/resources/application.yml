@@ -11,6 +11,25 @@ spring:
     nacos:
       discovery:
         server-addr: docker-serv:8848
+  rabbitmq:
+    host: docker-serv
+    port: 5672
+    username: root
+    password: 123123
+    virtual-host: /
+    publisher-confirm-type: correlated  #CORRELATED值是发布消息成功到交换器后会触发回调方法，如果是cluster模式，需要所有broker都接收到才会调用confirmCallback
+    # 开启发送端消息抵达队列的确认
+    publisher-returns: true
+    template:
+      # 指定消息在没有被队列接收时是否强行退回还是直接丢弃
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动确认
+#   publisher-confirms: true
+#   在springboot2.2.0.RELEASE版本之前是amqp正式支持的属性，用来配置消息发送到交换器之后是否触发回调方法，
+#   在2.2.0及之后该属性过期使用spring.rabbitmq.publisher-confirm-type属性配置代替，用来配置更多的确认类型；
+#   参考 https://blog.csdn.net/z69183787/article/details/109371628
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
