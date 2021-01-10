@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:57:10
  */
 @RestController
-@RequestMapping("order/orderitem")
+@RequestMapping("/api/order/orderitem")
 @Api(tags = "OrderItem-订单项信息接口")
 public class OrderItemController {
     @Autowired

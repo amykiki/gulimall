@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:57:10
  */
 @RestController
-@RequestMapping("order/orderoperatehistory")
+@RequestMapping("/api/order/orderoperatehistory")
 @Api(tags = "OrderOperateHistory-订单操作历史记录接口")
 public class OrderOperateHistoryController {
     @Autowired

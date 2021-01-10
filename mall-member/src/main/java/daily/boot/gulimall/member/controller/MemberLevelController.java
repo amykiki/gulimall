@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/memberlevel")
+@RequestMapping("/api/member/memberlevel")
 @Api(tags = "MemberLevel-会员等级接口")
 public class MemberLevelController {
     @Autowired

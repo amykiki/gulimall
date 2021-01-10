@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-@RequestMapping("member/autologin")
+@RequestMapping("/api/member/autologin")
 @Api(tags = "用户自动登录管理接口")
 public class MemberAutoLoginController {
     @Autowired

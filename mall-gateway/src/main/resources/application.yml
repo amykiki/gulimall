@@ -63,6 +63,12 @@ spring:
             - PreserveHostHeader
           predicates:
             - Host=cart.gulimall.com
+        - id: gulimall_order_route
+          uri: lb://gulimall-order
+          filters:
+            - PreserveHostHeader
+          predicates:
+            - Host=order.gulimall.com
 logging:
   level:
     daily.boot.gulimall.gateway: debug

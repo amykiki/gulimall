@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/growthchangehistory")
+@RequestMapping("/api/member/growthchangehistory")
 @Api(tags = "GrowthChangeHistory-成长值变化历史记录接口")
 public class GrowthChangeHistoryController {
     @Autowired

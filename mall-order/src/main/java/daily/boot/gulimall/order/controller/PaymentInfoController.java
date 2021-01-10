@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:57:10
  */
 @RestController
-@RequestMapping("order/paymentinfo")
+@RequestMapping("/api/order/paymentinfo")
 @Api(tags = "PaymentInfo-支付信息表接口")
 public class PaymentInfoController {
     @Autowired

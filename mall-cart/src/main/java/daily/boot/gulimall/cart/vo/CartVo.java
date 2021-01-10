@@ -38,6 +38,7 @@ public class CartVo {
     
     public BigDecimal getTotalAmount() {
         BigDecimal amount = items.stream()
+                                 .filter(CartItemVo::getCheck)
                                  .map(CartItemVo::getTotalPrice)
                                  .reduce(BigDecimal.ZERO, BigDecimal::add);
         //计算优惠后的价格

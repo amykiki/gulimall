@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/membercollectsubject")
+@RequestMapping("/api/member/membercollectsubject")
 @Api(tags = "MemberCollectSubject-会员收藏的专题活动接口")
 public class MemberCollectSubjectController {
     @Autowired

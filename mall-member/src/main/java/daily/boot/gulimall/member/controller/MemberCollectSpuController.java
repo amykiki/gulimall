@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/membercollectspu")
+@RequestMapping("/api/member/membercollectspu")
 @Api(tags = "MemberCollectSpu-会员收藏的商品接口")
 public class MemberCollectSpuController {
     @Autowired

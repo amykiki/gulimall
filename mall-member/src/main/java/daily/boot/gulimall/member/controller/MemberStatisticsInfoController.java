@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/memberstatisticsinfo")
+@RequestMapping("/api/member/memberstatisticsinfo")
 @Api(tags = "MemberStatisticsInfo-会员统计信息接口")
 public class MemberStatisticsInfoController {
     @Autowired

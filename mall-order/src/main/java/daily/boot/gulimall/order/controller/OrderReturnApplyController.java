@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:57:10
  */
 @RestController
-@RequestMapping("order/orderreturnapply")
+@RequestMapping("/api/order/orderreturnapply")
 @Api(tags = "OrderReturnApply-订单退货申请接口")
 public class OrderReturnApplyController {
     @Autowired

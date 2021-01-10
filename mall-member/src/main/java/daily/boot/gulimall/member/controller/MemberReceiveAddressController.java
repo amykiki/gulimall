@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/memberreceiveaddress")
+@RequestMapping("/api/member/memberreceiveaddress")
 @Api(tags = "MemberReceiveAddress-会员收货地址接口")
 public class MemberReceiveAddressController {
     @Autowired

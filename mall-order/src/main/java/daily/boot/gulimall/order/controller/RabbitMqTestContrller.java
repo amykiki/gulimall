@@ -17,7 +17,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/rabbitmq")
+@RequestMapping("/api/rabbitmq")
 @Api(tags = "RabbitMQ-消息队列测试")
 @Slf4j
 public class RabbitMqTestContrller {

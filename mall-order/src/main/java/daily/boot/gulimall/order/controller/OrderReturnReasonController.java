@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:57:10
  */
 @RestController
-@RequestMapping("order/orderreturnreason")
+@RequestMapping("/api/order/orderreturnreason")
 @Api(tags = "OrderReturnReason-退货原因接口")
 public class OrderReturnReasonController {
     @Autowired

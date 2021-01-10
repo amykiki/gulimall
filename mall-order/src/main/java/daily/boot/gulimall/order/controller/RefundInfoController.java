@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:57:10
  */
 @RestController
-@RequestMapping("order/refundinfo")
+@RequestMapping("/api/order/refundinfo")
 @Api(tags = "RefundInfo-退款信息接口")
 public class RefundInfoController {
     @Autowired

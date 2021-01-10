@@ -18,26 +18,26 @@ import java.util.Date;
 @FeignClient(name = "${gulimall.feign.member}")
 public interface MemberFeignService {
     
-    @PostMapping("/member/member/register")
+    @PostMapping("/api/member/member/register")
     Result register(@RequestBody UserRegisterTo userRegisterTo);
     
-    @GetMapping("/member/member/userinfo-by-username")
+    @GetMapping("/api/member/member/userinfo-by-username")
     Result<MemberUserTo> getUserInfoByUsername(@RequestParam("username") String username);
     
     
-    @PostMapping("/member/autologin/saveToken")
+    @PostMapping("/api/member/autologin/saveToken")
     Result createNewToken(@RequestBody MemberAutoLoginTo token);
     
-    @PostMapping("/member/autologin/updateToken")
+    @PostMapping("/api/member/autologin/updateToken")
     Result updateToken(@RequestBody MemberAutoLoginTo updateToken);
     
-    @GetMapping("/member/autologin/getTokenForSeries")
+    @GetMapping("/api/member/autologin/getTokenForSeries")
     Result<MemberAutoLoginTo> getTokenForSeries(@RequestParam("seriesId") String seriesId);
     
-    @PostMapping("/member/autologin/removeUserTokens")
+    @PostMapping("/api/member/autologin/removeUserTokens")
     Result removeUserTokens(@RequestParam("username") String username);
     
-    @PostMapping("/member/autologin/removeUserTokenBySeries")
+    @PostMapping("/api/member/autologin/removeUserTokenBySeries")
     Result removeUserTokenBySeries(@RequestParam("series") String series);
 
 }

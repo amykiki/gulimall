@@ -6,6 +6,7 @@ import daily.boot.common.exception.error.CommonErrorCode;
 import daily.boot.common.exception.error.ErrorCode;
 import daily.boot.gulimall.cart.service.RemoteService;
 import daily.boot.gulimall.service.api.feign.ProductFeignService;
+import daily.boot.gulimall.service.api.service.AbstractRemoteService;
 import daily.boot.gulimall.service.api.to.SkuInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.concurrent.Callable;
 
 @Service
 @Slf4j
-public class RemoteServiceImpl implements RemoteService {
+public class RemoteServiceImpl extends AbstractRemoteService implements RemoteService{
     @Autowired
     private ProductFeignService productFeignService;
     
@@ -31,17 +32,17 @@ public class RemoteServiceImpl implements RemoteService {
         return call(() -> productFeignService.getSkuSaleAttrValues(skuId), "getSkuSaleAttrValues");
     }
     
-    private <T> T call(Callable<Result<T>> fun, String methodName) {
-        try {
-            Result<T> rtn = fun.call();
-            if (rtn.isOk()) {
-                return rtn.getData();
-            }
-            log.error("call {} fail", methodName);
-            throw new BusinessException(CommonErrorCode.RPC_ERROR);
-        }catch (Exception e) {
-            log.error("Call {} exception", methodName, e);
-            throw new BusinessException(CommonErrorCode.RPC_ERROR);
-        }
-    }
+    //private <T> T call(Callable<Result<T>> fun, String methodName) {
+    //    try {
+    //        Result<T> rtn = fun.call();
+    //        if (rtn.isOk()) {
+    //            return rtn.getData();
+    //        }
+    //        log.error("call {} fail", methodName);
+    //        throw new BusinessException(CommonErrorCode.RPC_ERROR);
+    //    }catch (Exception e) {
+    //        log.error("Call {} exception", methodName, e);
+    //        throw new BusinessException(CommonErrorCode.RPC_ERROR);
+    //    }
+    //}
 }

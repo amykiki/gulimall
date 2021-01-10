@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/memberloginlog")
+@RequestMapping("/api/member/memberloginlog")
 @Api(tags = "MemberLoginLog-会员登录记录接口")
 public class MemberLoginLogController {
     @Autowired

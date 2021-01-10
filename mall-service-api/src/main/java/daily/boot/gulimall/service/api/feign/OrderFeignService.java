@@ -11,6 +11,6 @@ import java.util.List;
 @FeignClient(name = "${gulimall.feign.order}")
 public interface OrderFeignService {
     
-    @GetMapping("/order/order/{memberId}")
+    @GetMapping("/api/order/order/{memberId}")
     Result<List<OrderTo>> getOrdersByMemberId(@PathVariable("memberId") Long memberId);
 }

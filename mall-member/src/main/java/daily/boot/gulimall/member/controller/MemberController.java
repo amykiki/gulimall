@@ -31,7 +31,7 @@ import java.util.Objects;
  * @date 2020-10-14 16:46:51
  */
 @RestController
-@RequestMapping("member/member")
+@RequestMapping("/api/member/member")
 @Api(tags = "Member-会员接口")
 public class MemberController {
     @Autowired
