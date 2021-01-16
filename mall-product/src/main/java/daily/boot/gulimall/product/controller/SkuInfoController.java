@@ -1,5 +1,6 @@
 package daily.boot.gulimall.product.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
@@ -10,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,11 +24,20 @@ import java.util.List;
  * @date 2020-10-14 15:18:58
  */
 @RestController
-@RequestMapping("product/skuinfo")
+@RequestMapping("/api/product/skuinfo")
 @Api(tags = "SkuInfo-sku信息接口")
 public class SkuInfoController {
     @Autowired
     private SkuInfoService skuInfoService;
+    
+    
+    @GetMapping("/{skuId}/price")
+    public Result<BigDecimal> getPrice(@PathVariable("skuId") Long skuId) {
+        //获取当前商品信息
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+        //返回商品价格
+        return Result.ok(skuInfo.getPrice());
+    }
 
     /**
      * 列表

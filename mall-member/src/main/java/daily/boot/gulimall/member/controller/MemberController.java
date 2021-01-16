@@ -10,6 +10,7 @@ import daily.boot.gulimall.member.exception.MemberErrorCode;
 import daily.boot.gulimall.member.service.MemberService;
 import daily.boot.gulimall.member.vo.MemberUserRegisterVo;
 import daily.boot.gulimall.service.api.feign.OrderFeignService;
+import daily.boot.gulimall.service.api.to.MemberFullInfoTo;
 import daily.boot.gulimall.service.api.to.MemberUserTo;
 import daily.boot.gulimall.service.api.to.OrderTo;
 import io.swagger.annotations.Api;
@@ -39,6 +40,18 @@ public class MemberController {
     
     @Autowired
     private OrderFeignService orderFeignService;
+    
+    @GetMapping("/getMemberFullInfo/{userId}")
+    public Result<MemberFullInfoTo> getMemberFullInfo(@PathVariable Long userId) {
+        MemberEntity memberEntity = memberService.getMemberFullInfo(userId);
+        if (Objects.nonNull(memberEntity)) {
+            MemberFullInfoTo to = new MemberFullInfoTo();
+            BeanUtils.copyProperties(memberEntity, to);
+            return Result.ok(to);
+        } else {
+            throw new BusinessException(MemberErrorCode.USERID_NOT_EXIST);
+        }
+    }
     
     /**
      * 注册

@@ -268,4 +268,22 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         }
         
     }
+    
+    @Override
+    public SpuInfoEntity getSpuInfoBySkuId(Long skuId) {
+        //先查询sku表里的数据
+        SkuInfoEntity skuInfoEntity = skuInfoService.getById(skuId);
+        
+        //获取spuId
+        Long spuId = skuInfoEntity.getSpuId();
+        
+        //通过spuId查询spuInfo信息表的数据
+        SpuInfoEntity spuInfoEntity = this.getById(spuId);
+        
+        //查询品牌表的数据获取品牌名
+        BrandEntity brandEntity = brandService.getById(spuInfoEntity.getBrandId());
+        spuInfoEntity.setBrandName(brandEntity.getName());
+        
+        return spuInfoEntity;
+    }
 }

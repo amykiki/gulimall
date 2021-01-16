@@ -16,10 +16,22 @@ public abstract class AbstractRemoteService {
                 return rtn.getData();
             }
             log.error("call {} fail", methodName);
-            throw new BusinessException(CommonErrorCode.RPC_ERROR);
+            throw new BusinessException(rtn.getMsg(), rtn.getCode());
         }catch (Exception e) {
-            log.error("Call {} exception", methodName, e);
-            throw new BusinessException(CommonErrorCode.RPC_ERROR);
+            if (!(e instanceof BusinessException)) {
+                log.error("Call {} exception", methodName, e);
+                throw new BusinessException(CommonErrorCode.RPC_ERROR);
+            }else {
+                throw (BusinessException)e;
+            }
         }
+    }
+    
+    protected  <T> T call(Callable<Result<T>> fun) {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        StackTraceElement callerStackTraceElement = stackTraceElements[2];
+        String className = callerStackTraceElement.getClassName();
+        String methodName = callerStackTraceElement.getMethodName();
+        return call(fun, className + "-" + methodName);
     }
 }

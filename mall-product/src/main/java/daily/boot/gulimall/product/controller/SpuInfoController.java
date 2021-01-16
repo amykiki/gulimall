@@ -1,5 +1,6 @@
 package daily.boot.gulimall.product.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
@@ -23,12 +24,17 @@ import java.util.List;
  * @date 2020-10-14 15:18:58
  */
 @RestController
-@RequestMapping("product/spuinfo")
+@RequestMapping("/api/product/spuinfo")
 @Api(tags = "SpuInfo-spu信息接口")
 public class SpuInfoController {
     @Autowired
     private SpuInfoService spuInfoService;
 
+    @GetMapping("/skuId/{skuId}")
+    public Result<SpuInfoEntity> getSpuInfoBySkuId(@PathVariable("skuId") Long skuId) {
+        SpuInfoEntity spuInfoEntity = spuInfoService.getSpuInfoBySkuId(skuId);
+        return Result.ok(spuInfoEntity);
+    }
     /**
      * 列表
      */

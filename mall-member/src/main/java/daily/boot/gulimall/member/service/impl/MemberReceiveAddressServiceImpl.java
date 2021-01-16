@@ -10,6 +10,8 @@ import daily.boot.gulimall.member.dao.MemberReceiveAddressDao;
 import daily.boot.gulimall.member.entity.MemberReceiveAddressEntity;
 import daily.boot.gulimall.member.service.MemberReceiveAddressService;
 
+import java.util.List;
+
 
 @Service("memberReceiveAddressService")
 public class MemberReceiveAddressServiceImpl extends ServiceImpl<MemberReceiveAddressDao, MemberReceiveAddressEntity> implements MemberReceiveAddressService {
@@ -19,5 +21,9 @@ public class MemberReceiveAddressServiceImpl extends ServiceImpl<MemberReceiveAd
         IPage<MemberReceiveAddressEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    public List<MemberReceiveAddressEntity> getAddress(Long memberId) {
+        return this.lambdaQuery().eq(MemberReceiveAddressEntity::getMemberId, memberId).list();
+    }
 }

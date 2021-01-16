@@ -4,8 +4,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.order.entity.OrderEntity;
+import daily.boot.gulimall.order.vo.OrderConfirmVo;
+import daily.boot.gulimall.order.vo.OrderSubmitVo;
+import daily.boot.gulimall.order.vo.SubmitOrderResponseVo;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -25,5 +29,9 @@ public interface OrderService extends IService<OrderEntity> {
     PageInfo<OrderEntity> queryPage(PageQueryVo queryVo);
     
     List<OrderEntity> getOrdersByMemberId(Long memberId);
+    
+    OrderConfirmVo confirmOrder() throws ExecutionException, InterruptedException;
+    
+    SubmitOrderResponseVo submitOrder(OrderSubmitVo vo);
 }
 

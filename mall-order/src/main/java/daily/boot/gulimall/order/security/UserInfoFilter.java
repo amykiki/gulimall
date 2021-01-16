@@ -65,7 +65,8 @@ public class UserInfoFilter extends OncePerRequestFilter {
                     }
                     loginUserInfo.setUserId(userId);
                     loginUserInfo.setUserName(username);
-                    changed = true;
+                    //如果userInfo发生改变，则要写会session中
+                    saveUserInfoToSession(request, loginUserInfo);
                 }
     
             }
@@ -77,10 +78,6 @@ public class UserInfoFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         } finally {
             LoginUserInfoHolder.clearLoginUserInfo();
-            //如果userInfo发生改变，则要写会session中
-            if (changed) {
-                saveUserInfoToSession(request, loginUserInfo);
-            }
         }
         
     }

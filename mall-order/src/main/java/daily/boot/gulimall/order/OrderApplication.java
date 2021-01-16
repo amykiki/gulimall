@@ -1,11 +1,13 @@
 package daily.boot.gulimall.order;
 
+import daily.boot.gulimall.service.api.feign.*;
 import daily.boot.unified.dispose.annotation.EnableGlobalDispose;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
@@ -62,6 +64,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableRabbit
 @EnableRedisHttpSession
 @EnableGlobalDispose
+@EnableFeignClients(clients = {ProductFeignService.class, MemberFeignService.class, SSOFeignService.class, CartFeignService.class, WareFeignService.class})
 @EnableDiscoveryClient
 @MapperScan({"daily.boot.gulimall.order.dao"})
 public class OrderApplication {

@@ -1,10 +1,10 @@
 server:
   port: 17000
   forward-headers-strategy: native # 使用了反向代理的情况下，内嵌tomcat要读取真正的请求header才能保证跳转正确
-    servlet:
-      session:
-        cookie:
-          name: GM-ORDER-SESSIONID
+  servlet:
+    session:
+      cookie:
+        name: GM-ORDER-SESSIONID
 
 spring:
   datasource:
@@ -53,6 +53,10 @@ mybatis-plus:
       id-type: auto # id自增
 
 gulimall:
+  feign:
+    member: gulimall-member
+    product: gulimall-product
+    ware: gulimall-ware
   #自定义线程池参数
   threadpool:
     core-size: 10
@@ -82,6 +86,20 @@ security:
 
     sso:
       login-path: /user/login  #自定义登录url
+
+## seata配置
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: gulimall-order-group
+  service:
+    # 虚拟组和实际分组映射
+    vgroup-mapping:
+      gulimall-order-group: default
+    # 分组和seata服务的映射
+    grouplist:
+      default: 127.0.0.1:8091
+
 
 logging:
   level:

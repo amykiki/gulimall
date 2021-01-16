@@ -25,4 +25,19 @@ logging:
 gulimall:
   feign:
     product: gulimall-product
+    member: gulimall-member
+
+## seata配置
+seata:
+  enabled: true
+  application-id: ${spring.application.name}
+  tx-service-group: gulimall-order-group
+  enable-auto-data-source-proxy: true
+  service:
+    # 虚拟组和实际分组映射
+    vgroup-mapping:
+      gulimall-order-group: default
+    # 分组和seata服务的映射
+    grouplist:
+      default: 127.0.0.1:8091
 

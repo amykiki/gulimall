@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.member.entity.MemberReceiveAddressEntity;
 
+import java.util.List;
+
 
 /**
  * 会员收货地址
@@ -20,5 +22,7 @@ public interface MemberReceiveAddressService extends IService<MemberReceiveAddre
      * @return
      */
     PageInfo<MemberReceiveAddressEntity> queryPage(PageQueryVo queryVo);
+    
+    List<MemberReceiveAddressEntity> getAddress(Long memberId);
 }
 

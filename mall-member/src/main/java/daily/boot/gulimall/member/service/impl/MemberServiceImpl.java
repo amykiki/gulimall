@@ -6,6 +6,7 @@ import daily.boot.gulimall.member.entity.MemberLevelEntity;
 import daily.boot.gulimall.member.exception.MemberErrorCode;
 import daily.boot.gulimall.member.service.MemberLevelService;
 import daily.boot.gulimall.member.vo.MemberUserRegisterVo;
+import daily.boot.gulimall.service.api.to.MemberFullInfoTo;
 import daily.boot.gulimall.service.api.to.MemberUserTo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,5 +92,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     @Override
     public int getMemberCountByMobile(String mobile) {
         return this.lambdaQuery().eq(MemberEntity::getMobile, mobile).count();
+    }
+    
+    @Override
+    public MemberEntity getMemberFullInfo(Long userId) {
+        return this.baseMapper.getMemberFullInfo(userId);
     }
 }

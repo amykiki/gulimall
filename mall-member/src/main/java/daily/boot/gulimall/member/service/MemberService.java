@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.member.entity.MemberEntity;
 import daily.boot.gulimall.member.vo.MemberUserRegisterVo;
+import daily.boot.gulimall.service.api.to.MemberFullInfoTo;
 import daily.boot.gulimall.service.api.to.MemberUserTo;
 import org.springframework.validation.annotation.Validated;
 
@@ -38,5 +39,7 @@ public interface MemberService extends IService<MemberEntity> {
     
     
     MemberEntity getMemberUserInfoByUsername(@NotNull(message = "用户名不能为空") String username);
+    
+    MemberEntity getMemberFullInfo(Long userId);
 }
 

@@ -6,7 +6,8 @@ public enum MemberErrorCode implements ErrorCode {
     USERNAME_EXIST("MEM-001", "用户名已存在"),
     PHONE_EXIST("MEM-002", "用户手机号已存在"),
     USERNAME_NOT_EXIST("MEM-003", "用户名不存在"),
-    AUTO_LOGIN_UPDATE_FAIL("MEM-004", "更新自动登录标识失败");
+    AUTO_LOGIN_UPDATE_FAIL("MEM-004", "更新自动登录标识失败"),
+    USERID_NOT_EXIST("MEM-005", "用户ID不存在");
     
     private String code;
     private String message;

@@ -8,7 +8,8 @@ public enum WareErrorCode implements ErrorCode {
     WARE_PURCHASE_DETAIL_CANNOT_MERGED("WARE_003", "采购需求正在完成中或已完成，不能再合并"),
     WARE_PURCHASE_DETAIL_NOT_EXIST("WARE_004", "采购需求不存在"),
     WARE_PURCHASE_DONE_EMPTY("WARE_005", "采购单完成详情为空"),
-    WARE_PURCHASE_NOT_VALID("WARE_006", "采购单号无效");
+    WARE_PURCHASE_NOT_VALID("WARE_006", "采购单号无效"),
+    WARE_SKU_NO_STOCK("WARE_007", "SKU无货");
     
     private String code;
     

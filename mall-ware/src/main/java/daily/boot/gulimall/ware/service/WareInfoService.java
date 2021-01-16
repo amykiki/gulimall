@@ -3,6 +3,7 @@ package daily.boot.gulimall.ware.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
+import daily.boot.gulimall.service.api.to.FareTo;
 import daily.boot.gulimall.ware.entity.WareInfoEntity;
 
 
@@ -20,5 +21,7 @@ public interface WareInfoService extends IService<WareInfoEntity> {
      * @return
      */
     PageInfo<WareInfoEntity> queryPage(PageQueryVo queryVo);
+    
+    FareTo getFare(Long addrId);
 }
 

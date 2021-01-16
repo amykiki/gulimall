@@ -31,7 +31,7 @@ public class SSOSecurityConfiguration extends WebSecurityConfigurerAdapter {
     
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/favicon.ico", "/error");
+        web.ignoring().antMatchers("/favicon.ico", "/error", "/api/**");
     }
     
     @Override

@@ -5,6 +5,7 @@ import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
 import daily.boot.gulimall.service.api.to.SkuHasStockTo;
+import daily.boot.gulimall.service.api.to.WareSkuLockTo;
 import daily.boot.gulimall.ware.entity.WareSkuEntity;
 import daily.boot.gulimall.ware.service.WareSkuService;
 import io.swagger.annotations.Api;
@@ -29,6 +30,12 @@ import java.util.List;
 public class WareSkuController {
     @Autowired
     private WareSkuService wareSkuService;
+    
+    @PostMapping("/lock/order")
+    public Result<Boolean> orderLockStock(@RequestBody WareSkuLockTo lockTo) {
+        Boolean locked = wareSkuService.orderLockStock(lockTo);
+        return Result.ok(locked);
+    }
 
     /**
      * 列表

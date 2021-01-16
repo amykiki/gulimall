@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public interface CartService {
-    List<CartItemVo> getUserCartItems();
+    List<CartItemVo> getUserCartItems(Long loginUserId);
     
     CartVo getCart() throws ExecutionException, InterruptedException;
     

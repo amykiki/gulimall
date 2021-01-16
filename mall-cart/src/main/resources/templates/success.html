@@ -26,8 +26,8 @@
 
         <ul class="hd_wrap_right">
             <li>
-                <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/login.html" class="li_2">请登录</a>
-                <a th:if="${session.loginUser != null}">欢迎, [[${session.loginUser.nickname}]]</a>
+                <a th:if="${session.LOGIN_USER_INFO == null}" href="http://auth.gulimall.com/login.html" class="li_2">请登录</a>
+                <a th:if="${session.LOGIN_USER_INFO != null}">欢迎, [[${session.LOGIN_USER_INFO.userName}]]</a>
             </li>
             <li>
                 <a th:if="${session.loginUser == null}" href="http://auth.gulimall.com/reg.html" style="color: red;">免费注册</a>

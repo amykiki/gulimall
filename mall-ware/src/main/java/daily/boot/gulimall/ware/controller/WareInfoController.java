@@ -1,8 +1,10 @@
 package daily.boot.gulimall.ware.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
+import daily.boot.gulimall.service.api.to.FareTo;
 import daily.boot.gulimall.ware.entity.WareInfoEntity;
 import daily.boot.gulimall.ware.service.WareInfoService;
 import io.swagger.annotations.Api;
@@ -27,6 +29,12 @@ import java.util.List;
 public class WareInfoController {
     @Autowired
     private WareInfoService wareInfoService;
+    
+    @GetMapping("/fare")
+    public Result<FareTo> getFare(@RequestParam("addrId") Long addrId) {
+        FareTo fare = wareInfoService.getFare(addrId);
+        return Result.ok(fare);
+    }
 
     /**
      * 列表

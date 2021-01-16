@@ -31,6 +31,11 @@
         select id, level_id, username, password, mobile, status from gulimall_ums.ums_member
         where username = #{username}
     </select>
+    <select id="getMemberFullInfo" resultType="daily.boot.gulimall.member.entity.MemberEntity">
+        select id, level_id, username, nickname, mobile, email, header, gender, birth, city, job,
+               sign, source_type, integration, growth, status from gulimall_ums.ums_member
+        where id = #{userId}
+    </select>
 
 
 </mapper>

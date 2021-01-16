@@ -1,5 +1,7 @@
 package daily.boot.gulimall.cart.service.impl;
 
+import daily.boot.common.exception.BusinessException;
+import daily.boot.gulimall.cart.exception.CartErrorCode;
 import daily.boot.gulimall.cart.security.CartUserKeyHolder;
 import daily.boot.gulimall.cart.service.CartService;
 import daily.boot.gulimall.cart.service.RemoteService;
@@ -11,12 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.util.CollectionUtils;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -31,8 +35,19 @@ public class CartServiceImpl implements CartService {
     private ExecutorService cartExecutor;
     
     @Override
-    public List<CartItemVo> getUserCartItems() {
-        return null;
+    public List<CartItemVo> getUserCartItems(Long loginUserId) {
+        String cartKey = CART_PREFIX + loginUserId;
+        List<CartItemVo> cartItems = getCartItems(cartKey);
+        if (CollectionUtils.isEmpty(cartItems)) {
+            throw new BusinessException(CartErrorCode.CUR_CART_ITEM_NONE);
+        }
+        //筛选出选中的，并更新价格为最新
+        return cartItems.stream()
+                        .filter(CartItemVo::getCheck)
+                        .peek(item -> {
+                            BigDecimal price = remoteService.getSkuPrice(item.getSkuId());
+                            item.setPrice(price);
+                        }).collect(Collectors.toList());
     }
     
     @Override

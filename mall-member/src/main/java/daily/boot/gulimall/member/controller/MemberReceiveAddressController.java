@@ -1,5 +1,6 @@
 package daily.boot.gulimall.member.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
@@ -27,7 +28,17 @@ import java.util.List;
 public class MemberReceiveAddressController {
     @Autowired
     private MemberReceiveAddressService memberReceiveAddressService;
+    
+    @GetMapping(value = "/{memberId}/address")
+    public Result<List<MemberReceiveAddressEntity>> getAddress(@PathVariable("memberId") Long memberId) {
+        List<MemberReceiveAddressEntity> addressList = memberReceiveAddressService.getAddress(memberId);
+        return Result.ok(addressList);
+    }
 
+    @GetMapping("/addrInfo/{addrId}")
+    public Result<MemberReceiveAddressEntity> getByAddrId(@PathVariable("addrId") Long addrId) {
+        return Result.ok(memberReceiveAddressService.getById(addrId));
+    }
     /**
      * 列表
      */

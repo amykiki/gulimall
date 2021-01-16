@@ -16,4 +16,6 @@ import org.apache.ibatis.annotations.Param;
 public interface MemberDao extends BaseMapper<MemberEntity> {
     
     MemberEntity getMemberUserInfo(@Param("username") String username);
+    
+    MemberEntity getMemberFullInfo(Long userId);
 }

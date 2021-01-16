@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandle;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -30,6 +31,11 @@ public class RemoteServiceImpl extends AbstractRemoteService implements RemoteSe
     @Override
     public List<String> getSkuSaleAttrValues(Long skuId) {
         return call(() -> productFeignService.getSkuSaleAttrValues(skuId), "getSkuSaleAttrValues");
+    }
+    
+    @Override
+    public BigDecimal getSkuPrice(Long skuId) {
+        return call(() -> productFeignService.getPrice(skuId));
     }
     
     //private <T> T call(Callable<Result<T>> fun, String methodName) {

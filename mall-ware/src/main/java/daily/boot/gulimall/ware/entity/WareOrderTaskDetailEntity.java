@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -16,6 +18,7 @@ import lombok.Data;
  * @date 2020-10-14 17:07:54
  */
 @Data
+@Builder
 @TableName("wms_ware_order_task_detail")
 @ApiModel(value = "库存工作单类")
 public class WareOrderTaskDetailEntity implements Serializable {

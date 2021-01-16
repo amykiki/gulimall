@@ -6,22 +6,37 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import daily.boot.common.Result;
+import daily.boot.common.exception.BusinessException;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.service.api.feign.ProductFeignService;
+import daily.boot.gulimall.service.api.to.OrderItemTo;
 import daily.boot.gulimall.service.api.to.SkuHasStockTo;
 import daily.boot.gulimall.service.api.to.SkuInfoVo;
+import daily.boot.gulimall.service.api.to.WareSkuLockTo;
+import daily.boot.gulimall.service.api.to.mq.StockLockedTo;
 import daily.boot.gulimall.ware.dao.WareSkuDao;
 import daily.boot.gulimall.ware.entity.PurchaseDetailEntity;
+import daily.boot.gulimall.ware.entity.WareOrderTaskDetailEntity;
+import daily.boot.gulimall.ware.entity.WareOrderTaskEntity;
 import daily.boot.gulimall.ware.entity.WareSkuEntity;
+import daily.boot.gulimall.ware.exception.WareErrorCode;
 import daily.boot.gulimall.ware.service.PurchaseDetailService;
+import daily.boot.gulimall.ware.service.WareOrderTaskDetailService;
+import daily.boot.gulimall.ware.service.WareOrderTaskService;
 import daily.boot.gulimall.ware.service.WareSkuService;
+import io.seata.core.context.RootContext;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -36,6 +51,10 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
     private ProductFeignService productFeignService;
     @Autowired
     private PurchaseDetailService purchaseDetailService;
+    @Autowired
+    private WareOrderTaskService wareOrderTaskService;
+    @Autowired
+    private WareOrderTaskDetailService wareOrderTaskDetailService;
 
     @Override
     public PageInfo<WareSkuEntity> queryPage(PageQueryVo queryVo, WareSkuEntity wareSkuEntity) {
@@ -114,5 +133,91 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
         }).collect(Collectors.toList());
     
         return skuHasStockList;
+    }
+    
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Boolean orderLockStock(WareSkuLockTo lockTo) {
+        String xid = RootContext.getXID();
+        System.out.println("xid = " + xid);
+        /**
+         * 保存库存工作单详情信息，追溯
+         */
+        WareOrderTaskEntity wareOrderTaskEntity = new WareOrderTaskEntity();
+        wareOrderTaskEntity.setOrderSn(lockTo.getOrderSn());
+        wareOrderTaskEntity.setCreateTime(new Date());
+        wareOrderTaskService.save(wareOrderTaskEntity);
+        
+        //1. 按照下单的收货地址，找到一个就近仓库，锁定库存
+        //2. 找到每个商品在哪个仓库都有库存
+        List<OrderItemTo> locks = lockTo.getLocks();
+    
+        List<SkuWareHasStock> skuWareHasStockList = locks.stream().map(item -> {
+            SkuWareHasStock stock = new SkuWareHasStock();
+            Long skuId = item.getSkuId();
+            stock.setSkuId(skuId);
+            stock.setNum(item.getCount());
+            //查询这个商品在哪个仓库有库存
+            List<Long> wareIdList = this.listWareIdHasSkuStock(skuId);
+            stock.setWareId(wareIdList);
+            return stock;
+        }).collect(Collectors.toList());
+        
+        //3. 锁定库存
+        boolean skuStocked = false;
+        for (SkuWareHasStock hasStock : skuWareHasStockList) {
+            Long skuId = hasStock.getSkuId();
+            List<Long> wareIds = hasStock.getWareId();
+    
+            if (CollectionUtils.isEmpty(wareIds)) {
+                throw new BusinessException(WareErrorCode.WARE_SKU_NO_STOCK, skuId + "无货");
+            }
+            
+            //如果每一个商品都锁定成功，将当前商品锁定了几件的工作单记录发给MQ
+            //锁定失败，前面保存的工作单信息都回滚，
+            //发送出去的消息，即使要解锁库存，由于在数据库查不到指定的ID，所以不用解锁
+            for (Long wareId : wareIds) {
+                //锁定成功返回1， 失败就返回0
+                Long updated = this.baseMapper.lockSkuStock(skuId, wareId, hasStock.getNum());
+                if (updated == 1) {
+                    skuStocked = true;
+                    WareOrderTaskDetailEntity taskDetailEntity =
+                            WareOrderTaskDetailEntity.builder()
+                                                     .skuId(skuId).skuName("")
+                                                     .skuNum(hasStock.getNum()).taskId(wareOrderTaskEntity.getId())
+                                                     .wareId(wareId).lockStatus(1)
+                                                     .build();
+                    wareOrderTaskDetailService.save(taskDetailEntity);
+    
+                    // TODO: 2021/1/13 告诉MQ库存锁定成功
+                    StockLockedTo lockedTo = new StockLockedTo();
+                    lockedTo.setWareOrderTaskId(wareOrderTaskEntity.getId());
+                    lockedTo.setWareOrderTaskDetailId(taskDetailEntity.getId());
+                    break;
+                } else {
+                    //当前仓库锁失败，重试下一个仓库
+                }
+            }
+        }
+        if (!skuStocked) {
+            throw new BusinessException(WareErrorCode.WARE_SKU_NO_STOCK,  "OrderSn[" + lockTo.getOrderSn() + "]锁定失败，没有足够的库存!" );
+        }
+        return true;
+    }
+    
+    @Override
+    public List<Long> listWareIdHasSkuStock(Long skuId) {
+        LambdaQueryWrapper<WareSkuEntity> queryWrapper = Wrappers.lambdaQuery();
+        queryWrapper.select(WareSkuEntity::getWareId)
+                    .eq(WareSkuEntity::getSkuId, skuId)
+                    .apply("stock - stock_locked > 0");
+        return this.listObjs(queryWrapper, wareId -> (Long) wareId);
+    }
+    
+    @Data
+    class SkuWareHasStock {
+        private Long skuId;
+        private Integer num;
+        private List<Long> wareId;
     }
 }

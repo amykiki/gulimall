@@ -27,17 +27,6 @@ public class CartController {
     }
     
     /**
-     * 获取当前用户的购物车商品项
-     *
-     * @return
-     */
-    @GetMapping(value = "/currentUserCartItems")
-    @ResponseBody
-    public List<CartItemVo> getCurrentCartItems() {
-        return cartService.getUserCartItems();
-    }
-    
-    /**
      * 去购物车页面的请求
      * 浏览器使用cookie:user-key标识用户身份，一个月后过期
      * 如果第一次使用购物车功能，会给一个临时的用户身份

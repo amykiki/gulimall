@@ -1,5 +1,6 @@
 package daily.boot.gulimall.cart.configuration;
 
+import daily.boot.gulimall.cart.security.CartUserKeyFilter;
 import daily.boot.gulimall.cart.security.SSOIsLoginFilter;
 import daily.boot.gulimall.cart.security.UserInfoFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -19,6 +20,13 @@ public class MyWebConfiguration implements WebMvcConfigurer {
     
     @Bean
     public FilterRegistrationBean disableAutoRegisterUserInfoFilter(UserInfoFilter filter) {
+        FilterRegistrationBean registration = new FilterRegistrationBean(filter);
+        registration.setEnabled(false);
+        return registration;
+    }
+    
+    @Bean
+    public FilterRegistrationBean disableAutoRegisterCartUserKeyFilter(CartUserKeyFilter filter) {
         FilterRegistrationBean registration = new FilterRegistrationBean(filter);
         registration.setEnabled(false);
         return registration;

@@ -50,6 +50,12 @@ public class SpuInfoEntity implements Serializable {
      */
     @ApiModelProperty(value = "品牌id")
     private Long brandId;
+    
+    /**
+     * 品牌名
+     */
+    @TableField(exist = false)
+    private String brandName;
     /**
      * 
      */
