@@ -11,6 +11,21 @@ spring:
     nacos:
       discovery:
         server-addr: docker-serv:8848
+  rabbitmq:
+    host: docker-serv
+    port: 5672
+    username: root
+    password: 123123
+    virtual-host: /
+    publisher-confirm-type: correlated  #CORRELATED值是发布消息成功到交换器后会触发回调方法，如果是cluster模式，需要所有broker都接收到才会调用confirmCallback
+    # 开启发送端消息抵达队列的确认
+    publisher-returns: true
+    template:
+      # 指定消息在没有被队列接收时是否强行退回还是直接丢弃
+      mandatory: true
+    listener:
+      simple:
+        acknowledge-mode: manual # 手动确认
 
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
@@ -26,6 +41,14 @@ gulimall:
   feign:
     product: gulimall-product
     member: gulimall-member
+    order: gulimall-order
+  ware:
+    mq:
+      stock-event-exchange: stock-event-exchange
+      stock-delay-queue: stock.delay.queue
+      stock-locked-routing-key: stock.locked
+      stock-release-stock-queue: stock.release.stock.queue
+      stock-release-stock-routing-key: stock.release.#
 
 ## seata配置
 seata:
@@ -40,4 +63,3 @@ seata:
     # 分组和seata服务的映射
     grouplist:
       default: 127.0.0.1:8091
-

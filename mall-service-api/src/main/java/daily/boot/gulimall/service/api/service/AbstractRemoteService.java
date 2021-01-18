@@ -15,7 +15,7 @@ public abstract class AbstractRemoteService {
             if (rtn.isOk()) {
                 return rtn.getData();
             }
-            log.error("call {} fail", methodName);
+            log.error("call {} fail, fail message{}", methodName, rtn.getMsg() + rtn.getCode());
             throw new BusinessException(rtn.getMsg(), rtn.getCode());
         }catch (Exception e) {
             if (!(e instanceof BusinessException)) {

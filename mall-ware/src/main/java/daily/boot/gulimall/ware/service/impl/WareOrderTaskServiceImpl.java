@@ -19,5 +19,9 @@ public class WareOrderTaskServiceImpl extends ServiceImpl<WareOrderTaskDao, Ware
         IPage<WareOrderTaskEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    public WareOrderTaskEntity getOrderTaskByOrderSn(String orderSn) {
+        return this.lambdaQuery().eq(WareOrderTaskEntity::getOrderSn, orderSn).one();
+    }
 }

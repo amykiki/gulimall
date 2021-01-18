@@ -28,7 +28,13 @@ import daily.boot.gulimall.order.vo.SubmitOrderResponseVo;
 import daily.boot.gulimall.service.api.to.*;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.AmqpException;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
@@ -46,7 +52,17 @@ import java.util.stream.Collectors;
 
 
 @Service("orderService")
+@Slf4j
 public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> implements OrderService {
+    @Value("${gulimall.order.mq.order-event-exchange}")
+    private String orderEventExchange;
+    @Value("${gulimall.order.mq.order-create-order-routing-key}")
+    private String orderCreateOrderRoutingKey;
+    @Value("${gulimall.order.mq.stock-release-stock-routing-key}")
+    private String stockReleaseStockRoutingKey;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    
     @Autowired
     private ExecutorService orderExecutor;
     @Autowired
@@ -130,10 +146,10 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
     
     @Override
-    //@Transactional(rollbackFor = Exception.class)
-    @GlobalTransactional
+    @Transactional(rollbackFor = Exception.class)
+    //@GlobalTransactional
     public SubmitOrderResponseVo submitOrder(OrderSubmitVo vo) {
-        String xid = RootContext.getXID();
+        //String xid = RootContext.getXID();
         SubmitOrderResponseVo responseVo = new SubmitOrderResponseVo();
         responseVo.setCode(0);
         
@@ -189,17 +205,56 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             responseVo.setOrder(orderCreateTo.getOrder());
     
             // TODO: 2021/1/13 订单创建成功，发送消息给mq
-    
+            rabbitTemplate.convertAndSend(orderEventExchange, orderCreateOrderRoutingKey, orderCreateTo.getOrder(), new CorrelationData(orderCreateTo.getOrder().getOrderSn()));
             // TODO: 2021/1/13 删除购物车里的数据
             List<Long> skuOrdered = orderCreateTo.getOrderItems().stream().map(OrderItemEntity::getSkuId).collect(Collectors.toList());
             // 测试全局事务
-            int i = 10/0;
+            //int i = 10/0;
             return responseVo;
             //remoteService.deleteCartItem(loginUserInfo.getUserId(), skuOrdered);
         } else {
             //锁定失败
             throw new BusinessException(OrderErrorCode.ORDER_LOCK_STOCK_FAIL);
         }
+    }
+    
+    /**
+     * 关闭订单
+     * @param orderEntity
+     */
+    @Override
+    public void closeOrder(OrderEntity orderEntity) {
+        OrderEntity orderInfo = this.lambdaQuery().eq(OrderEntity::getOrderSn, orderEntity.getOrderSn()).one();
+        //首先确定订单存在且状态为新建，有可能订单都并存在，在下订单的时候就回滚了
+        if (Objects.nonNull(orderInfo) && orderInfo.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
+            log.info("*******GULIMALL-ORDER需要关闭订单{}，订单状态{}********", orderEntity.getOrderSn(), orderEntity.getStatus());
+            //待付款状态进行关单
+            OrderEntity orderUpdate = new OrderEntity();
+            orderUpdate.setId(orderInfo.getId());
+            orderUpdate.setStatus(OrderStatusEnum.CANCLED.getCode());
+            this.updateById(orderUpdate);
+            
+            //发送消息给MQ--库存，库存服务需解锁库存
+            OrderTo orderTo = new OrderTo();
+            BeanUtils.copyProperties(orderInfo, orderTo);
+            try {
+                // TODO: 2021/1/17 事务信息
+                // 确保每个消息发送成功，给每个消息做好日志记录
+                // 可以给数据库保存每个详细信息
+                log.info("*******GULIMALL-ORDER已关闭订单{}，推送解锁库存信息至GULIMALL-WARE服务解锁*******", orderEntity.getOrderSn());
+                rabbitTemplate.convertAndSend(orderEventExchange, stockReleaseStockRoutingKey, orderTo, new CorrelationData(orderTo.getOrderSn()));
+            } catch (Exception e) {
+                // TODO: 2021/1/17 定期扫描数据库，重新发送失败信息 
+            }
+    
+        }else {
+            log.info("*******GULIMALL-ORDER无需关闭订单{}，订单状态{}*******", orderEntity.getOrderSn(), orderInfo == null ? null : orderInfo.getStatus());
+        }
+    }
+    
+    @Override
+    public OrderEntity getorderByOrderSn(String orderSn) {
+        return this.lambdaQuery().eq(OrderEntity::getOrderSn, orderSn).one();
     }
     
     /**

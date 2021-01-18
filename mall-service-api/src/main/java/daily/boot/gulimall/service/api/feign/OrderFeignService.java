@@ -13,4 +13,7 @@ public interface OrderFeignService {
     
     @GetMapping("/api/order/order/{memberId}")
     Result<List<OrderTo>> getOrdersByMemberId(@PathVariable("memberId") Long memberId);
+    
+    @GetMapping("/api/order/order/status/{orderSn}")
+    Result<OrderTo> getOrderStatus(@PathVariable("orderSn") String orderSn);
 }

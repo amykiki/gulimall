@@ -10,6 +10,8 @@ import daily.boot.gulimall.ware.dao.WareOrderTaskDetailDao;
 import daily.boot.gulimall.ware.entity.WareOrderTaskDetailEntity;
 import daily.boot.gulimall.ware.service.WareOrderTaskDetailService;
 
+import java.util.List;
+
 
 @Service("wareOrderTaskDetailService")
 public class WareOrderTaskDetailServiceImpl extends ServiceImpl<WareOrderTaskDetailDao, WareOrderTaskDetailEntity> implements WareOrderTaskDetailService {
@@ -19,5 +21,12 @@ public class WareOrderTaskDetailServiceImpl extends ServiceImpl<WareOrderTaskDet
         IPage<WareOrderTaskDetailEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    public List<WareOrderTaskDetailEntity> listUnLockedByTaskId(Long taskId) {
+        return this.lambdaQuery()
+                   .eq(WareOrderTaskDetailEntity::getTaskId, taskId)
+                   .eq(WareOrderTaskDetailEntity::getLockStatus, 1)
+                   .list();
+    }
 }

@@ -96,6 +96,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!--使用1.4版本有问题，无法传递xid-->
         <dependency>
             <groupId>io.seata</groupId>
             <artifactId>seata-spring-boot-starter</artifactId>

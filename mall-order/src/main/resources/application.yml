@@ -69,6 +69,16 @@ gulimall:
     request-matchers: /**
     auth-request-matchers: /**
     logout-url: /user/logout
+  order:
+    mq:
+      order-event-exchange: order-event-exchange
+      order-delay-queue: order.delay.queue
+      order-create-order-routing-key: order.create.order
+      order-release-order-queue: order.release.order.queue
+      order-release-order-routing-key: order.release.order
+      stock-release-stock-queue: stock.release.stock.queue
+      stock-release-stock-routing-key: order.release.other.#
+
 
 security:
   oauth2:

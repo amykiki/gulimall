@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.ware.entity.WareOrderTaskDetailEntity;
 
+import java.util.List;
+
 
 /**
  * 库存工作单
@@ -20,5 +22,7 @@ public interface WareOrderTaskDetailService extends IService<WareOrderTaskDetail
      * @return
      */
     PageInfo<WareOrderTaskDetailEntity> queryPage(PageQueryVo queryVo);
+    
+    List<WareOrderTaskDetailEntity> listUnLockedByTaskId(Long taskId);
 }
 

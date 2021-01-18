@@ -20,5 +20,7 @@ public interface WareOrderTaskService extends IService<WareOrderTaskEntity> {
      * @return
      */
     PageInfo<WareOrderTaskEntity> queryPage(PageQueryVo queryVo);
+    
+    WareOrderTaskEntity getOrderTaskByOrderSn(String orderSn);
 }
 
