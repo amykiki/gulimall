@@ -109,6 +109,12 @@ public class OrderController {
         PageInfo<OrderEntity> pageInfo = orderService.queryPage(pageQueryVo);
         return R.ok().put("page", pageInfo);
     }
+    
+    @PostMapping("/listWithItem")
+    public Result<PageInfo<OrderEntity>> listWithItem(@RequestBody PageQueryVo pageQueryVo) {
+        PageInfo<OrderEntity> page = orderService.queryPageWithItem(pageQueryVo);
+        return Result.ok(page);
+    }
 
     @GetMapping("/{memberId}")
     public Result<List<OrderEntity>> getOrdersByMemberId(@PathVariable Long memberId) {

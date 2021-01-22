@@ -1,4 +1,4 @@
-package daily.boot.gulimall.order.security;
+package daily.boot.gulimall.member.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +35,7 @@ public class SSOSecurityConfiguration extends WebSecurityConfigurerAdapter {
                                    "/v2/**",
                                    "/webjars/**",
                                    "/swagger-resources/**",
-                                   "/api/**",
-                                   "/callback/**");
+                                   "/api/**");
     }
     
     @Override

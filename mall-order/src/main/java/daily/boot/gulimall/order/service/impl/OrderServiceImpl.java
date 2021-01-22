@@ -11,25 +11,23 @@ import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.Query;
 import daily.boot.gulimall.order.constant.OrderConstant;
+import daily.boot.gulimall.order.constant.PayConstant;
 import daily.boot.gulimall.order.dao.OrderDao;
 import daily.boot.gulimall.order.entity.OrderEntity;
 import daily.boot.gulimall.order.entity.OrderItemEntity;
+import daily.boot.gulimall.order.entity.PaymentInfoEntity;
 import daily.boot.gulimall.order.enums.OrderStatusEnum;
 import daily.boot.gulimall.order.security.LoginUserInfo;
 import daily.boot.gulimall.order.security.LoginUserInfoHolder;
 import daily.boot.gulimall.order.service.OrderItemService;
 import daily.boot.gulimall.order.service.OrderService;
+import daily.boot.gulimall.order.service.PaymentInfoService;
 import daily.boot.gulimall.order.service.RemoteService;
 import daily.boot.gulimall.order.to.OrderCreateTo;
-import daily.boot.gulimall.order.vo.OrderConfirmVo;
+import daily.boot.gulimall.order.vo.*;
 import daily.boot.gulimall.service.api.to.OrderItemTo;
-import daily.boot.gulimall.order.vo.OrderSubmitVo;
-import daily.boot.gulimall.order.vo.SubmitOrderResponseVo;
 import daily.boot.gulimall.service.api.to.*;
-import io.seata.core.context.RootContext;
-import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
@@ -71,6 +69,8 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Autowired
     private OrderItemService orderItemService;
     
+    @Autowired
+    private PaymentInfoService paymentInfoService;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
     
@@ -255,6 +255,92 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Override
     public OrderEntity getorderByOrderSn(String orderSn) {
         return this.lambdaQuery().eq(OrderEntity::getOrderSn, orderSn).one();
+    }
+    
+    /**
+     * 获取当前订单的支付信息
+     * @param orderSn
+     * @return
+     */
+    @Override
+    public AliPayVo getOrderPay(String orderSn) {
+        AliPayVo aliPayVo = new AliPayVo();
+        OrderEntity orderEntity = this.getorderByOrderSn(orderSn);
+        //1. 校验该待付款订单是当前登录用户的，且订单状态为待付款
+        LoginUserInfo loginUserInfo = LoginUserInfoHolder.getLoginUserInfo();
+        if (orderEntity == null || !orderEntity.getMemberId().equals(loginUserInfo.getUserId())) {
+            //返回订单不存在
+            throw new BusinessException(OrderErrorCode.ORDER_NOT_EXIST);
+        }
+        if (!orderEntity.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
+            //订单状态不为待付款
+            throw new BusinessException(OrderErrorCode.ORDER_CAN_NOT_PAID);
+        }
+        //设置订单号
+        aliPayVo.setOutTradeNo(orderSn);
+        
+        //设置订单金额，注意传给支付宝的是两位小数点，需要向上取值
+        BigDecimal payAmount = orderEntity.getPayAmount().setScale(2, BigDecimal.ROUND_UP);
+        aliPayVo.setTotalAmount(payAmount.toString());
+        
+        //查询订单项数据，获取订单内容
+        List<OrderItemEntity> orderItemEntities = orderItemService.listByOrderSn(orderSn);
+        OrderItemEntity orderItemEntity = orderItemEntities.get(0);
+        aliPayVo.setSubject(orderItemEntity.getSkuName());
+        aliPayVo.setBody(orderItemEntity.getSkuAttrsVals());
+        
+        return aliPayVo;
+    }
+    
+    /**
+     * 处理支付宝的支付结果
+     * @param asyncVo
+     * @return
+     */
+    @Override
+    public String handlePayResult(AliPayAsyncVo asyncVo) {
+        //1. 保存交易流水信息
+        PaymentInfoEntity paymentInfo = new PaymentInfoEntity();
+        paymentInfo.setOrderSn(asyncVo.getOutTradeNo());
+        paymentInfo.setAlipayTradeNo(asyncVo.getTradeNo());
+        paymentInfo.setTotalAmount(new BigDecimal(asyncVo.getTotalAmount()));
+        paymentInfo.setSubject(asyncVo.getSubject());
+        paymentInfo.setPaymentStatus(asyncVo.getTradeStatus());
+        paymentInfo.setCreateTime(new Date());
+        paymentInfoService.save(paymentInfo);
+        
+        //修改订单状态
+        String tradeStatus = asyncVo.getTradeStatus();
+        
+        //修改订单状态
+        //状态 TRADE_SUCCESS 的通知触发条件是商户签约的产品支持退款功能的前提下，买家付款成功；
+        //交易状态 TRADE_FINISHED 的通知触发条件是商户签约的产品不支持退款功能的前提下，买家付款成功；或者，商户签约的产品支持退款功能的前提下，交易已经成功并且已经超过可退款期限。
+        if (tradeStatus.equals("TRADE_SUCCESS") || tradeStatus.equals("TRADE_FINISHED")) {
+            //支付成功状态
+            String orderSn = asyncVo.getOutTradeNo();
+            this.baseMapper.updateStatusAndPayTypeAndPaymentTimeByOrderSn(OrderStatusEnum.PAYED.getCode(), PayConstant.ALIPAY, asyncVo.getGmtPayment(), orderSn);
+        }
+        log.info("支付宝付款{}验证成功", asyncVo.getOutTradeNo());
+        return "success";
+    }
+    
+    @Override
+    public PageInfo<OrderEntity> queryPageWithItem(PageQueryVo pageQueryVo) {
+        Long memberId = Long.parseLong(pageQueryVo.getKey());
+    
+        IPage<OrderEntity> page = this.page(Query.getPage(pageQueryVo),
+                                            Wrappers.lambdaQuery(OrderEntity.class)
+                                                    .eq(OrderEntity::getMemberId, memberId)
+                                                    .orderByDesc(OrderEntity::getCreateTime));
+        
+        //遍历所有订单集合
+        page.getRecords().forEach(order -> {
+            //根据订单号查询订单项里的数据
+            List<OrderItemEntity> orderItemEntities = orderItemService.listByOrderSn(order.getOrderSn());
+            order.setOrderItems(orderItemEntities);
+        });
+    
+        return PageInfo.of(page);
     }
     
     /**

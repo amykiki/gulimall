@@ -10,6 +10,8 @@ import daily.boot.gulimall.order.dao.OrderItemDao;
 import daily.boot.gulimall.order.entity.OrderItemEntity;
 import daily.boot.gulimall.order.service.OrderItemService;
 
+import java.util.List;
+
 
 @Service("orderItemService")
 public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEntity> implements OrderItemService {
@@ -19,5 +21,9 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEnt
         IPage<OrderItemEntity> page = this.page(Query.getPage(queryVo));
         return PageInfo.of(page);
     }
-
+    
+    @Override
+    public List<OrderItemEntity> listByOrderSn(String orderSn) {
+        return this.lambdaQuery().eq(OrderItemEntity::getOrderSn, orderSn).list();
+    }
 }

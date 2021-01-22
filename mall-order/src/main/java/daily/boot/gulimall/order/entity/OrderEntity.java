@@ -1,13 +1,17 @@
 package daily.boot.gulimall.order.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import lombok.Data;
 
 /**
@@ -47,6 +51,7 @@ public class OrderEntity implements Serializable {
      * create_time
      */
     @ApiModelProperty(value = "create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     /**
      * 用户名
@@ -212,26 +217,34 @@ public class OrderEntity implements Serializable {
      * 支付时间
      */
     @ApiModelProperty(value = "支付时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date paymentTime;
     /**
      * 发货时间
      */
     @ApiModelProperty(value = "发货时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date deliveryTime;
     /**
      * 确认收货时间
      */
     @ApiModelProperty(value = "确认收货时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date receiveTime;
     /**
      * 评价时间
      */
     @ApiModelProperty(value = "评价时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date commentTime;
     /**
      * 修改时间
      */
     @ApiModelProperty(value = "修改时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date modifyTime;
+    
+    @TableField(exist = false)
+    private List<OrderItemEntity> orderItems;
 
 }

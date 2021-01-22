@@ -1,6 +1,7 @@
 package daily.boot.gulimall.member;
 
 import daily.boot.gulimall.service.api.feign.OrderFeignService;
+import daily.boot.gulimall.service.api.feign.SSOFeignService;
 import daily.boot.unified.dispose.annotation.EnableGlobalDispose;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -10,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(clients = {OrderFeignService.class})
+@EnableFeignClients(clients = {OrderFeignService.class, SSOFeignService.class})
 @MapperScan({"daily.boot.gulimall.member.dao"})
 @EnableGlobalDispose
 public class MemberApplication {

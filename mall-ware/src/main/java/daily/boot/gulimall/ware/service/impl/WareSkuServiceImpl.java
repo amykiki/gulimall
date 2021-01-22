@@ -252,6 +252,8 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                 }else {
                     log.info("++++++++收到解锁库存操作，库存已解锁，无需再解锁！！--wareOrdertaskId{}--taskDetailId{}++++++++", to.getWareOrderTaskId(), to.getWareOrderTaskDetailId());
                 }
+            }else {
+                log.info("++++++++待解锁订单序列号{}--待解锁SKU{}--订单状态{}，保持锁定状态++++++++", orderSn, taskDetailInfo.getSkuId(), orderInfo.getStatus());
             }
         } else {
             log.info("++++++++收到解锁库存操作，没有查询到库存工单详情，无需再解锁！！--wareOrdertaskId{}--taskDetailId{}++++++++", to.getWareOrderTaskId(), to.getWareOrderTaskDetailId());

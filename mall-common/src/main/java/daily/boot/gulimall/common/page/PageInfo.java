@@ -41,6 +41,9 @@ public class PageInfo<T> implements Serializable {
      */
     private List<T> list;
     
+    public PageInfo() {
+    }
+    
     /**
      * 分页
      * @param list        列表数据

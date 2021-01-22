@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.order.entity.OrderEntity;
-import daily.boot.gulimall.order.vo.OrderConfirmVo;
-import daily.boot.gulimall.order.vo.OrderSubmitVo;
-import daily.boot.gulimall.order.vo.SubmitOrderResponseVo;
+import daily.boot.gulimall.order.vo.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -37,5 +35,11 @@ public interface OrderService extends IService<OrderEntity> {
     void closeOrder(OrderEntity orderEntity);
     
     OrderEntity getorderByOrderSn(String orderSn);
+    
+    AliPayVo getOrderPay(String orderSn);
+    
+    String handlePayResult(AliPayAsyncVo asyncVo);
+    
+    PageInfo<OrderEntity> queryPageWithItem(PageQueryVo pageQueryVo);
 }
 

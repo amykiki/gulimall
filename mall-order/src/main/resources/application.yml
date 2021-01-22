@@ -78,6 +78,12 @@ gulimall:
       order-release-order-routing-key: order.release.order
       stock-release-stock-queue: stock.release.stock.queue
       stock-release-stock-routing-key: order.release.other.#
+      delay-queue-ttl: 180000   #单位毫秒
+    pay:
+      notify-url: http://2u27i23766.wicp.vip/callback/payed/notify
+      return-url: http://member.gulimall.com/memberOrder.html
+      gateway-url: https://openapi.alipaydev.com/gateway.do
+      timeout: 2m
 
 
 security:
@@ -99,7 +105,8 @@ security:
 
 ## seata配置
 seata:
-  enabled: true
+  enabled: false
+#  enabled: true
   application-id: ${spring.application.name}
   tx-service-group: gulimall-order-group
   service:

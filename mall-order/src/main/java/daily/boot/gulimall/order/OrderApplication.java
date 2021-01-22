@@ -59,6 +59,8 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  *     ⑥ 给分布式大事务入口标注 @GlobalTransactional
  *     ⑦ 给每一个远程小事务用 @Transactional
  *
+ *  支付宝电脑网站支付文档 https://opendocs.alipay.com/open/270/105902
+ *
  */
 @SpringBootApplication
 @EnableRabbit

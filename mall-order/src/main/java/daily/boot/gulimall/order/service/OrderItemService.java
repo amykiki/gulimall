@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.order.entity.OrderItemEntity;
 
+import java.util.List;
+
 
 /**
  * 订单项信息
@@ -20,5 +22,7 @@ public interface OrderItemService extends IService<OrderItemEntity> {
      * @return
      */
     PageInfo<OrderItemEntity> queryPage(PageQueryVo queryVo);
+    
+    List<OrderItemEntity> listByOrderSn(String orderSn);
 }
 

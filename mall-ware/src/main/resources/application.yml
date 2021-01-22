@@ -49,10 +49,12 @@ gulimall:
       stock-locked-routing-key: stock.locked
       stock-release-stock-queue: stock.release.stock.queue
       stock-release-stock-routing-key: stock.release.#
+      delay-queue-ttl: 240000   #单位毫秒
 
 ## seata配置
 seata:
-  enabled: true
+  enabled: false
+#  enabled: true
   application-id: ${spring.application.name}
   tx-service-group: gulimall-order-group
   enable-auto-data-source-proxy: true

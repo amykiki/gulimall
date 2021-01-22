@@ -1,5 +1,10 @@
 server:
   port: 16000
+  forward-headers-strategy: native # 使用了反向代理的情况下，内嵌tomcat要读取真正的请求header才能保证跳转正确
+  servlet:
+    session:
+      cookie:
+        name: GM-MEMBER-SESSIONID
 
 spring:
   datasource:
@@ -18,11 +23,17 @@ spring:
     host: docker-serv
     port: 6379
     password: abc123
+    database: 4
   cache:
     type: redis
     redis:
       use-key-prefix: true
       time-to-live: 900000
+  # 关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
+  session:
+    store-type: redis
 
 
 mybatis-plus:
@@ -41,3 +52,26 @@ gulimall:
     coupon: gulimall-coupon
     product: gulimall-product
     search: gulimall-search
+  # 单点登录登出配置
+  sso:
+    auth-server: http://auth.gulimall.com
+    request-matchers: /**
+    auth-request-matchers: /**
+    logout-url: /user/logout
+
+security:
+  oauth2:
+    #OAuth2 Client配置，对应OAuth2ClientProperties类
+    client:
+      client-id: gulimall-member
+      client-secret: abc123
+      user-authorization-uri: ${gulimall.sso.auth-server}/oauth/authorize # 获取用户的授权码地址
+      access-token-uri: ${gulimall.sso.auth-server}/oauth/token # 获取访问令牌的地址
+      use-current-uri: false
+      pre-established-redirect-uri: http://member.gulimall.com/user/login
+    # OAuth2 Resource 配置，对应 ResourceServerProperties 类
+    resource:
+      token-info-uri: ${gulimall.sso.auth-server}/oauth/check_token # 校验访问令牌是否有效的地址
+
+    sso:
+      login-path: /user/login  #自定义登录url

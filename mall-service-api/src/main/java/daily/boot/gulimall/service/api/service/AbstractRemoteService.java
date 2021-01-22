@@ -3,6 +3,7 @@ package daily.boot.gulimall.service.api.service;
 import daily.boot.common.Result;
 import daily.boot.common.exception.BusinessException;
 import daily.boot.common.exception.error.CommonErrorCode;
+import daily.boot.gulimall.common.page.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.Callable;
@@ -34,4 +35,5 @@ public abstract class AbstractRemoteService {
         String methodName = callerStackTraceElement.getMethodName();
         return call(fun, className + "-" + methodName);
     }
+    
 }

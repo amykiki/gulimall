@@ -1,24 +1,29 @@
 package daily.boot.gulimall.ware.configuration;
 
+import lombok.Setter;
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
 
 @Configuration
+@ConfigurationProperties(prefix = "gulimall.ware.mq")
+@Setter
 public class MyRabbitMQConfiguration {
-    @Value("${gulimall.ware.mq.stock-event-exchange}")
+    //@Value("${gulimall.ware.mq.stock-event-exchange}")
     private String stockEventExchange;
-    @Value("${gulimall.ware.mq.stock-delay-queue}")
+    //@Value("${gulimall.ware.mq.stock-delay-queue}")
     private String stockDelayQueue;
-    @Value("${gulimall.ware.mq.stock-release-stock-queue}")
+    //@Value("${gulimall.ware.mq.stock-release-stock-queue}")
     private String stockReleaseStockQueue;
-    @Value("${gulimall.ware.mq.stock-locked-routing-key}")
+    //@Value("${gulimall.ware.mq.stock-locked-routing-key}")
     private String stockLockedRoutingKey;
-    @Value("${gulimall.ware.mq.stock-release-stock-routing-key}")
+    //@Value("${gulimall.ware.mq.stock-release-stock-routing-key}")
     private String stockReleaseStockRoutingKey;
+    private Integer delayQueueTtl;
     
     @Bean
     public Exchange stockEventExchange() {
@@ -43,7 +48,7 @@ public class MyRabbitMQConfiguration {
         arguments.put("x-dead-letter-exchange", stockEventExchange);
         arguments.put("x-dead-letter-routing-key", stockReleaseStockRoutingKey);
         //消息过期时间，2分钟比order自身过期时间长
-        arguments.put("x-message-ttl", 120000);
+        arguments.put("x-message-ttl", delayQueueTtl);
         return new Queue(stockDelayQueue, true, false, false, arguments);
     }
     
