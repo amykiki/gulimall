@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:20
  */
 @RestController
-@RequestMapping("coupon/couponspucategoryrelation")
+@RequestMapping("/api/coupon/couponspucategoryrelation")
 @Api(tags = "CouponSpuCategoryRelation-优惠券分类关联接口")
 public class CouponSpuCategoryRelationController {
     @Autowired
@@ -68,7 +68,7 @@ public class CouponSpuCategoryRelationController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:couponspucategoryrelation:update")
     public R update(@RequestBody CouponSpuCategoryRelationEntity couponSpuCategoryRelation){

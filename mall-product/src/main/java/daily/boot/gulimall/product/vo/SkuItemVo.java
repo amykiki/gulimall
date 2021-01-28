@@ -3,6 +3,7 @@ package daily.boot.gulimall.product.vo;
 import daily.boot.gulimall.product.entity.SkuImagesEntity;
 import daily.boot.gulimall.product.entity.SkuInfoEntity;
 import daily.boot.gulimall.product.entity.SpuInfoDescEntity;
+import daily.boot.gulimall.service.api.to.SeckillSkuItemVo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -30,6 +31,9 @@ public class SkuItemVo implements Serializable {
     private SpuInfoDescEntity desc;
     
     private List<SpuItemAttrGroup> groupAttrs;
+    
+    //秒杀商品优惠信息
+    private SeckillSkuItemVo seckillSkuVo;
     
     @Data
     public static class SkuItemSaleAttr implements Serializable{

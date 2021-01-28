@@ -68,4 +68,14 @@ public class RemoteServiceImpl extends AbstractRemoteService implements RemoteSe
     public boolean orderLockStock(WareSkuLockTo lockTo) {
         return call(() -> wareFeignService.orderLockStock(lockTo));
     }
+    
+    @Override
+    public SkuInfoVo getSkuInfoBySkuId(Long skuId) {
+        return call(() -> productFeignService.info(skuId));
+    }
+    
+    @Override
+    public List<String> getSkuSaleAttrValues(Long skuId) {
+        return call(() -> productFeignService.getSkuSaleAttrValues(skuId));
+    }
 }

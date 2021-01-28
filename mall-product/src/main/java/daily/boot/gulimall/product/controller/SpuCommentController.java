@@ -68,7 +68,7 @@ public class SpuCommentController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("product:spucomment:update")
     public R update(@RequestBody SpuCommentEntity spuComment){

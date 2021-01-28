@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.coupon.entity.SeckillSkuRelationEntity;
 
+import java.util.List;
+
 
 /**
  * 秒杀活动商品关联
@@ -17,8 +19,11 @@ public interface SeckillSkuRelationService extends IService<SeckillSkuRelationEn
     /**
      * 无条件翻页查询
      * @param queryVo 分页查询参数
+     * @param promotionSessionId
      * @return
      */
-    PageInfo<SeckillSkuRelationEntity> queryPage(PageQueryVo queryVo);
+    PageInfo<SeckillSkuRelationEntity> queryPage(PageQueryVo queryVo, String promotionSessionId);
+    
+    List<SeckillSkuRelationEntity> listByPromotionSessionId(Long id);
 }
 

@@ -58,6 +58,7 @@ gulimall:
     search: gulimall-search
     ware: gulimall-ware
     member: gulimall-member
+    seckill: gulimall-seckill
   #自定义线程池参数
   threadpool:
     core-size: 10

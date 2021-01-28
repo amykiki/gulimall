@@ -30,6 +30,8 @@ public class MyRabbitMQConfig {
     private String stockReleaseStockQueue;
     //@Value("${gulimall.order.mq.stock-release-stock-routing-key}")
     private String stockReleaseStockRoutingKey;
+    private String orderSeckillOrderQueue;
+    private String orderSeckillOrderRouteKey;
     private Integer delayQueueTtl;
     
     /*
@@ -116,5 +118,22 @@ public class MyRabbitMQConfig {
                            orderEventExchange,
                            stockReleaseStockRoutingKey,
                            null);
+    }
+    
+    /**
+     * 商品秒杀队列
+     * @return
+     */
+    @Bean
+    public Queue orderSeckillOrderQueue() {
+        return new Queue(orderSeckillOrderQueue, true, false, false);
+    }
+    
+    @Bean
+    public Binding orderSeckillOrderQueueBinding() {
+        return BindingBuilder.bind(orderSeckillOrderQueue())
+                .to(orderEventExchange())
+                .with(orderSeckillOrderRouteKey)
+                .noargs();
     }
 }

@@ -68,7 +68,7 @@ public class MemberCollectSpuController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("member:membercollectspu:update")
     public R update(@RequestBody MemberCollectSpuEntity memberCollectSpu){

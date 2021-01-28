@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:21
  */
 @RestController
-@RequestMapping("coupon/homesubject")
+@RequestMapping("/api/coupon/homesubject")
 @Api(tags = "HomeSubject-首页专题表【jd首页下面很多专题，每个专题链接新的页面，展示专题商品信息】接口")
 public class HomeSubjectController {
     @Autowired
@@ -68,7 +68,7 @@ public class HomeSubjectController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:homesubject:update")
     public R update(@RequestBody HomeSubjectEntity homeSubject){

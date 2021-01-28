@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
 @MapperScan({"daily.boot.gulimall.product.dao"})
-@EnableFeignClients(clients = {SSOFeignService.class, MemberFeignService.class, WareFeignService.class, SearchFeignService.class, CouponFeignService.class})
+@EnableFeignClients(clients = {SSOFeignService.class, MemberFeignService.class, WareFeignService.class, SearchFeignService.class,
+        CouponFeignService.class,
+        SeckillFeignService.class
+})
 @EnableTransactionManagement
 @EnableDiscoveryClient
 @EnableGlobalDispose

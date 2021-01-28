@@ -1,5 +1,6 @@
 package daily.boot.gulimall.coupon.controller;
 
+import daily.boot.common.Result;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.utils.R;
@@ -22,11 +23,17 @@ import java.util.List;
  * @date 2020-10-14 16:05:21
  */
 @RestController
-@RequestMapping("coupon/seckillsession")
+@RequestMapping("/api/coupon/seckillsession")
 @Api(tags = "SeckillSession-秒杀活动场次接口")
 public class SeckillSessionController {
     @Autowired
     private SeckillSessionService seckillSessionService;
+    
+    @GetMapping("/Latest3DaySession")
+    public Result<List<SeckillSessionEntity>> getLatest3DaySession() {
+        List<SeckillSessionEntity> sessionEntities = seckillSessionService.getLatest3DaySession();
+        return Result.ok(sessionEntities);
+    }
 
     /**
      * 列表
@@ -68,7 +75,7 @@ public class SeckillSessionController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:seckillsession:update")
     public R update(@RequestBody SeckillSessionEntity seckillSession){
@@ -92,7 +99,7 @@ public class SeckillSessionController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @RequestMapping("/page-list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("coupon:seckillsession:pagelist")
     public R pageList(PageQueryVo pageQueryVo){

@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:20
  */
 @RestController
-@RequestMapping("coupon/skuladder")
+@RequestMapping("/api/coupon/skuladder")
 @Api(tags = "SkuLadder-商品阶梯价格接口")
 public class SkuLadderController {
     @Autowired
@@ -68,7 +68,7 @@ public class SkuLadderController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:skuladder:update")
     public R update(@RequestBody SkuLadderEntity skuLadder){

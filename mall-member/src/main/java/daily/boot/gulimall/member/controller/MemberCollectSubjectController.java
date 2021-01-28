@@ -68,7 +68,7 @@ public class MemberCollectSubjectController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("member:membercollectsubject:update")
     public R update(@RequestBody MemberCollectSubjectEntity memberCollectSubject){

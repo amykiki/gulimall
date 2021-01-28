@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:21
  */
 @RestController
-@RequestMapping("coupon/memberprice")
+@RequestMapping("/api/coupon/memberprice")
 @Api(tags = "MemberPrice-商品会员价格接口")
 public class MemberPriceController {
     @Autowired
@@ -68,7 +68,7 @@ public class MemberPriceController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:memberprice:update")
     public R update(@RequestBody MemberPriceEntity memberPrice){

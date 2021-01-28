@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:21
  */
 @RestController
-@RequestMapping("coupon/seckillpromotion")
+@RequestMapping("/api/coupon/seckillpromotion")
 @Api(tags = "SeckillPromotion-秒杀活动接口")
 public class SeckillPromotionController {
     @Autowired
@@ -68,7 +68,7 @@ public class SeckillPromotionController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:seckillpromotion:update")
     public R update(@RequestBody SeckillPromotionEntity seckillPromotion){

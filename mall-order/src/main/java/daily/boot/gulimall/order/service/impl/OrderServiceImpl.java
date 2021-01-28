@@ -27,6 +27,7 @@ import daily.boot.gulimall.order.to.OrderCreateTo;
 import daily.boot.gulimall.order.vo.*;
 import daily.boot.gulimall.service.api.to.OrderItemTo;
 import daily.boot.gulimall.service.api.to.*;
+import daily.boot.gulimall.service.api.to.mq.SeckillOrderTo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -544,5 +545,53 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         orderEntity.setAutoConfirmDay(7);
         orderEntity.setConfirmStatus(0);
         return orderEntity;
+    }
+    
+    /**
+     * 创建秒杀单
+     * @param orderTo
+     */
+    @Override
+    @Transactional
+    public void createSeckillOrder(SeckillOrderTo orderTo) {
+        //保存订单信息
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setOrderSn(orderTo.getOrderSn());
+        orderEntity.setMemberId(orderTo.getMemberId());
+        orderEntity.setCreateTime(new Date());
+        BigDecimal totalPrice = orderTo.getSeckillPrice().multiply(BigDecimal.valueOf(orderTo.getNum()));
+        orderEntity.setPayAmount(totalPrice);
+        orderEntity.setStatus(OrderStatusEnum.CREATE_NEW.getCode());
+        
+        //保存订单
+        this.save(orderEntity);
+        
+        //保存订单项信息
+        //获取sku信息
+        SkuInfoVo skuInfoVo = remoteService.getSkuInfoBySkuId(orderTo.getSkuId());
+        //获取sku sale attr信息
+        List<String> skuSaleAttrs = remoteService.getSkuSaleAttrValues(orderTo.getSkuId());
+        OrderItemEntity orderItem = new OrderItemEntity();
+        orderItem.setOrderSn(orderTo.getOrderSn());
+        orderItem.setRealAmount(totalPrice);
+        orderItem.setSkuPrice(orderTo.getSeckillPrice());
+        orderItem.setSkuQuantity(orderTo.getNum());
+        orderItem.setSkuId(orderTo.getSkuId());
+        orderItem.setOrderId(orderEntity.getId());
+        orderItem.setSkuPic(skuInfoVo.getSkuDefaultImg());
+        //skuName和SkuAttrsVals在设置alipay支付信息时需要
+        orderItem.setSkuName(skuInfoVo.getSkuTitle());
+        String skuSaleAttrStr = StringUtils.collectionToDelimitedString(skuSaleAttrs, ";");
+        orderItem.setSkuAttrsVals(skuSaleAttrStr);
+        
+        //获取商品的spu信息
+        SpuInfoTo spuInfo = remoteService.getSpuInfoBySkuId(orderTo.getSkuId());
+        orderItem.setSpuId(spuInfo.getId());
+        orderItem.setSpuName(spuInfo.getSpuName());
+        orderItem.setSpuBrand(spuInfo.getBrandName());
+        orderItem.setCategoryId(spuInfo.getCatelogId());
+        
+        //保存订单项数据
+        orderItemService.save(orderItem);
     }
 }

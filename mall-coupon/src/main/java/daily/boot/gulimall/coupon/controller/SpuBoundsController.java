@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:20
  */
 @RestController
-@RequestMapping("coupon/spubounds")
+@RequestMapping("/api/coupon/spubounds")
 @Api(tags = "SpuBounds-商品spu积分设置接口")
 public class SpuBoundsController {
     @Autowired
@@ -68,7 +68,7 @@ public class SpuBoundsController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:spubounds:update")
     public R update(@RequestBody SpuBoundsEntity spuBounds){

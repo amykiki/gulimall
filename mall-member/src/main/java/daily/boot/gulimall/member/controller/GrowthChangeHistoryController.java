@@ -68,7 +68,7 @@ public class GrowthChangeHistoryController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("member:growthchangehistory:update")
     public R update(@RequestBody GrowthChangeHistoryEntity growthChangeHistory){

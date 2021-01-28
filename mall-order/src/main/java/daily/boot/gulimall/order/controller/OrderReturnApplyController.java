@@ -68,7 +68,7 @@ public class OrderReturnApplyController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("order:orderreturnapply:update")
     public R update(@RequestBody OrderReturnApplyEntity orderReturnApply){

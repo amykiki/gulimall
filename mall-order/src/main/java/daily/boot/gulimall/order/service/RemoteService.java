@@ -19,4 +19,8 @@ public interface RemoteService {
     SpuInfoTo getSpuInfoBySkuId(Long skuId);
     
     boolean orderLockStock(WareSkuLockTo lockTo);
+    
+    SkuInfoVo getSkuInfoBySkuId(Long skuId);
+    
+    List<String> getSkuSaleAttrValues(Long skuId);
 }

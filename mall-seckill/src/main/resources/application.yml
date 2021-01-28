@@ -1,0 +1,98 @@
+server:
+  port: 24000
+  forward-headers-strategy: native # 使用了反向代理的情况下，内嵌tomcat要读取真正的请求header才能保证跳转正确
+  servlet:
+    session:
+      cookie:
+        name: GM-SECKILL-SESSIONID
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: docker-serv:8848
+  redis:
+    host: docker-serv
+    port: 6379
+    password: abc123
+    database: 7
+  # 关闭thymeleaf缓存
+  thymeleaf:
+    cache: false
+  session:
+    store-type: redis
+  # 配置异步任务线程池
+  task:
+    execution:
+      pool:
+        core-size: 1
+        max-size: 5
+        queue-capacity: 3
+  rabbitmq:
+    host: docker-serv
+    port: 5672
+    username: root
+    password: 123123
+    virtual-host: /
+    publisher-confirm-type: correlated  #CORRELATED值是发布消息成功到交换器后会触发回调方法，如果是cluster模式，需要所有broker都接收到才会调用confirmCallback
+    # 开启发送端消息抵达队列的确认
+    publisher-returns: true
+    template:
+      # 指定消息在没有被队列接收时是否强行退回还是直接丢弃
+      mandatory: true
+#   publisher-confirms: true
+#   在springboot2.2.0.RELEASE版本之前是amqp正式支持的属性，用来配置消息发送到交换器之后是否触发回调方法，
+#   在2.2.0及之后该属性过期使用spring.rabbitmq.publisher-confirm-type属性配置代替，用来配置更多的确认类型；
+#   参考 https://blog.csdn.net/z69183787/article/details/109371628
+
+gulimall:
+  feign:
+    coupon: gulimall-coupon
+    product: gulimall-product
+    member: gulimall-member
+  #自定义线程池参数
+  threadpool:
+    core-size: 10
+    max-size: 30
+    max-queue: 150
+    keepalive-time: 20 # 最大等待时间，单位为秒
+  # 单点登录登出配置
+  sso:
+    auth-server: http://auth.gulimall.com
+    request-matchers: /**
+    auth-request-matchers: /**
+    logout-url: /user/logout
+  seckill:
+    mq:
+      order-event-exchange: order-event-exchange
+      order-seckill-order-route-key: order.seckill.order
+
+
+security:
+  oauth2:
+    #OAuth2 Client配置，对应OAuth2ClientProperties类
+    client:
+      client-id: gulimall-seckill
+      client-secret: abc123
+      user-authorization-uri: ${gulimall.sso.auth-server}/oauth/authorize # 获取用户的授权码地址
+      access-token-uri: ${gulimall.sso.auth-server}/oauth/token # 获取访问令牌的地址
+      use-current-uri: false
+      pre-established-redirect-uri: http://seckill.gulimall.com/user/login
+    # OAuth2 Resource 配置，对应 ResourceServerProperties 类
+    resource:
+      token-info-uri: ${gulimall.sso.auth-server}/oauth/check_token # 校验访问令牌是否有效的地址
+
+    sso:
+      login-path: /user/login  #自定义登录url
+
+logging:
+  level:
+    daily.boot.gulimall.seckill: debug
+
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 60000
+        read-timeout: 60000
+

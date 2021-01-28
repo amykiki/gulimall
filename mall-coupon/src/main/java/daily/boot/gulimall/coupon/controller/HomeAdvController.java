@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:21
  */
 @RestController
-@RequestMapping("coupon/homeadv")
+@RequestMapping("/api/coupon/homeadv")
 @Api(tags = "HomeAdv-首页轮播广告接口")
 public class HomeAdvController {
     @Autowired
@@ -68,7 +68,7 @@ public class HomeAdvController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:homeadv:update")
     public R update(@RequestBody HomeAdvEntity homeAdv){

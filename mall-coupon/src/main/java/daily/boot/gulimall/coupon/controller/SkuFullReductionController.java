@@ -23,7 +23,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:20
  */
 @RestController
-@RequestMapping("coupon/skufullreduction")
+@RequestMapping("/api/coupon/skufullreduction")
 @Api(tags = "SkuFullReduction-商品满减信息接口")
 public class SkuFullReductionController {
     @Autowired
@@ -74,7 +74,7 @@ public class SkuFullReductionController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:skufullreduction:update")
     public R update(@RequestBody SkuFullReductionEntity skuFullReduction){

@@ -68,7 +68,7 @@ public class IntegrationChangeHistoryController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("member:integrationchangehistory:update")
     public R update(@RequestBody IntegrationChangeHistoryEntity integrationChangeHistory){

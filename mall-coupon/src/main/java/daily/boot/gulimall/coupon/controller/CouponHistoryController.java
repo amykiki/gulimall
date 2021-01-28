@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:20
  */
 @RestController
-@RequestMapping("coupon/couponhistory")
+@RequestMapping("/api/coupon/couponhistory")
 @Api(tags = "CouponHistory-优惠券领取历史记录接口")
 public class CouponHistoryController {
     @Autowired
@@ -68,7 +68,7 @@ public class CouponHistoryController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:couponhistory:update")
     public R update(@RequestBody CouponHistoryEntity couponHistory){

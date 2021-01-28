@@ -22,7 +22,7 @@ import java.util.List;
  * @date 2020-10-14 16:05:20
  */
 @RestController
-@RequestMapping("coupon/seckillskurelation")
+@RequestMapping("/api/coupon/seckillskurelation")
 @Api(tags = "SeckillSkuRelation-秒杀活动商品关联接口")
 public class SeckillSkuRelationController {
     @Autowired
@@ -68,7 +68,7 @@ public class SeckillSkuRelationController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("coupon:seckillskurelation:update")
     public R update(@RequestBody SeckillSkuRelationEntity seckillSkuRelation){
@@ -92,11 +92,11 @@ public class SeckillSkuRelationController {
     /**
      * 无条件分页查询
      */
-    @PostMapping("/page-list")
+    @GetMapping("/page-list")
     @ApiOperation(value = "无条件分页查询", notes = "无条件分页查询")
     //@RequiresPermissions("coupon:seckillskurelation:pagelist")
-    public R pageList(PageQueryVo pageQueryVo){
-        PageInfo<SeckillSkuRelationEntity> pageInfo = seckillSkuRelationService.queryPage(pageQueryVo);
+    public R pageList(PageQueryVo pageQueryVo, String promotionSessionId){
+        PageInfo<SeckillSkuRelationEntity> pageInfo = seckillSkuRelationService.queryPage(pageQueryVo, promotionSessionId);
         return R.ok().put("page", pageInfo);
     }
 

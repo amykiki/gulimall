@@ -5,6 +5,8 @@ import daily.boot.gulimall.common.page.PageQueryVo;
 import daily.boot.gulimall.common.page.PageInfo;
 import daily.boot.gulimall.coupon.entity.SeckillSessionEntity;
 
+import java.util.List;
+
 
 /**
  * 秒杀活动场次
@@ -20,5 +22,7 @@ public interface SeckillSessionService extends IService<SeckillSessionEntity> {
      * @return
      */
     PageInfo<SeckillSessionEntity> queryPage(PageQueryVo queryVo);
+    
+    List<SeckillSessionEntity> getLatest3DaySession();
 }
 

@@ -68,7 +68,7 @@ public class OrderSettingController {
     /**
      * 修改
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ApiOperation(value = "修改数据")
     //@RequiresPermissions("order:ordersetting:update")
     public R update(@RequestBody OrderSettingEntity orderSetting){

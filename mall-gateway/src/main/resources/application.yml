@@ -14,6 +14,12 @@ spring:
             - Path=/api/product/** #前端项目，都用/api
           filters:
             - RewritePath=/api/(?<segment>.*), /$\{segment}
+        - id: coupon_route
+          uri: lb://gulimall-coupon #负载均衡服务
+          predicates:
+            - Path=/api/coupon/** #前端项目，都用/api
+#          filters:
+#            - RewritePath=/api/(?<segment>.*), /$\{segment}
         - id: member_route
           uri: lb://gulimall-member #负载均衡服务
           predicates:
@@ -32,12 +38,6 @@ spring:
             - Path=/api/ware/** #前端项目，都用/api
           filters:
             - RewritePath=/api/(?<segment>.*), /$\{segment}
-        - id: admin_route
-          uri: lb://renren-fast #负载均衡服务
-          predicates:
-            - Path=/api/** #前端项目，都用/api
-          filters:
-            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
         # ----host 断言
         - id: gulimall_host_route
           uri: lb://gulimall-product
@@ -75,6 +75,19 @@ spring:
             - PreserveHostHeader
           predicates:
             - Host=member.gulimall.com
+        - id: gulimall_seckill_route
+          uri: lb://gulimall-seckill
+          filters:
+            - PreserveHostHeader
+          predicates:
+            - Host=seckill.gulimall.com
+        # ----其他
+        - id: admin_route
+          uri: lb://renren-fast #负载均衡服务
+          predicates:
+            - Path=/api/** #前端项目，都用/api
+          filters:
+            - RewritePath=/api/(?<segment>.*), /renren-fast/$\{segment}
 logging:
   level:
     daily.boot.gulimall.gateway: debug

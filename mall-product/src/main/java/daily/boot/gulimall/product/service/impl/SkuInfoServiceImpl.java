@@ -22,6 +22,7 @@ import daily.boot.gulimall.product.vo.SkuItemVo;
 import daily.boot.gulimall.product.vo.SpuSaveVo;
 import daily.boot.gulimall.service.api.feign.CouponFeignService;
 import daily.boot.gulimall.service.api.to.MemberPriceTo;
+import daily.boot.gulimall.service.api.to.SeckillSkuItemVo;
 import daily.boot.gulimall.service.api.to.SkuReductionTo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -55,7 +56,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
     @Autowired
     private AttrGroupService attrGroupService;
     @Autowired
-    private FeignService feignService;
+    private RemoteService remoteService;
     @Resource(name = "productExecutor")
     private ExecutorService executor;
     @Override
@@ -174,7 +175,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         //2. 异步获取库存信息
         CompletableFuture<Void> hasStockFuture = CompletableFuture.runAsync(() -> {
             logThreadInfo("hasStockFuture...");
-            boolean hasStock = feignService.skuHasStock(skuId);
+            boolean hasStock = remoteService.skuHasStock(skuId);
             skuItemVo.setHasStock(hasStock);
         }, executor);
         
@@ -203,8 +204,23 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             List<SkuItemVo.SpuItemAttrGroup> attrGroup = attrGroupService.listAttrGroupWithAttrsBySpuId(info.getSpuId());
             skuItemVo.setGroupAttrs(attrGroup);
         }, executor);
+        
+        //7. 查询当前sku是否参与秒杀优惠活动
+        CompletableFuture<SeckillSkuItemVo> seckillFuture = CompletableFuture.supplyAsync(() -> {
+            SeckillSkuItemVo seckillSkuItemVo = remoteService.getSkuSeckillInfo(skuId);
+            if (seckillSkuItemVo != null) {
+                long currentTime = System.currentTimeMillis();
+                //还未到时间的不要用
+                if (currentTime > seckillSkuItemVo.getEndTime()) {
+                    return null;
+                }
+            }
+            return seckillSkuItemVo;
+        }, executor);
     
         try {
+            SeckillSkuItemVo seckillSkuItemVo = seckillFuture.get();
+            skuItemVo.setSeckillSkuVo(seckillSkuItemVo);
             CompletableFuture.allOf(hasStockFuture, skuImageFuture, saleAttrFuture, spuDescFuture, spuAttrFuture).get();
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
